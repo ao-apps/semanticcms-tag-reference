@@ -42,6 +42,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<documented.artifactId>semanticcms-tag-reference</documented.artifactId>
 
 		<documented.name>SemanticCMS Tag Reference</documented.name>
+		<documented.shortTitle>Tag Reference</documented.shortTitle>
 		<documented.url>https://semanticcms.com${bookPath}/</documented.url>
 		<documented.description>Generates tag library descriptor documentation for .tld files.</documented.description>
 		<documented.inceptionYear>2016</documented.inceptionYear>
@@ -145,6 +146,14 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<groupId>com.semanticcms</groupId>
 			<artifactId>semanticcms-section-taglib</artifactId>
 			<version>1.4.2-SNAPSHOT</version>
+		</dependency>
+		<!-- Dependency only to get version into properties -->
+		<dependency>
+			<groupId>com.semanticcms</groupId>
+			<artifactId>semanticcms-tag-reference</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>
