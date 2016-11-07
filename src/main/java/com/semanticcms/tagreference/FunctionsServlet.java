@@ -24,6 +24,7 @@ package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
 import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.servlet.CapturePage;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -50,19 +51,33 @@ public class FunctionsServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-			Map<String,Object> args = new LinkedHashMap<String,Object>();
-			args.put("tldRef", tldRef);
-			args.put("tldDoc", tldDoc);
-			Dispatcher.include(
+		Map<String,Object> args = new LinkedHashMap<String,Object>();
+		args.put("tldRef", tldRef);
+		args.put("tldDoc", tldDoc);
+		// TODO: Is there a way to get rid of this forward/include duality?
+		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
+		if(CapturePage.getCaptureContext(req) == null) {
+			// Forward required so can set content type
+			Dispatcher.forward(
 				getServletContext(),
 				JSPX_TARGET,
 				req,
 				resp,
 				args
 			);
-		} catch(SkipPageException e) {
-			throw new ServletException(e);
+		} else {
+			try {
+				// Include required on capture since forward interrupts the final output
+				Dispatcher.include(
+					getServletContext(),
+					JSPX_TARGET,
+					req,
+					resp,
+					args
+				);
+			} catch(SkipPageException e) {
+				throw new ServletException(e);
+			}
 		}
 	}
 }
