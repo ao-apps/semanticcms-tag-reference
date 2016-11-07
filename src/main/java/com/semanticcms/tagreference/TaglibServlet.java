@@ -31,6 +31,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.SkipPageException;
 import org.w3c.dom.Document;
 
 public class TaglibServlet extends HttpServlet {
@@ -53,17 +54,21 @@ public class TaglibServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Map<String,Object> args = new LinkedHashMap<String,Object>();
-		args.put("title", title);
-		args.put("shortTitle", shortTitle);
-		args.put("tldRef", tldRef);
-		args.put("tldDoc", tldDoc);
-		Dispatcher.forward(
-			getServletContext(),
-			JSPX_TARGET,
-			req,
-			resp,
-			args
-		);
+		try {
+			Map<String,Object> args = new LinkedHashMap<String,Object>();
+			args.put("title", title);
+			args.put("shortTitle", shortTitle);
+			args.put("tldRef", tldRef);
+			args.put("tldDoc", tldDoc);
+			Dispatcher.include(
+				getServletContext(),
+				JSPX_TARGET,
+				req,
+				resp,
+				args
+			);
+		} catch(SkipPageException e) {
+			throw new ServletException(e);
+		}
 	}
 }
