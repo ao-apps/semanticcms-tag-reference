@@ -24,7 +24,6 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
-<%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
@@ -41,8 +40,10 @@ Arguments:
 	<tbody>
 		<x:forEach select="$taglibElem/function">
 			<tr>
-				<%-- TODO: This as link --%>
-				<td><x:out select="name" /></td>
+				<td>
+					<x:set var="functionName" select="string(name)" />
+					<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{functionName}" />
+				</td>
 				<%-- TODO: Signatures link tlddocs? --%>
 				<td>
 					<x:set var="description" select="string(description[1])" />

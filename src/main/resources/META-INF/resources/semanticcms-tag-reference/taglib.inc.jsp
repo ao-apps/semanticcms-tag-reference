@@ -47,11 +47,9 @@ Arguments:
 	dateModified="${ao:getLastModified(tldRef.servletPath)}"
 >
 	<%-- TODO: file:file link to .tld file itself? --%>
-	<x:if select="boolean($taglibElem/description)">
-		<p>
-			<x:out select="$taglibElem/description" escapeXml="false" />
-		</p>
-	</x:if>
+	<x:forEach var="description" select="$taglibElem/description">
+		<x:out select="$description" escapeXml="false" />
+	</x:forEach>
 	<section:section label="Usage">
 		<section:section label="Standard Syntax">
 			<code>&lt;%@ taglib prefix="<x:out select="$taglibElem/short-name" />" uri="<x:out select="$taglibElem/uri" />" %&gt;</code>
@@ -66,7 +64,14 @@ Arguments:
 				<x:if select="boolean($taglibElem/display-name)">
 					<tr>
 						<th>Display Name:</th>
-						<td><x:out select="$taglibElem/display-name" /></td>
+						<td>
+							<x:forEach var="displayName" select="$taglibElem/display-name" varStatus="displayNameStatus">
+								<x:out select="$displayName" escapeXml="false" />
+								<c:if test="${!displayNameStatus.last}">
+									<br />
+								</c:if>
+							</x:forEach>
+						</td>
 					</tr>
 				</x:if>
 				<tr>

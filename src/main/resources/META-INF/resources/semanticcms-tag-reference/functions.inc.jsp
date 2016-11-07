@@ -24,15 +24,14 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
-<%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
-The view of function summaries at at /path/taglib.tld/functions
+The view of function summaries at /path/taglib.tld/functions
 
 Arguments:
-	arg.tldRef      The PageRef for the TLD file itself
-	arg.tldDoc      The XML DOM document for the .tld file
+	arg.tldRef  The PageRef for the TLD file itself
+	arg.tldDoc  The XML DOM document for the .tld file
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tldDoc" value="${arg.tldDoc}" />
@@ -44,6 +43,14 @@ Arguments:
 	shortTitle="Functions"
 	dateModified="${ao:getLastModified(tldRef.servletPath)}"
 >
+	<%-- Add one child per function --%>
+	<x:forEach select="$taglibElem/function">
+		<x:set var="functionName" select="string(name)" />
+		<core:child
+			book="${tldRef.bookName}"
+			page="${tldRef.path}/function-${functionName}"
+		/>
+	</x:forEach>
 	<ao:include
 		page="function-summary.inc.jsp"
 		arg.tldRef="${tldRef}"

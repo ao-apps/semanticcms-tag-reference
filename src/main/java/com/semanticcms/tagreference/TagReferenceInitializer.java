@@ -26,6 +26,7 @@ import com.aoindustries.xml.XmlUtils;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Set;
 import javax.servlet.ServletContainerInitializer;
@@ -51,6 +52,13 @@ import org.xml.sax.SAXException;
  * </ol>
  */
 abstract public class TagReferenceInitializer implements ServletContainerInitializer {
+
+	/**
+	 * The encoding used within path encoding.
+	 * We do not expect special characters in tag or function names but we still
+	 * encode them because the future is an unknown place (wink).
+	 */
+	private static final String ENCODING = "UTF-8";
 
 	private final String title;
 	private final String shortTitle;
@@ -105,9 +113,13 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				}
 				do {
 					// /path/taglib.tld/tag-tagName
-					Element tagElem = tagIter.next();
-					// String tagName = tagElem.get
-					// TODO: Per-tag
+					String tagName = XmlUtils.getChildElementByTagName(tagIter.next(), "name").getTextContent().trim();
+					String tagServletUrlPattern = tldServletPath + "/tag-" + URLEncoder.encode(tagName, ENCODING);
+					ServletRegistration.Dynamic registration = servletContext.addServlet(
+						tagServletUrlPattern,
+						new TagServlet(tldRef, tldDoc, tagName)
+					);
+					registration.addMapping(tagServletUrlPattern);
 				} while(tagIter.hasNext());
 			}
 			Iterator<Element> functionIter = XmlUtils.iterableChildElementsByTagName(taglibElem, "function").iterator();
@@ -123,8 +135,13 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				}
 				do {
 					// /path/taglib.tld/function-functionName
-					Element functionElem = functionIter.next();
-					// TODO: Per-function
+					String functionName = XmlUtils.getChildElementByTagName(functionIter.next(), "name").getTextContent().trim();
+					String functionServletUrlPattern = tldServletPath + "/function-" + URLEncoder.encode(functionName, ENCODING);
+					ServletRegistration.Dynamic registration = servletContext.addServlet(
+						functionServletUrlPattern,
+						new FunctionServlet(tldRef, tldDoc, functionName)
+					);
+					registration.addMapping(functionServletUrlPattern);
 				} while(functionIter.hasNext());
 			}
 		} catch(IOException e) {

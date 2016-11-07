@@ -27,30 +27,27 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
-Shared tag summary implementation.
+The view of one function at /path/taglib.tld/function-functionName
 
 Arguments:
-	arg.tldRef      The PageRef for the TLD file itself
-	arg.tldDoc      The XML DOM document for the .tld file
+	arg.tldRef        The PageRef for the TLD file itself
+	arg.tldDoc        The XML DOM document for the .tld file
+	arg.functionName  The name of the function to display
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tldDoc" value="${arg.tldDoc}" />
+<c:set var="functionName" value="${arg.functionName}" />
 <x:set var="taglibElem" select="$tldDoc/taglib" />
-<table class="thinTable">
-	<tbody>
-		<x:forEach select="$taglibElem/tag">
-			<tr>
-				<td>
-					<x:set var="tagName" select="string(name)" />
-					<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{tagName}" />
-				</td>
-				<td>
-					<x:set var="description" select="string(description[1])" />
-					<c:if test="${!empty description}">
-						<ao:include page="snippet-summary.inc.jsp" arg.htmlSnippet="${description}" />
-					</c:if>
-				</td>
-			</tr>
-		</x:forEach>
-	</tbody>
-</table>
+<x:set var="tldShortName" select="string($taglibElem/short-name)" />
+<core:page
+	book="${tldRef.bookName}"
+	path="${tldRef.path}/function-${functionName}"
+	title="\${${tldShortName}:${functionName}()}"
+	dateModified="${ao:getLastModified(tldRef.servletPath)}"
+>
+	<core:parent
+		book="${tldRef.bookName}"
+		page="${tldRef.path}/functions"
+	/>
+	TODO
+</core:page>
