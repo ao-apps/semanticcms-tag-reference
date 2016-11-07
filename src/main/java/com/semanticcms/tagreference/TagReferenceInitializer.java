@@ -44,7 +44,7 @@ import org.xml.sax.SAXException;
  * <ol>
  *   <li>/path/taglib.tld   The taglib file itself available for download (handled by default servlet)</li>
  *   <li>/path/taglib.tld/  The documentation for the taglib overall</li>
- *   <li>/path/taglib.tld/tags  The list of functions only</li>
+ *   <li>/path/taglib.tld/tags  The list of tags only</li>
  *   <li>/path/taglib.tld/tag-tagName  The detailed per-tag documentation</li>
  *   <li>/path/taglib.tld/functions  The list of functions only</li>
  *   <li>/path/taglib.tld/function-functionName  The detailed per-function documentation</li>
