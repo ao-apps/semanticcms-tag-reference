@@ -120,11 +120,18 @@ Arguments:
 					</thead>
 					<tbody>
 						<x:forEach var="attribute" select="$tagElem/attribute">
+							<c:set var="rowspan" value="1" />
+							<x:if select="boolean($attribute/deferred-method)">
+								<c:set var="rowspan" value="${rowspan + 1}" />
+							</x:if>
+							<x:if select="boolean($attribute/deferred-value)">
+								<c:set var="rowspan" value="${rowspan + 1}" />
+							</x:if>
 							<tr>
-								<td><x:out select="$attribute/name" /></td>
-								<td>
+								<td rowspan="${rowspan}"><x:out select="$attribute/name" /></td>
+								<td rowspan="${rowspan}">
 									<x:set var="required" select="string($attribute/required)" />
-									<ao:out value="${required != null && required=='true'}" />
+									<ao:out value="${(required != null && required=='true') ? 'Yes' : 'No'}" />
 								</td>
 								<td>
 									<x:set var="rtexprvalue" select="string($attribute/rtexprvalue)" />
@@ -133,20 +140,44 @@ Arguments:
 									<c:if test="${fragment != null && fragment=='true'}">
 										<br />Fragment
 									</c:if>
-									<x:if select="boolean($attribute/deferred-method)">
-										<br />Deferred-Method
-									</x:if>
-									<x:if select="boolean($attribute/deferred-value)">
-										<br />Deferred-Value
-									</x:if>
 								</td>
-								<td>TODO</td>
 								<td>
+									<x:choose>
+										<x:when select="boolean($attribute/type)">
+											<x:out select="$attribute/type" />
+										</x:when>
+										<x:otherwise>
+											java.lang.Object
+										</x:otherwise>
+									</x:choose>
+								</td>
+								<td rowspan="${rowspan}">
 									<x:forEach var="description" select="$attribute/description">
 										<x:out select="$description" escapeXml="false" />
 									</x:forEach>
 								</td>
 							</tr>
+							<x:if select="boolean($attribute/deferred-method)">
+								<tr>
+									<td>Deferred-Method</td>
+									<td><x:out select="$attribute/deferred-method/method-signature" /></td>
+								</tr>
+							</x:if>
+							<x:if select="boolean($attribute/deferred-value)">
+								<tr>
+									<td>Deferred-Value</td>
+									<td>
+										<x:choose>
+											<x:when select="boolean($attribute/deferred-value/type)">
+												<x:out select="$attribute/deferred-value/type" />
+											</x:when>
+											<x:otherwise>
+												java.lang.Object
+											</x:otherwise>
+										</x:choose>
+									</td>
+								</tr>
+							</x:if>
 						</x:forEach>
 					</tbody>
 				</table>
@@ -159,7 +190,7 @@ Arguments:
 	<section:section label="Variables">
 		<x:choose>
 			<x:when select="boolean($tagElem/variable)">
-				TODO
+				TODO: Document a variable when first needed.  We don't use any variables at this time.
 			</x:when>
 			<x:otherwise>
 				<em>No Variables Defined.</em>
