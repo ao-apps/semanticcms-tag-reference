@@ -35,9 +35,11 @@ Arguments:
 	arg.shortTitle  The page shortTitle
 	arg.tldRef      The PageRef for the TLD file itself
 	arg.tldDoc      The XML DOM document for the .tld file
+	arg.apiLinks    The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tldDoc" value="${arg.tldDoc}" />
+<c:set var="apiLinks" value="${arg.apiLinks}" />
 <x:set var="taglibElem" select="$tldDoc/taglib" />
 <core:page
 	book="${tldRef.bookName}"
@@ -110,6 +112,7 @@ Arguments:
 				page="function-summary.inc.jsp"
 				arg.tldRef="${tldRef}"
 				arg.tldDoc="${tldDoc}"
+				arg.apiLinks="${apiLinks}"
 			/>
 		</section:section>
 	</x:if>

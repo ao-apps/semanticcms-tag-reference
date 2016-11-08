@@ -24,27 +24,48 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
 Shared function summary implementation.
 
 Arguments:
-	arg.tldRef      The PageRef for the TLD file itself
-	arg.tldDoc      The XML DOM document for the .tld file
+	arg.tldRef    The PageRef for the TLD file itself
+	arg.tldDoc    The XML DOM document for the .tld file
+	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tldDoc" value="${arg.tldDoc}" />
+<c:set var="apiLinks" value="${arg.apiLinks}" />
 <x:set var="taglibElem" select="$tldDoc/taglib" />
+<x:set var="tldShortName" select="string($taglibElem/short-name)" />
 <table class="thinTable">
 	<tbody>
 		<x:forEach select="$taglibElem/function">
+			<x:set var="functionSignature" select="string(function-signature)" />
+			<c:set var="returnType" value="${fn:substringBefore(functionSignature, ' ')}" />
+			<c:set var="signatureParams" value="${fn:substringBefore(fn:substringAfter(functionSignature, '('), ')')}" />
 			<tr>
-				<td>
-					<x:set var="functionName" select="string(name)" />
-					<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{functionName}" />
+				<td style="white-space:nowrap">
+					<ao:include
+						page="linked-classname.inc.jsp"
+						arg.apiLinks="${apiLinks}"
+						arg.className="${returnType}"
+					/>
 				</td>
-				<%-- TODO: Signatures link tlddocs? --%>
+				<td style="white-space:nowrap">
+					<x:set var="functionName" select="string(name)" />
+					\${<ao:out value="${tldShortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{functionName}"
+						><strong><ao:out value="${functionName}"
+					/></strong></core:link>(<c:forEach var="paramType" items="${fn:split(signatureParams, ',')}" varStatus="paramTypeStatus"
+						><ao:include
+							page="linked-classname.inc.jsp"
+							arg.apiLinks="${apiLinks}"
+							arg.className="${paramType}"
+						/><c:if test="${!paramTypeStatus.last}">, </c:if
+					></c:forEach
+				>)}</td>
 				<td>
 					<x:set var="description" select="string(description[1])" />
 					<c:if test="${!empty description}">

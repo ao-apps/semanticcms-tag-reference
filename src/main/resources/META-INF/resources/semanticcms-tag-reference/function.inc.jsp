@@ -24,6 +24,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
@@ -66,18 +67,36 @@ Arguments:
 			<tbody>
 				<tr>
 					<th>Function Class:</th>
-					<td>
+					<td style="white-space:nowrap">
 						<x:set var="functionClass" select="string($functionElem/function-class)" />
 						<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${functionClass}" />
 					</td>
 				</tr>
 				<tr>
 					<th>Function Signature:</th>
-					<td><x:out select="$functionElem/function-signature" /></td>
+					<td style="white-space:nowrap">
+						<x:set var="functionSignature" select="string($functionElem/function-signature)" />
+						<c:set var="returnType" value="${fn:substringBefore(functionSignature, ' ')}" />
+						<c:set var="signatureFunction" value="${fn:trim(fn:substringBefore(fn:substringAfter(functionSignature, ' '), '('))}" />
+						<c:set var="signatureParams" value="${fn:substringBefore(fn:substringAfter(functionSignature, '('), ')')}" />
+						<ao:include
+							page="linked-classname.inc.jsp"
+							arg.apiLinks="${apiLinks}"
+							arg.className="${returnType}"
+						/>
+						<ao:out value="${signatureFunction}"
+						/>(<c:forEach var="paramType" items="${fn:split(signatureParams, ',')}" varStatus="paramTypeStatus"
+							><ao:include
+								page="linked-classname.inc.jsp"
+								arg.apiLinks="${apiLinks}"
+								arg.className="${paramType}"
+							/><c:if test="${!paramTypeStatus.last}">, </c:if
+						></c:forEach>)
+					</td>
 				</tr>
 				<tr>
 					<th>Display Name:</th>
-					<td>
+					<td style="white-space:nowrap">
 						<x:choose>
 							<x:when select="boolean($functionElem/display-name)">
 								<x:forEach var="displayName" select="$functionElem/display-name" varStatus="displayNameStatus">

@@ -115,7 +115,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				String taglibServletUrlPattern = tldServletPath + "/";
 				ServletRegistration.Dynamic registration = servletContext.addServlet(
 					taglibServletUrlPattern,
-					new TaglibServlet(title, shortTitle, tldRef, tldDoc)
+					new TaglibServlet(title, shortTitle, tldRef, tldDoc, apiLinks)
 				);
 				registration.addMapping(taglibServletUrlPattern);
 			}
@@ -148,7 +148,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					String functionsServletUrlPattern = tldServletPath + "/functions";
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionsServletUrlPattern,
-						new FunctionsServlet(tldRef, tldDoc)
+						new FunctionsServlet(tldRef, tldDoc, apiLinks)
 					);
 					registration.addMapping(functionsServletUrlPattern);
 				}

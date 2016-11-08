@@ -36,14 +36,17 @@ Arguments:
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tldDoc" value="${arg.tldDoc}" />
 <x:set var="taglibElem" select="$tldDoc/taglib" />
+<x:set var="tldShortName" select="string($taglibElem/short-name)" />
 <table class="thinTable">
 	<tbody>
 		<x:forEach select="$taglibElem/tag">
 			<tr>
-				<td>
+				<td style="white-space:nowrap">
 					<x:set var="tagName" select="string(name)" />
-					<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{tagName}" />
-				</td>
+					&lt;<ao:out value="${tldShortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{tagName}"
+						><strong><ao:out value="${tagName}"
+					/></strong></core:link
+				>&gt;</td>
 				<td>
 					<x:set var="description" select="string(description[1])" />
 					<c:if test="${!empty description}">

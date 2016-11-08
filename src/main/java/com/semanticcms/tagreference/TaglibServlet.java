@@ -24,7 +24,6 @@ package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
 import com.semanticcms.core.model.PageRef;
-import com.semanticcms.core.servlet.CaptureLevel;
 import com.semanticcms.core.servlet.CapturePage;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -46,12 +45,20 @@ public class TaglibServlet extends HttpServlet {
 	private final String shortTitle;
 	private final PageRef tldRef;
 	private final Document tldDoc;
+	private final Map<String,String> apiLinks;
 
-	public TaglibServlet(String title, String shortTitle, PageRef tldRef, Document tldDoc) {
+	public TaglibServlet(
+		String title,
+		String shortTitle,
+		PageRef tldRef,
+		Document tldDoc,
+		Map<String,String> apiLinks
+	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
 		this.tldRef = tldRef;
 		this.tldDoc = tldDoc;
+		this.apiLinks = apiLinks;
 	}
 
 	@Override
@@ -61,6 +68,7 @@ public class TaglibServlet extends HttpServlet {
 		args.put("shortTitle", shortTitle);
 		args.put("tldRef", tldRef);
 		args.put("tldDoc", tldDoc);
+		args.put("apiLinks", apiLinks);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
 		if(CapturePage.getCaptureContext(req) == null) {

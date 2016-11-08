@@ -43,10 +43,16 @@ public class FunctionsServlet extends HttpServlet {
 
 	private final PageRef tldRef;
 	private final Document tldDoc;
+	private final Map<String,String> apiLinks;
 
-	public FunctionsServlet(PageRef tldRef, Document tldDoc) {
+	public FunctionsServlet(
+		PageRef tldRef,
+		Document tldDoc,
+		Map<String,String> apiLinks
+	) {
 		this.tldRef = tldRef;
 		this.tldDoc = tldDoc;
+		this.apiLinks = apiLinks;
 	}
 
 	@Override
@@ -54,6 +60,7 @@ public class FunctionsServlet extends HttpServlet {
 		Map<String,Object> args = new LinkedHashMap<String,Object>();
 		args.put("tldRef", tldRef);
 		args.put("tldDoc", tldDoc);
+		args.put("apiLinks", apiLinks);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
 		if(CapturePage.getCaptureContext(req) == null) {
