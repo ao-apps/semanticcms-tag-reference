@@ -131,52 +131,94 @@ Arguments:
 					</thead>
 					<tbody>
 						<x:forEach var="attribute" select="$tagElem/attribute">
-							<c:set var="rowspan" value="1" />
-							<x:if select="boolean($attribute/deferred-method)">
+							<x:set var="hasType" select="boolean($attribute/type)" />
+							<x:set var="rtexprvalue" select="string($attribute/rtexprvalue)" />
+							<c:set var="rtexprvalue" value="${rtexprvalue=='true'}" />
+
+							<x:set var="showDeferredMethod" select="boolean($attribute/deferred-method)" />
+							<x:set var="showDeferredValue" select="boolean($attribute/deferred-value)" />
+							<c:set var="showType" value="${rtexprvalue || hasType || (!showDeferredMethod && !showDeferredValue)}" />
+
+							<c:set var="rowspan" value="0" />
+							<c:if test="${showType}">
 								<c:set var="rowspan" value="${rowspan + 1}" />
-							</x:if>
-							<x:if select="boolean($attribute/deferred-value)">
+							</c:if>
+							<c:if test="${showDeferredMethod}">
 								<c:set var="rowspan" value="${rowspan + 1}" />
-							</x:if>
-							<tr>
-								<td rowspan="${rowspan}"><x:out select="$attribute/name" /></td>
-								<td rowspan="${rowspan}">
-									<x:set var="required" select="string($attribute/required)" />
-									<ao:out value="${(required != null && required=='true') ? 'Yes' : 'No'}" />
-								</td>
-								<td>
-									<x:set var="rtexprvalue" select="string($attribute/rtexprvalue)" />
-									<ao:out value="${(rtexprvalue != null && rtexprvalue=='true') ? 'Runtime' : 'Static'}" />
-									<x:set var="fragment" select="string($attribute/fragment)" />
-									<c:if test="${fragment != null && fragment=='true'}">
-										<br />Fragment
-									</c:if>
-								</td>
-								<td>
-									<x:choose>
-										<x:when select="boolean($attribute/type)">
-											<x:set var="type" select="string($attribute/type)" />
-											<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${type}" />
-										</x:when>
-										<x:otherwise>
-											<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="java.lang.Object" />
-										</x:otherwise>
-									</x:choose>
-								</td>
-								<td rowspan="${rowspan}">
-									<x:forEach var="description" select="$attribute/description">
-										<x:out select="$description" escapeXml="false" />
-									</x:forEach>
-								</td>
-							</tr>
-							<x:if select="boolean($attribute/deferred-method)">
+							</c:if>
+							<c:if test="${showDeferredValue}">
+								<c:set var="rowspan" value="${rowspan + 1}" />
+							</c:if>
+
+							<c:set var="row" value="0" />
+							<c:if test="${showType}">
+								<c:set var="row" value="${row + 1}" />
 								<tr>
+									<c:if test="${row == 1}">
+										<td rowspan="${rowspan}"><x:out select="$attribute/name" /></td>
+										<td rowspan="${rowspan}">
+											<x:set var="required" select="string($attribute/required)" />
+											<ao:out value="${(required != null && required=='true') ? 'Yes' : 'No'}" />
+										</td>
+									</c:if>
+									<td>
+										<ao:out value="${rtexprvalue ? 'Runtime' : 'Static'}" />
+										<x:set var="fragment" select="string($attribute/fragment)" />
+										<c:if test="${fragment != null && fragment=='true'}">
+											<br />Fragment
+										</c:if>
+									</td>
+									<td>
+										<x:choose>
+											<x:when select="boolean($attribute/type)">
+												<x:set var="type" select="string($attribute/type)" />
+												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${type}" />
+											</x:when>
+											<x:otherwise>
+												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="java.lang.Object" />
+											</x:otherwise>
+										</x:choose>
+									</td>
+									<c:if test="${row == 1}">
+										<td rowspan="${rowspan}">
+											<x:forEach var="description" select="$attribute/description">
+												<x:out select="$description" escapeXml="false" />
+											</x:forEach>
+										</td>
+									</c:if>
+								</tr>
+							</c:if>
+							<c:if test="${showDeferredMethod}">
+								<c:set var="row" value="${row + 1}" />
+								<tr>
+									<c:if test="${row == 1}">
+										<td rowspan="${rowspan}"><x:out select="$attribute/name" /></td>
+										<td rowspan="${rowspan}">
+											<x:set var="required" select="string($attribute/required)" />
+											<ao:out value="${(required != null && required=='true') ? 'Yes' : 'No'}" />
+										</td>
+									</c:if>
 									<td>Deferred-Method</td>
 									<td><x:out select="$attribute/deferred-method/method-signature" /></td>
+									<c:if test="${row == 1}">
+										<td rowspan="${rowspan}">
+											<x:forEach var="description" select="$attribute/description">
+												<x:out select="$description" escapeXml="false" />
+											</x:forEach>
+										</td>
+									</c:if>
 								</tr>
-							</x:if>
-							<x:if select="boolean($attribute/deferred-value)">
+							</c:if>
+							<c:if test="${showDeferredValue}">
+								<c:set var="row" value="${row + 1}" />
 								<tr>
+									<c:if test="${row == 1}">
+										<td rowspan="${rowspan}"><x:out select="$attribute/name" /></td>
+										<td rowspan="${rowspan}">
+											<x:set var="required" select="string($attribute/required)" />
+											<ao:out value="${(required != null && required=='true') ? 'Yes' : 'No'}" />
+										</td>
+									</c:if>
 									<td>Deferred-Value</td>
 									<td>
 										<x:choose>
@@ -189,8 +231,15 @@ Arguments:
 											</x:otherwise>
 										</x:choose>
 									</td>
+									<c:if test="${row == 1}">
+										<td rowspan="${rowspan}">
+											<x:forEach var="description" select="$attribute/description">
+												<x:out select="$description" escapeXml="false" />
+											</x:forEach>
+										</td>
+									</c:if>
 								</tr>
-							</x:if>
+							</c:if>
 						</x:forEach>
 					</tbody>
 				</table>
