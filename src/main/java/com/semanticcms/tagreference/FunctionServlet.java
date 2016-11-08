@@ -44,11 +44,18 @@ public class FunctionServlet extends HttpServlet {
 	private final PageRef tldRef;
 	private final Document tldDoc;
 	private final String functionName;
+	private final Map<String,String> apiLinks;
 
-	public FunctionServlet(PageRef tldRef, Document tldDoc, String functionName) {
+	public FunctionServlet(
+		PageRef tldRef,
+		Document tldDoc,
+		String functionName,
+		Map<String,String> apiLinks
+	) {
 		this.tldRef = tldRef;
 		this.tldDoc = tldDoc;
 		this.functionName = functionName;
+		this.apiLinks = apiLinks;
 	}
 
 	@Override
@@ -57,6 +64,7 @@ public class FunctionServlet extends HttpServlet {
 		args.put("tldRef", tldRef);
 		args.put("tldDoc", tldDoc);
 		args.put("functionName", functionName);
+		args.put("apiLinks", apiLinks);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
 		if(CapturePage.getCaptureContext(req) == null) {

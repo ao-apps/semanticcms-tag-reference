@@ -31,13 +31,15 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 The view of one tag at /path/taglib.tld/tag-tagName
 
 Arguments:
-	arg.tldRef   The PageRef for the TLD file itself
-	arg.tldDoc   The XML DOM document for the .tld file
-	arg.tagName  The name of the tag to display
+	arg.tldRef    The PageRef for the TLD file itself
+	arg.tldDoc    The XML DOM document for the .tld file
+	arg.tagName   The name of the tag to display
+	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tldDoc" value="${arg.tldDoc}" />
 <c:set var="tagName" value="${arg.tagName}" />
+<c:set var="apiLinks" value="${arg.apiLinks}" />
 <x:set var="taglibElem" select="$tldDoc/taglib" />
 <x:set var="tldShortName" select="string($taglibElem/short-name)" />
 <x:set var="tagElem" select="$tldDoc/taglib/tag[string(name)=$tagName]" />
@@ -54,19 +56,28 @@ Arguments:
 	<x:forEach var="description" select="$tagElem/description">
 		<x:out select="$description" escapeXml="false" />
 	</x:forEach>
+	<x:if select="boolean($tagElem/example)">
+		<section:section label="Example">
+			<x:out select="$tagElem/example" escapeXml="false" />
+		</section:section>
+	</x:if>
 	<section:section label="Tag Information">
 		<table class="thinTable">
 			<tbody>
 				<tr>
 					<th>Tag Class:</th>
-					<td><x:out select="$tagElem/tag-class" /></td>
+					<td>
+						<x:set var="tagClass" select="string($tagElem/tag-class)" />
+						<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${tagClass}" />
+					</td>
 				</tr>
 				<tr>
 					<th>TagExtraInfo Class:</th>
 					<td>
 						<x:choose>
 							<x:when select="boolean($tagElem/tei-class)">
-								<x:out select="$tagElem/tei-class" />
+								<x:set var="teiClass" select="string($tagElem/tei-class)" />
+								<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${teiClass}" />
 							</x:when>
 							<x:otherwise>
 								<em>None</em>
@@ -144,10 +155,11 @@ Arguments:
 								<td>
 									<x:choose>
 										<x:when select="boolean($attribute/type)">
-											<x:out select="$attribute/type" />
+											<x:set var="type" select="string($attribute/type)" />
+											<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${type}" />
 										</x:when>
 										<x:otherwise>
-											java.lang.Object
+											<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="java.lang.Object" />
 										</x:otherwise>
 									</x:choose>
 								</td>
@@ -169,10 +181,11 @@ Arguments:
 									<td>
 										<x:choose>
 											<x:when select="boolean($attribute/deferred-value/type)">
-												<x:out select="$attribute/deferred-value/type" />
+												<x:set var="type" select="string($attribute/deferred-value/type)" />
+												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${type}" />
 											</x:when>
 											<x:otherwise>
-												java.lang.Object
+												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="java.lang.Object" />
 											</x:otherwise>
 										</x:choose>
 									</td>
@@ -197,9 +210,4 @@ Arguments:
 			</x:otherwise>
 		</x:choose>
 	</section:section>
-	<x:if select="boolean($tagElem/example)">
-		<section:section label="Example">
-			<x:out select="$tagElem/example" escapeXml="false" />
-		</section:section>
-	</x:if>
 </core:page>

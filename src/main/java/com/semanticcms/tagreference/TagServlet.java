@@ -44,11 +44,18 @@ public class TagServlet extends HttpServlet {
 	private final PageRef tldRef;
 	private final Document tldDoc;
 	private final String tagName;
+	private final Map<String,String> apiLinks;
 
-	public TagServlet(PageRef tldRef, Document tldDoc, String tagName) {
+	public TagServlet(
+		PageRef tldRef,
+		Document tldDoc,
+		String tagName,
+		Map<String,String> apiLinks
+	) {
 		this.tldRef = tldRef;
 		this.tldDoc = tldDoc;
 		this.tagName = tagName;
+		this.apiLinks = apiLinks;
 	}
 
 	@Override
@@ -57,6 +64,7 @@ public class TagServlet extends HttpServlet {
 		args.put("tldRef", tldRef);
 		args.put("tldDoc", tldDoc);
 		args.put("tagName", tagName);
+		args.put("apiLinks", apiLinks);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
 		if(CapturePage.getCaptureContext(req) == null) {

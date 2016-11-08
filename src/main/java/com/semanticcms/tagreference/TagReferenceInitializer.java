@@ -27,7 +27,10 @@ import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
@@ -64,12 +67,28 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private final String shortTitle;
 	private final String tldBook;
 	private final String tldPath;
+	private final Map<String,String> apiLinks;
 
-	public TagReferenceInitializer(String title, String shortTitle, String tldBook, String tldPath) {
+	public TagReferenceInitializer(
+		String title,
+		String shortTitle,
+		String tldBook,
+		String tldPath,
+		String javaApiLink,
+		String javaEEApiLink,
+		Map<String,String> additionalApiLinks
+	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
 		this.tldBook = tldBook;
 		this.tldPath = tldPath;
+		// Add package matches
+		Map<String,String> combinedApiLinks = new LinkedHashMap<String,String>();
+		combinedApiLinks.put("java.lang.", javaApiLink);
+		combinedApiLinks.put("java.util.", javaApiLink);
+		// TODO: Java EE as-needed
+		combinedApiLinks.putAll(additionalApiLinks);
+		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
 	@Override
@@ -117,7 +136,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					String tagServletUrlPattern = tldServletPath + "/tag-" + URLEncoder.encode(tagName, ENCODING);
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						tagServletUrlPattern,
-						new TagServlet(tldRef, tldDoc, tagName)
+						new TagServlet(tldRef, tldDoc, tagName, apiLinks)
 					);
 					registration.addMapping(tagServletUrlPattern);
 				} while(tagIter.hasNext());
@@ -139,7 +158,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					String functionServletUrlPattern = tldServletPath + "/function-" + URLEncoder.encode(functionName, ENCODING);
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionServletUrlPattern,
-						new FunctionServlet(tldRef, tldDoc, functionName)
+						new FunctionServlet(tldRef, tldDoc, functionName, apiLinks)
 					);
 					registration.addMapping(functionServletUrlPattern);
 				} while(functionIter.hasNext());
