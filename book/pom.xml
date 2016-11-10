@@ -43,13 +43,11 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 
 		<documented.name>SemanticCMS Tag Reference</documented.name>
 		<documented.shortTitle>Tag Reference</documented.shortTitle>
-		<documented.url>https://semanticcms.com${bookPath}/</documented.url>
+		<documented.url>https://semanticcms.com/${documented.artifactId}/</documented.url>
 		<documented.description>Generates tag library descriptor documentation for .tld files.</documented.description>
 		<documented.inceptionYear>2016</documented.inceptionYear>
 
 		<documented.scm.url>https://github.com/aoindustries/${documented.artifactId}</documented.scm.url>
-
-		<bookPath>/${documented.artifactId}</bookPath>
 	</properties>
 
 	<name>${documented.name} Book</name>
