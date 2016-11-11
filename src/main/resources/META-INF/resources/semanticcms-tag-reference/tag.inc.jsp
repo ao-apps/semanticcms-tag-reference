@@ -172,10 +172,20 @@ Arguments:
 										<x:choose>
 											<x:when select="boolean($attribute/type)">
 												<x:set var="type" select="string($attribute/type)" />
-												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${type}" />
+												<ao:include
+													page="linked-classname.inc.jsp"
+													arg.apiLinks="${apiLinks}"
+													arg.className="${type}"
+													arg.shortName="true"
+												/>
 											</x:when>
 											<x:otherwise>
-												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="java.lang.Object" />
+												<ao:include
+													page="linked-classname.inc.jsp"
+													arg.apiLinks="${apiLinks}"
+													arg.className="java.lang.Object"
+													arg.shortName="true"
+												/>
 											</x:otherwise>
 										</x:choose>
 									</td>
@@ -224,10 +234,20 @@ Arguments:
 										<x:choose>
 											<x:when select="boolean($attribute/deferred-value/type)">
 												<x:set var="type" select="string($attribute/deferred-value/type)" />
-												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${type}" />
+												<ao:include
+													page="linked-classname.inc.jsp"
+													arg.apiLinks="${apiLinks}"
+													arg.className="${type}"
+													arg.shortName="true"
+												/>
 											</x:when>
 											<x:otherwise>
-												<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="java.lang.Object" />
+												<ao:include
+													page="linked-classname.inc.jsp"
+													arg.apiLinks="${apiLinks}"
+													arg.className="java.lang.Object"
+													arg.shortName="true"
+												/>
 											</x:otherwise>
 										</x:choose>
 									</td>
