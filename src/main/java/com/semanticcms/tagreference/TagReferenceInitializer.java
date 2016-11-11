@@ -84,6 +84,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this.tldPath = tldPath;
 		// Add package matches
 		Map<String,String> combinedApiLinks = new LinkedHashMap<String,String>();
+		combinedApiLinks.put("java.io.", javaApiLink);
 		combinedApiLinks.put("java.lang.", javaApiLink);
 		combinedApiLinks.put("java.util.", javaApiLink);
 		// TODO: Java EE as-needed
