@@ -44,9 +44,9 @@ Arguments:
 	><c:if test="${!done && fn:startsWith(className, entry.key)}"
 		><ao:a href="${entry.value}${fn:replace(className, '.', '/')}.html"
 			><c:set var="splitClassName" value="${fn:split(className, '.')}"
-			/><ao:out value="${arg.shortName && fn:length(splitClassName) > 1 ? splitClassName[fn:length(splitClassName)-1] : className}${array}"
+			/><ao:out value="${arg.shortName && fn:length(splitClassName) > 1 ? splitClassName[fn:length(splitClassName)-1] : className}"
 		/></ao:a
-		><c:set var="done" value="true"
+		><ao:out value="${array}" /><c:set var="done" value="true"
 	/></c:if
 ></c:forEach
 ><c:if test="${!done}"
