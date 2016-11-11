@@ -33,6 +33,7 @@ This is for convenience, not performance.
 Arguments:
 	arg.apiLinks   The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 	arg.className  The classname to display.
+	arg.shortName  (Optional) when true, will display the classname in short format
 --%><c:set var="className" value="${fn:trim(arg.className)}"
 /><c:set var="array" value=""
 /><c:if test="${fn:endsWith(className, '[]')}"
@@ -41,7 +42,10 @@ Arguments:
 /></c:if><c:set var="done" value="false"
 /><c:forEach var="entry" items="${arg.apiLinks}"
 	><c:if test="${!done && fn:startsWith(className, entry.key)}"
-		><ao:a href="${entry.value}${fn:replace(className, '.', '/')}.html"><ao:out value="${className}${array}" /></ao:a
+		><ao:a href="${entry.value}${fn:replace(className, '.', '/')}.html"
+			><c:set var="splitClassName" value="${fn:split(className, '.')}"
+			/><ao:out value="${arg.shortName && fn:length(splitClassName) > 1 ? splitClassName[fn:length(splitClassName)-1] : className}${array}"
+		/></ao:a
 		><c:set var="done" value="true"
 	/></c:if
 ></c:forEach

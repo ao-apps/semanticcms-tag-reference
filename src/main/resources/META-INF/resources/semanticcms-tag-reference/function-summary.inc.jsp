@@ -52,6 +52,7 @@ Arguments:
 						page="linked-classname.inc.jsp"
 						arg.apiLinks="${apiLinks}"
 						arg.className="${returnType}"
+						arg.shortName="true"
 					/>
 				</td>
 				<td style="white-space:nowrap">
@@ -63,6 +64,7 @@ Arguments:
 							page="linked-classname.inc.jsp"
 							arg.apiLinks="${apiLinks}"
 							arg.className="${paramType}"
+							arg.shortName="true"
 						/><c:if test="${!paramTypeStatus.last}">, </c:if
 					></c:forEach
 				>)}</td>
