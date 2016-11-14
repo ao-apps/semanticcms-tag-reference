@@ -21,6 +21,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses />.
 -->
 <jsp:root
+	xmlns:ao="https://aoindustries.com/ao-taglib/"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:changelog="https://semanticcms.com/changelog/taglib/"
 	xmlns:core="https://semanticcms.com/core/taglib/"
@@ -35,12 +36,18 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
+		dateModified="2016-11-13T21:10:46-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
-		<c:if test="${fn:endsWith('@{com.semanticcms:semanticcms-tag-reference:jar.version}', '-SNAPSHOT')}">
+		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
+		<ao:assert
+			test="${!fn:startsWith(version, '@')}"
+			message="Version not substituted: #{version}"
+		/>
+		<c:if test="${fn:endsWith(version, '-SNAPSHOT')}">
 			<changelog:release
 				projectName="@{documented.name}"
-				version="@{com.semanticcms:semanticcms-tag-reference:jar.version}"
+				version="#{version}"
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
