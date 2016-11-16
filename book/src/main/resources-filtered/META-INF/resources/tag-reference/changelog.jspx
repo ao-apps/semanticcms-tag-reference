@@ -36,7 +36,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2016-11-13T21:10:46-0600"
+		dateModified="2016-11-15T19:40:03-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -51,11 +51,19 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			>
-				<ul>
-					<li>New module to generate tag library descriptor documentation for .tld files.</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.0.0"
+			datePublished="2016-11-15T19:40:03-0600"
+			groupId="@{documented.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{documented.scm.url}"
+		>
+			<ul>
+				<li>New module to generate tag library descriptor documentation for <code>*.tld</code> files.</li>
+			</ul>
+		</changelog:release>
 	</core:page>
 </jsp:root>
