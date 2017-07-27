@@ -22,13 +22,11 @@
  */
 package com.semanticcms.tagreference;
 
-import com.aoindustries.xml.XmlUtils;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -38,8 +36,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
 
 /**
@@ -99,74 +96,71 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			PageRef tldRef = new PageRef(tldBook, tldPath);
 			String tldServletPath = tldRef.getServletPath();
 			// Parse TLD
-			Document tldDoc;
+			Taglib taglib;
 			{
 				InputStream tldIn = servletContext.getResourceAsStream(tldServletPath);
 				if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
 				try {
-					tldDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn);
+					taglib = new Taglib(tldRef, DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
 				} finally {
 					tldIn.close();
 				}
 			}
-			Element taglibElem = tldDoc.getDocumentElement();
 			// Dynamically add servlets
 			{
 				// /path/taglib.tld/
 				String taglibServletUrlPattern = tldServletPath + "/";
 				ServletRegistration.Dynamic registration = servletContext.addServlet(
 					taglibServletUrlPattern,
-					new TaglibServlet(title, shortTitle, tldRef, tldDoc, apiLinks)
+					new TaglibServlet(title, shortTitle, tldRef, taglib, apiLinks)
 				);
 				registration.addMapping(taglibServletUrlPattern);
 			}
-			Iterator<Element> tagIter = XmlUtils.iterableChildElementsByTagName(taglibElem, "tag").iterator();
-			if(tagIter.hasNext()) {
+			if(!taglib.getTags().isEmpty()) {
 				{
 					// /path/taglib.tld/tags
 					String tagsServletUrlPattern = tldServletPath + "/tags";
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						tagsServletUrlPattern,
-						new TagsServlet(tldRef, tldDoc)
+						new TagsServlet(tldRef, taglib)
 					);
 					registration.addMapping(tagsServletUrlPattern);
 				}
-				do {
+				for(Tag tag : taglib.getTags()) {
 					// /path/taglib.tld/tag-tagName
-					String tagName = XmlUtils.getChildElementByTagName(tagIter.next(), "name").getTextContent().trim();
-					String tagServletUrlPattern = tldServletPath + "/tag-" + URLEncoder.encode(tagName, ENCODING);
+					String tagServletUrlPattern = tldServletPath + "/tag-" + URLEncoder.encode(tag.getName(), ENCODING);
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						tagServletUrlPattern,
-						new TagServlet(tldRef, tldDoc, tagName, apiLinks)
+						new TagServlet(tldRef, tag, apiLinks)
 					);
 					registration.addMapping(tagServletUrlPattern);
-				} while(tagIter.hasNext());
+				}
 			}
-			Iterator<Element> functionIter = XmlUtils.iterableChildElementsByTagName(taglibElem, "function").iterator();
-			if(functionIter.hasNext()) {
+			if(!taglib.getFunctions().isEmpty()) {
 				{
 					// /path/taglib.tld/functions
 					String functionsServletUrlPattern = tldServletPath + "/functions";
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionsServletUrlPattern,
-						new FunctionsServlet(tldRef, tldDoc, apiLinks)
+						new FunctionsServlet(tldRef, taglib, apiLinks)
 					);
 					registration.addMapping(functionsServletUrlPattern);
 				}
-				do {
+				for(Function function : taglib.getFunctions()) {
 					// /path/taglib.tld/function-functionName
-					String functionName = XmlUtils.getChildElementByTagName(functionIter.next(), "name").getTextContent().trim();
-					String functionServletUrlPattern = tldServletPath + "/function-" + URLEncoder.encode(functionName, ENCODING);
+					String functionServletUrlPattern = tldServletPath + "/function-" + URLEncoder.encode(function.getName(), ENCODING);
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionServletUrlPattern,
-						new FunctionServlet(tldRef, tldDoc, functionName, apiLinks)
+						new FunctionServlet(tldRef, function, apiLinks)
 					);
 					registration.addMapping(functionServletUrlPattern);
-				} while(functionIter.hasNext());
+				}
 			}
 		} catch(IOException e) {
 			throw new ServletException(e);
 		} catch(ParserConfigurationException e) {
+			throw new ServletException(e);
+		} catch(XPathExpressionException e) {
 			throw new ServletException(e);
 		} catch(SAXException e) {
 			throw new ServletException(e);

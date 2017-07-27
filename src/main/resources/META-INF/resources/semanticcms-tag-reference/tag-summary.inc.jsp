@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016  AO Industries, Inc.
+Copyright (C) 2016, 2017  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -24,36 +24,28 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
 Shared tag summary implementation.
 
 Arguments:
-	arg.tldRef      The PageRef for the TLD file itself
-	arg.tldDoc      The XML DOM document for the .tld file
+	arg.tldRef  The PageRef for the TLD file itself
+	arg.taglib  The parsed taglib
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
-<c:set var="tldDoc" value="${arg.tldDoc}" />
-<x:set var="taglibElem" select="$tldDoc/taglib" />
-<x:set var="tldShortName" select="string($taglibElem/short-name)" />
+<c:set var="taglib" value="${arg.taglib}" />
 <table class="thinTable">
 	<tbody>
-		<x:forEach select="$taglibElem/tag">
+		<c:forEach var="tag" items="${taglib.tags}">
 			<tr>
 				<td style="white-space:nowrap">
-					<x:set var="tagName" select="string(name)" />
-					&lt;<ao:out value="${tldShortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{tagName}"
+					<c:set var="tagName" value="${tag.name}" />
+					&lt;<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{core:encodeUrlParam(tagName)}"
 						><strong><ao:out value="${tagName}"
 					/></strong></core:link
 				>&gt;</td>
-				<td>
-					<x:set var="description" select="string(description[1])" />
-					<c:if test="${!empty description}">
-						<ao:include page="snippet-summary.inc.jsp" arg.htmlSnippet="${description}" />
-					</c:if>
-				</td>
+				<td><ao:out value="${tag.descriptionSummary}" type="xhtml" /></td>
 			</tr>
-		</x:forEach>
+		</c:forEach>
 	</tbody>
 </table>

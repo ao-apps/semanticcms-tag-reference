@@ -52,7 +52,28 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			/>
+			>
+				<ul>
+					<li>Improved performance by parsing XML on start-up instead of on-the-fly:
+						<ol>
+							<li>Benchmark before on a basic dual-core laptop:
+<pre>ab -c 8 -n 100 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
+Benchmarking 127.0.0.1 (be patient)...apr_pollset_poll: The timeout specified has expired (70007)
+Total of 72 requests completed
+
+ab -c 4 -n 16 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
+Requests per second:    0.55 [#/sec] (mean)</pre>
+							</li>
+							<li>Benchmark so far:
+<pre>ab -c 4 -n 128 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
+Requests per second:    32.08 [#/sec] (mean)</pre>
+							</li>
+							<li>TODO: Removed dynamic linked-classname.inc.jsp and function signature parsing.</li>
+							<li>TODO: Benchmark after</li>
+						</ol>
+					</li>
+				</ul>
+			</changelog:release>
 		</c:if>
 
 		<changelog:release

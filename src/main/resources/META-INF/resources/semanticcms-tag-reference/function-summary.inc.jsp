@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016  AO Industries, Inc.
+Copyright (C) 2016, 2017  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -25,25 +25,22 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
 Shared function summary implementation.
 
 Arguments:
 	arg.tldRef    The PageRef for the TLD file itself
-	arg.tldDoc    The XML DOM document for the .tld file
+	arg.taglib    The parsed taglib
 	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
-<c:set var="tldDoc" value="${arg.tldDoc}" />
+<c:set var="taglib" value="${arg.taglib}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
-<x:set var="taglibElem" select="$tldDoc/taglib" />
-<x:set var="tldShortName" select="string($taglibElem/short-name)" />
 <table class="thinTable">
 	<tbody>
-		<x:forEach select="$taglibElem/function">
-			<x:set var="functionSignature" select="string(function-signature)" />
+		<c:forEach var="function" items="${taglib.functions}">
+			<c:set var="functionSignature" value="${function.functionSignature}" />
 			<c:set var="returnType" value="${fn:substringBefore(functionSignature, ' ')}" />
 			<c:set var="signatureParams" value="${fn:substringBefore(fn:substringAfter(functionSignature, '('), ')')}" />
 			<tr>
@@ -56,8 +53,8 @@ Arguments:
 					/>
 				</td>
 				<td style="white-space:nowrap">
-					<x:set var="functionName" select="string(name)" />
-					\${<ao:out value="${tldShortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{functionName}"
+					<c:set var="functionName" value="${function.name}" />
+					\${<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{core:encodeUrlParam(functionName)}"
 						><strong><ao:out value="${functionName}"
 					/></strong></core:link>(<c:forEach var="paramType" items="${fn:split(signatureParams, ',')}" varStatus="paramTypeStatus"
 						><ao:include
@@ -68,13 +65,8 @@ Arguments:
 						/><c:if test="${!paramTypeStatus.last}">, </c:if
 					></c:forEach
 				>)}</td>
-				<td>
-					<x:set var="description" select="string(description[1])" />
-					<c:if test="${!empty description}">
-						<ao:include page="snippet-summary.inc.jsp" arg.htmlSnippet="${description}" />
-					</c:if>
-				</td>
+				<td><ao:out value="${function.descriptionSummary}" type="xhtml" /></td>
 			</tr>
-		</x:forEach>
+		</c:forEach>
 	</tbody>
 </table>

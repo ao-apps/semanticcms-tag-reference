@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.SkipPageException;
-import org.w3c.dom.Document;
 
 public class TagsServlet extends HttpServlet {
 
@@ -42,18 +41,18 @@ public class TagsServlet extends HttpServlet {
 	private static final String JSPX_TARGET = "/semanticcms-tag-reference/tags.inc.jsp";
 
 	private final PageRef tldRef;
-	private final Document tldDoc;
+	private final Taglib taglib;
 
-	public TagsServlet(PageRef tldRef, Document tldDoc) {
+	public TagsServlet(PageRef tldRef, Taglib taglib) {
 		this.tldRef = tldRef;
-		this.tldDoc = tldDoc;
+		this.taglib = taglib;
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Map<String,Object> args = new LinkedHashMap<String,Object>();
 		args.put("tldRef", tldRef);
-		args.put("tldDoc", tldDoc);
+		args.put("taglib", taglib);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
 		if(CapturePage.getCaptureContext(req) == null) {

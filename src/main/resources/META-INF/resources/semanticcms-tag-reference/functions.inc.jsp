@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016  AO Industries, Inc.
+Copyright (C) 2016, 2017  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -24,20 +24,18 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
 The view of function summaries at /path/taglib.tld/functions
 
 Arguments:
 	arg.tldRef    The PageRef for the TLD file itself
-	arg.tldDoc    The XML DOM document for the .tld file
+	arg.taglib      The parsed taglib
 	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
-<c:set var="tldDoc" value="${arg.tldDoc}" />
+<c:set var="taglib" value="${arg.taglib}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
-<x:set var="taglibElem" select="$tldDoc/taglib" />
 <core:page
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/functions"
@@ -46,17 +44,16 @@ Arguments:
 	dateModified="${ao:getLastModified(tldRef.servletPath)}"
 >
 	<%-- Add one child per function --%>
-	<x:forEach select="$taglibElem/function">
-		<x:set var="functionName" select="string(name)" />
+	<c:forEach var="function" items="${taglib.functions}">
 		<core:child
 			book="${tldRef.bookName}"
-			page="${tldRef.path}/function-${functionName}"
+			page="${tldRef.path}/function-${core:encodeUrlParam(function.name)}"
 		/>
-	</x:forEach>
+	</c:forEach>
 	<ao:include
 		page="function-summary.inc.jsp"
 		arg.tldRef="${tldRef}"
-		arg.tldDoc="${tldDoc}"
+		arg.taglib="${taglib}"
 		arg.apiLinks="${apiLinks}"
 	/>
 </core:page>

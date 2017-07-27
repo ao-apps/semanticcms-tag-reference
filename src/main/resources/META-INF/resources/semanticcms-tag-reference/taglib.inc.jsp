@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016  AO Industries, Inc.
+Copyright (C) 2016, 2017  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -25,7 +25,6 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
 <%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
 The overall view of the taglib at /path/taglib.tld/
@@ -34,13 +33,12 @@ Arguments:
 	arg.title       The page title
 	arg.shortTitle  The page shortTitle
 	arg.tldRef      The PageRef for the TLD file itself
-	arg.tldDoc      The XML DOM document for the .tld file
+	arg.taglib      The parsed taglib
 	arg.apiLinks    The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
-<c:set var="tldDoc" value="${arg.tldDoc}" />
+<c:set var="taglib" value="${arg.taglib}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
-<x:set var="taglibElem" select="$tldDoc/taglib" />
 <core:page
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/"
@@ -49,71 +47,71 @@ Arguments:
 	dateModified="${ao:getLastModified(tldRef.servletPath)}"
 >
 	<%-- TODO: file:file link to .tld file itself? --%>
-	<x:forEach var="description" select="$taglibElem/description">
-		<x:out select="$description" escapeXml="false" />
-	</x:forEach>
+	<c:forEach var="description" items="${taglib.descriptions}">
+		<ao:out value="${description}" type="xhtml" />
+	</c:forEach>
 	<section:section label="Usage">
 		<section:section label="Standard Syntax">
-			<code>&lt;%@ taglib prefix="<x:out select="$taglibElem/short-name" />" uri="<x:out select="$taglibElem/uri" />" %&gt;</code>
+			<code>&lt;%@ taglib prefix="<ao:out value="${taglib.shortName}" />" uri="<ao:out value="${taglib.uri}" />" %&gt;</code>
 		</section:section>
 		<section:section label="XML Syntax">
-			<code>&lt;anyxmlelement xmlns:<x:out select="$taglibElem/short-name" />="<x:out select="$taglibElem/uri" />" /&gt;</code>
+			<code>&lt;anyxmlelement xmlns:<ao:out value="${taglib.shortName}" />="<ao:out value="${taglib.uri}" />" /&gt;</code>
 		</section:section>
 	</section:section>
 	<section:section label="Tag Library Information">
 		<table class="thinTable">
 			<tbody>
-				<x:if select="boolean($taglibElem/display-name)">
+				<c:if test="${!empty taglib.displayNames}">
 					<tr>
 						<th>Display Name:</th>
 						<td>
-							<x:forEach var="displayName" select="$taglibElem/display-name" varStatus="displayNameStatus">
-								<x:out select="$displayName" escapeXml="false" />
+							<c:forEach var="displayName" items="${taglib.displayNames}" varStatus="displayNameStatus">
+								<ao:out value="${displayName}" type="xhtml" />
 								<c:if test="${!displayNameStatus.last}">
 									<br />
 								</c:if>
-							</x:forEach>
+							</c:forEach>
 						</td>
 					</tr>
-				</x:if>
+				</c:if>
 				<tr>
 					<th>Version:</th>
-					<td><x:out select="$taglibElem/tlib-version" /></td>
+					<td><ao:out value="${taglib.tlibVersion}" /></td>
 				</tr>
 				<tr>
 					<th>Short Name:</th>
-					<td><x:out select="$taglibElem/short-name" /></td>
+					<td><ao:out value="${taglib.shortName}" /></td>
 				</tr>
-				<x:if select="boolean($taglibElem/uri)">
+				<c:if test="${!empty taglib.uri}">
 					<tr>
 						<th>URI:</th>
-						<td><x:out select="$taglibElem/uri" /></td>
+						<td><ao:out value="${taglib.uri}" /></td>
 					</tr>
-				</x:if>
+				</c:if>
 			</tbody>
 		</table>
 	</section:section>
-	<x:if select="boolean($taglibElem/tag)">
+	<c:if test="${!empty taglib.tags}">
 		<core:child book="${tldRef.bookName}" page="${tldRef.path}/tags" />
 		<%-- TODO: Links in section labels --%>
 		<section:section label="Tag Summary">
 			<ao:include
 				page="tag-summary.inc.jsp"
 				arg.tldRef="${tldRef}"
-				arg.tldDoc="${tldDoc}"
+				arg.taglib="${taglib}"
 			/>
 		</section:section>
-	</x:if>
-	<x:if select="boolean($taglibElem/function)">
+	</c:if>
+	<c:if test="${!empty taglib.functions}">
 		<core:child book="${tldRef.bookName}" page="${tldRef.path}/functions" />
 		<%-- TODO: Links in section labels --%>
 		<section:section label="Function Summary">
 			<ao:include
 				page="function-summary.inc.jsp"
 				arg.tldRef="${tldRef}"
-				arg.tldDoc="${tldDoc}"
+				arg.taglib="${taglib}"
 				arg.apiLinks="${apiLinks}"
 			/>
 		</section:section>
-	</x:if>
+	</c:if>
 </core:page>

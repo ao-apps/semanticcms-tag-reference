@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.SkipPageException;
-import org.w3c.dom.Document;
 
 public class FunctionServlet extends HttpServlet {
 
@@ -42,19 +41,16 @@ public class FunctionServlet extends HttpServlet {
 	private static final String JSPX_TARGET = "/semanticcms-tag-reference/function.inc.jsp";
 
 	private final PageRef tldRef;
-	private final Document tldDoc;
-	private final String functionName;
+	private final Function function;
 	private final Map<String,String> apiLinks;
 
 	public FunctionServlet(
 		PageRef tldRef,
-		Document tldDoc,
-		String functionName,
+		Function function,
 		Map<String,String> apiLinks
 	) {
 		this.tldRef = tldRef;
-		this.tldDoc = tldDoc;
-		this.functionName = functionName;
+		this.function = function;
 		this.apiLinks = apiLinks;
 	}
 
@@ -62,8 +58,7 @@ public class FunctionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Map<String,Object> args = new LinkedHashMap<String,Object>();
 		args.put("tldRef", tldRef);
-		args.put("tldDoc", tldDoc);
-		args.put("functionName", functionName);
+		args.put("function", function);
 		args.put("apiLinks", apiLinks);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?

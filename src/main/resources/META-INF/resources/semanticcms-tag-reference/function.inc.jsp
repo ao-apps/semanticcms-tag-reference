@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016  AO Industries, Inc.
+Copyright (C) 2016, 2017  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -26,56 +26,49 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%--
 The view of one function at /path/taglib.tld/function-functionName
 
 Arguments:
-	arg.tldRef        The PageRef for the TLD file itself
-	arg.tldDoc        The XML DOM document for the .tld file
-	arg.functionName  The name of the function to display
-	arg.apiLinks      The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
+	arg.tldRef    The PageRef for the TLD file itself
+	arg.function  The parsed function
+	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
-<c:set var="tldDoc" value="${arg.tldDoc}" />
-<c:set var="functionName" value="${arg.functionName}" />
+<c:set var="function" value="${arg.function}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
-<x:set var="taglibElem" select="$tldDoc/taglib" />
-<x:set var="tldShortName" select="string($taglibElem/short-name)" />
-<x:set var="functionElem" select="$tldDoc/taglib/function[string(name)=$functionName]" />
 <core:page
 	book="${tldRef.bookName}"
-	path="${tldRef.path}/function-${functionName}"
-	title="\${${tldShortName}:${functionName}()}"
+	path="${tldRef.path}/function-${core:encodeUrlParam(function.name)}"
+	title="\${${function.taglib.shortName}:${function.name}()}"
 	dateModified="${ao:getLastModified(tldRef.servletPath)}"
 >
 	<core:parent
 		book="${tldRef.bookName}"
 		page="${tldRef.path}/functions"
 	/>
-	<x:forEach var="description" select="$functionElem/description">
-		<x:out select="$description" escapeXml="false" />
-	</x:forEach>
-	<x:if select="boolean($functionElem/example)">
+	<c:forEach var="description" items="${function.descriptions}">
+		<ao:out value="${description}" type="xhtml" />
+	</c:forEach>
+	<c:if test="${!empty function.example}">
 		<section:section label="Example">
-			<x:out select="$functionElem/example" escapeXml="false" />
+			<ao:out value="${function.example}" type="xhtml" />
 		</section:section>
-	</x:if>
+	</c:if>
 	<section:section label="Function Information">
 		<table class="thinTable">
 			<tbody>
 				<tr>
 					<th>Function Class:</th>
 					<td style="white-space:nowrap">
-						<x:set var="functionClass" select="string($functionElem/function-class)" />
-						<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${functionClass}" />
+						<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${function.functionClass}" />
 					</td>
 				</tr>
 				<tr>
 					<th>Function Signature:</th>
 					<td style="white-space:nowrap">
-						<x:set var="functionSignature" select="string($functionElem/function-signature)" />
+						<c:set var="functionSignature" value="${function.functionSignature}" />
 						<c:set var="returnType" value="${fn:substringBefore(functionSignature, ' ')}" />
 						<c:set var="signatureFunction" value="${fn:trim(fn:substringBefore(fn:substringAfter(functionSignature, ' '), '('))}" />
 						<c:set var="signatureParams" value="${fn:substringBefore(fn:substringAfter(functionSignature, '('), ')')}" />
@@ -97,19 +90,19 @@ Arguments:
 				<tr>
 					<th>Display Name:</th>
 					<td style="white-space:nowrap">
-						<x:choose>
-							<x:when select="boolean($functionElem/display-name)">
-								<x:forEach var="displayName" select="$functionElem/display-name" varStatus="displayNameStatus">
-									<x:out select="$displayName" escapeXml="false" />
+						<ao:choose>
+							<ao:when test="#{!empty function.displayNames}">
+								<c:forEach var="displayName" items="${function.displayNames}" varStatus="displayNameStatus">
+									<ao:out value="${displayName}" type="xhtml" />
 									<c:if test="${!displayNameStatus.last}">
 										<br />
 									</c:if>
-								</x:forEach>
-							</x:when>
-							<x:otherwise>
+								</c:forEach>
+							</ao:when>
+							<ao:otherwise>
 								<em>None</em>
-							</x:otherwise>
-						</x:choose>
+							</ao:otherwise>
+						</ao:choose>
 					</td>
 				</tr>
 			</tbody>
