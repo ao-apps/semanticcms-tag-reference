@@ -72,6 +72,10 @@ Requests per second:    32.08 [#/sec] (mean)</pre>
 							<li>TODO: Benchmark after</li>
 						</ol>
 					</li>
+					<li>
+						Also catching formatting issues in <code>*.tld</code> files at start-up, which is better
+						than an exception later in production.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
