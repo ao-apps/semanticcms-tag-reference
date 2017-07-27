@@ -68,8 +68,10 @@ Requests per second:    0.55 [#/sec] (mean)</pre>
 <pre>ab -c 4 -n 128 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
 Requests per second:    32.08 [#/sec] (mean)</pre>
 							</li>
+							<!-- TODO:
 							<li>TODO: Removed dynamic linked-classname.inc.jsp and function signature parsing.</li>
 							<li>TODO: Benchmark after</li>
+							-->
 						</ol>
 					</li>
 					<li>
