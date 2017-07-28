@@ -213,7 +213,7 @@ Arguments:
 									<td>Deferred-Value</td>
 									<td>
 										<ao:choose>
-											<ao:when test="#{!empty deferredValue.type})">
+											<ao:when test="#{deferredValue.type != null}">
 												<ao:include
 													page="linked-classname.inc.jsp"
 													arg.apiLinks="${apiLinks}"
