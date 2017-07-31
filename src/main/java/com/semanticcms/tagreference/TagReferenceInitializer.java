@@ -62,6 +62,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 
 	private final String title;
 	private final String shortTitle;
+	private final String tldDomain;
 	private final String tldBook;
 	private final String tldPath;
 	private final Map<String,String> apiLinks;
@@ -69,6 +70,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
+		String tldDomain,
 		String tldBook,
 		String tldPath,
 		String javaApiLink,
@@ -77,6 +79,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
+		this.tldDomain = tldDomain;
 		this.tldBook = tldBook;
 		this.tldPath = tldPath;
 		// Add package matches
@@ -89,11 +92,40 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
+	/**
+	 * Uses default domain of {@code ""}.
+	 *
+	 * @see  #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Map)
+	 *
+	 * @deprecated  Please provide domain
+	 */
+	@Deprecated
+	public TagReferenceInitializer(
+		String title,
+		String shortTitle,
+		String tldBook,
+		String tldPath,
+		String javaApiLink,
+		String javaEEApiLink,
+		Map<String,String> additionalApiLinks
+	) {
+		this(
+			title,
+			shortTitle,
+			"",
+			tldBook,
+			tldPath,
+			javaApiLink,
+			javaEEApiLink,
+			additionalApiLinks
+		);
+	}
+
 	@Override
 	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
 		try {
 			// Books are not necessarily available during initialization
-			PageRef tldRef = new PageRef(tldBook, tldPath);
+			PageRef tldRef = new PageRef(tldDomain, tldBook, tldPath);
 			String tldServletPath = tldRef.getServletPath();
 			// Parse TLD
 			Taglib taglib;
