@@ -22,6 +22,7 @@
  */
 package com.semanticcms.tagreference;
 
+import com.semanticcms.core.model.BookRef;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.InputStream;
@@ -125,7 +126,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
 		try {
 			// Books are not necessarily available during initialization
-			PageRef tldRef = new PageRef(tldDomain, tldBook, tldPath);
+			PageRef tldRef = new PageRef(new BookRef(tldDomain, tldBook), tldPath);
 			String tldServletPath = tldRef.getServletPath();
 			// Parse TLD
 			Taglib taglib;
