@@ -126,11 +126,13 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
 		try {
 			// Books are not necessarily available during initialization
-			PageRef tldRef = new PageRef(new BookRef(tldDomain, tldBook), tldPath);
-			String tldServletPath = tldRef.getServletPath();
+			BookRef tldBookRef = new BookRef(tldDomain, tldBook);
+			PageRef tldRef = new PageRef(tldBookRef, tldPath);
+			String tldServletPath = tldBookRef.getPrefix() + tldPath;
 			// Parse TLD
 			Taglib taglib;
 			{
+				// TODO: Use repository
 				InputStream tldIn = servletContext.getResourceAsStream(tldServletPath);
 				if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
 				try {
