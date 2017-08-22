@@ -29,7 +29,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 Shared tag summary implementation.
 
 Arguments:
-	arg.tldRef  The PageRef for the TLD file itself
+	arg.tldRef  The ResourceRef for the TLD file itself
 	arg.taglib  The parsed taglib
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />

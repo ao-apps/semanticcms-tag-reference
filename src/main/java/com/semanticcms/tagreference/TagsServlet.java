@@ -23,7 +23,7 @@
 package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
-import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.model.ResourceRef;
 import com.semanticcms.core.servlet.CapturePage;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -40,10 +40,10 @@ public class TagsServlet extends HttpServlet {
 
 	private static final String JSPX_TARGET = "/semanticcms-tag-reference/tags.inc.jsp";
 
-	private final PageRef tldRef;
+	private final ResourceRef tldRef;
 	private final Taglib taglib;
 
-	public TagsServlet(PageRef tldRef, Taglib taglib) {
+	public TagsServlet(ResourceRef tldRef, Taglib taglib) {
 		this.tldRef = tldRef;
 		this.taglib = taglib;
 	}

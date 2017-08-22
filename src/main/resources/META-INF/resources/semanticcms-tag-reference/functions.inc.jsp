@@ -29,8 +29,8 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 The view of function summaries at /path/taglib.tld/functions
 
 Arguments:
-	arg.tldRef    The PageRef for the TLD file itself
-	arg.taglib      The parsed taglib
+	arg.tldRef    The ResourceRef for the TLD file itself
+	arg.taglib    The parsed taglib
 	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />

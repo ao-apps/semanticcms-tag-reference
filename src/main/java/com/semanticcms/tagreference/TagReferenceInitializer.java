@@ -22,8 +22,13 @@
  */
 package com.semanticcms.tagreference;
 
+import com.aoindustries.net.Path;
+import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.model.BookRef;
-import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.model.ResourceRef;
+import com.semanticcms.core.resources.Resource;
+import com.semanticcms.core.resources.ResourceStore;
+import com.semanticcms.core.servlet.SemanticCMS;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -63,26 +68,20 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 
 	private final String title;
 	private final String shortTitle;
-	private final String tldDomain;
-	private final String tldBook;
-	private final String tldPath;
+	private final ResourceRef tldRef;
 	private final Map<String,String> apiLinks;
 
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
-		String tldDomain,
-		String tldBook,
-		String tldPath,
+		ResourceRef tldRef,
 		String javaApiLink,
 		String javaEEApiLink,
 		Map<String,String> additionalApiLinks
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
-		this.tldDomain = tldDomain;
-		this.tldBook = tldBook;
-		this.tldPath = tldPath;
+		this.tldRef = tldRef;
 		// Add package matches
 		Map<String,String> combinedApiLinks = new LinkedHashMap<String,String>();
 		combinedApiLinks.put("java.io.", javaApiLink);
@@ -93,10 +92,18 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
+	private static Path toPath(String path) {
+		try {
+			return Path.valueOf(path);
+		} catch(ValidationException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 	/**
-	 * Uses default domain of {@code ""}.
+	 * Uses default domain of {@link BookRef#DEFAULT_DOMAIN}.
 	 *
-	 * @see  #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Map)
+	 * @see  #TagReferenceInitializer(java.lang.String, java.lang.String, com.semanticcms.core.model.ResourceRef, java.lang.String, java.lang.String, java.util.Map)
 	 *
 	 * @deprecated  Please provide domain
 	 */
@@ -113,9 +120,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this(
 			title,
 			shortTitle,
-			"",
-			tldBook,
-			tldPath,
+			new ResourceRef(new BookRef(BookRef.DEFAULT_DOMAIN, toPath(tldBook)), toPath(tldPath)),
 			javaApiLink,
 			javaEEApiLink,
 			additionalApiLinks
@@ -126,15 +131,12 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
 		try {
 			// Books are not necessarily available during initialization
-			BookRef tldBookRef = new BookRef(tldDomain, tldBook);
-			PageRef tldRef = new PageRef(tldBookRef, tldPath);
-			String tldServletPath = tldBookRef.getPrefix() + tldPath;
+			BookRef tldBookRef = tldRef.getBookRef();
+			String tldServletPath = tldBookRef.getPrefix() + tldRef.getPath().toString();
 			// Parse TLD
 			Taglib taglib;
 			{
-				// TODO: Use repository
-				InputStream tldIn = servletContext.getResourceAsStream(tldServletPath);
-				if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
+				InputStream tldIn = SemanticCMS.getInstance(servletContext).getBook(tldBookRef).getResources().getResource(tldRef.getPath()).getInputStream();
 				try {
 					taglib = new Taglib(tldRef, DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
 				} finally {

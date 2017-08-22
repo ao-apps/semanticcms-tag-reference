@@ -32,7 +32,7 @@ The overall view of the taglib at /path/taglib.tld/
 Arguments:
 	arg.title       The page title
 	arg.shortTitle  The page shortTitle
-	arg.tldRef      The PageRef for the TLD file itself
+	arg.tldRef      The ResourceRef for the TLD file itself
 	arg.taglib      The parsed taglib
 	arg.apiLinks    The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>

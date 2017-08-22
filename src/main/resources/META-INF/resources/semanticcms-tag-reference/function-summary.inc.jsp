@@ -30,7 +30,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 Shared function summary implementation.
 
 Arguments:
-	arg.tldRef    The PageRef for the TLD file itself
+	arg.tldRef    The ResourceRef for the TLD file itself
 	arg.taglib    The parsed taglib
 	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>

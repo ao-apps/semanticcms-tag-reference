@@ -24,6 +24,7 @@ package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
 import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.model.ResourceRef;
 import com.semanticcms.core.servlet.CapturePage;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -40,12 +41,12 @@ public class FunctionsServlet extends HttpServlet {
 
 	private static final String JSPX_TARGET = "/semanticcms-tag-reference/functions.inc.jsp";
 
-	private final PageRef tldRef;
+	private final ResourceRef tldRef;
 	private final Taglib taglib;
 	private final Map<String,String> apiLinks;
 
 	public FunctionsServlet(
-		PageRef tldRef,
+		ResourceRef tldRef,
 		Taglib taglib,
 		Map<String,String> apiLinks
 	) {

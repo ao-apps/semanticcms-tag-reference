@@ -24,7 +24,7 @@ package com.semanticcms.tagreference;
 
 import com.aoindustries.util.AoCollections;
 import com.aoindustries.xml.XmlUtils;
-import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.model.ResourceRef;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -43,7 +43,7 @@ import org.xml.sax.SAXException;
  */
 public class Taglib {
 
-	private final PageRef tldRef;
+	private final ResourceRef tldRef;
 	private final List<String> descriptions;
 	private final List<String> displayNames;
 	private final String tlibVersion;
@@ -55,7 +55,7 @@ public class Taglib {
 	private final List<Function> functions;
 
 	public Taglib(
-		PageRef tldRef,
+		ResourceRef tldRef,
 		Document tldDoc,
 		Map<String,String> apiLinks
 	) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
@@ -98,7 +98,7 @@ public class Taglib {
 		this.functions = AoCollections.optimalUnmodifiableList(new ArrayList<Function>(newFunctions.values()));
 	}
 
-	public PageRef getTldRef() {
+	public ResourceRef getTldRef() {
 		return tldRef;
 	}
 
