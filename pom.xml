@@ -66,10 +66,13 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 								<links>
 									<link>${javac.link.javaApi}</link>
 									<link>${javac.link.javaeeApi.6}</link>
+									<link>https://aoindustries.com/ao-encoding/apidocs/</link>
 									<link>https://aoindustries.com/ao-lang/apidocs/</link>
+									<link>https://aoindustries.com/ao-net-types/apidocs/</link>
 									<link>https://aoindustries.com/ao-taglib/apidocs/</link>
 									<link>https://aoindustries.com/aocode-public/apidocs/</link>
 									<link>https://semanticcms.com/core/model/apidocs/</link>
+									<link>https://semanticcms.com/core/resources/apidocs/</link>
 									<link>https://semanticcms.com/core/servlet/apidocs/</link>
 									<link>https://semanticcms.com/core/taglib/apidocs/</link>
 									<link>https://semanticcms.com/section/taglib/apidocs/</link>
@@ -122,7 +125,17 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		</dependency>
 		<dependency>
 			<groupId>com.aoindustries</groupId>
+			<artifactId>ao-encoding</artifactId>
+			<version>1.6.1-validation-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aoindustries</groupId>
 			<artifactId>ao-lang</artifactId>
+			<version>1.1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aoindustries</groupId>
+			<artifactId>ao-net-types</artifactId>
 			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -142,7 +155,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		</dependency>
 		<dependency>
 			<groupId>com.semanticcms</groupId>
-			<artifactId>semanticcms-core-pages-servlet</artifactId>
+			<artifactId>semanticcms-core-resources</artifactId>
 			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
