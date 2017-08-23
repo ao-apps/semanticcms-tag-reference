@@ -78,7 +78,7 @@ Requests per second:    32.08 [#/sec] (mean)</pre>
 						Also catching formatting issues in <code>*.tld</code> files at start-up, which is better
 						than an exception later in production.
 					</li>
-					<li>Added <core:link book="/core/model" page="/index.jspx" /> domain support.</li>
+					<li>Added <core:link book="/core/model" page="/" /> domain support.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
