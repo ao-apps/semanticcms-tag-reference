@@ -23,9 +23,8 @@
 package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
-import com.semanticcms.core.model.PageRef;
+import com.semanticcms.core.controller.CapturePage;
 import com.semanticcms.core.model.ResourceRef;
-import com.semanticcms.core.servlet.CapturePage;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;

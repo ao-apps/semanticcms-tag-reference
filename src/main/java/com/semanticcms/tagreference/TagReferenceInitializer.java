@@ -24,11 +24,9 @@ package com.semanticcms.tagreference;
 
 import com.aoindustries.net.Path;
 import com.aoindustries.validation.ValidationException;
+import com.semanticcms.core.controller.SemanticCMS;
 import com.semanticcms.core.model.BookRef;
 import com.semanticcms.core.model.ResourceRef;
-import com.semanticcms.core.resources.Resource;
-import com.semanticcms.core.resources.ResourceStore;
-import com.semanticcms.core.servlet.SemanticCMS;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
