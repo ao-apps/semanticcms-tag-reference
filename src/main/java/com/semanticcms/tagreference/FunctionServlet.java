@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,8 +23,8 @@
 package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
-import com.semanticcms.core.controller.CapturePage;
 import com.semanticcms.core.model.ResourceRef;
+import com.semanticcms.core.pages.local.CaptureContext;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,7 +62,7 @@ public class FunctionServlet extends HttpServlet {
 		args.put("apiLinks", apiLinks);
 		// TODO: Is there a way to get rid of this forward/include duality?
 		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
-		if(CapturePage.getCaptureContext(req) == null) {
+		if(CaptureContext.getCaptureContext(req) == null) {
 			// Forward required so can set content type
 			Dispatcher.forward(
 				getServletContext(),
