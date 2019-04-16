@@ -36,7 +36,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<shortTitle>Tag Reference</shortTitle>
 	</properties>
 
-	<name>SemanticCMS 1 Tag Reference</name>
+	<name>SemanticCMS Tag Reference</name>
 	<url>https://semanticcms.com/tag-reference/</url>
 	<description>Generates tag library descriptor documentation for .tld files.</description>
 	<inceptionYear>2016</inceptionYear>

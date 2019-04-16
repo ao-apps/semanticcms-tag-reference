@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<documented.groupId>com.semanticcms</documented.groupId><documented.artifactId>semanticcms-tag-reference</documented.artifactId>
 		<documented.javaVersion>1.7</documented.javaVersion>
 		<documented.javac.link.javaApi>${javac.link.javaApi.jdk7}</documented.javac.link.javaApi>
-		<documented.name>SemanticCMS 1 Tag Reference</documented.name>
+		<documented.name>SemanticCMS Tag Reference</documented.name>
 		<documented.shortTitle>Tag Reference</documented.shortTitle>
 		<documented.url>https://semanticcms.com/tag-reference/</documented.url>
 		<documented.description>Generates tag library descriptor documentation for .tld files.</documented.description>
