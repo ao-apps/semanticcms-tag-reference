@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2019  AO Industries, Inc.
+Copyright (C) 2016  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -31,7 +31,7 @@ For higher performance, use another mechanism to compute once and use repeatedly
 This is for convenience, not performance.
 
 Arguments:
-	arg.apiLinks   The mapping of java package prefix (including trailing '.') to javadoc prefixes (without any trailing '/')
+	arg.apiLinks   The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 	arg.className  The classname to display.
 	arg.shortName  (Optional) when true, will display the classname in short format
 --%><c:set var="className" value="${fn:trim(arg.className)}"
@@ -42,7 +42,7 @@ Arguments:
 /></c:if><c:set var="done" value="false"
 /><c:forEach var="entry" items="${arg.apiLinks}"
 	><c:if test="${!done && fn:startsWith(className, entry.key)}"
-		><ao:a href="${entry.value}/${fn:replace(className, '.', '/')}.html"
+		><ao:a href="${entry.value}${fn:replace(className, '.', '/')}.html"
 			><c:set var="splitClassName" value="${fn:split(className, '.')}"
 			/><ao:out value="${arg.shortName && fn:length(splitClassName) > 1 ? splitClassName[fn:length(splitClassName)-1] : className}"
 		/></ao:a
