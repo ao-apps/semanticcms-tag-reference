@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
+Copyright (C) 2016, 2017  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -33,7 +33,7 @@ The view of one function at /path/taglib.tld/function-functionName
 Arguments:
 	arg.tldRef    The PageRef for the TLD file itself
 	arg.function  The parsed function
-	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (without any trailing '/')
+	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="function" value="${arg.function}" />
