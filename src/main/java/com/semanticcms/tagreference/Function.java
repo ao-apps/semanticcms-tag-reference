@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2017  AO Industries, Inc.
+ * Copyright (C) 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -57,13 +57,13 @@ public class Function {
 	) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 		this.taglib = taglib;
 
-		List<String> newDescriptions = new ArrayList<String>();
+		List<String> newDescriptions = new ArrayList<>();
 		for(Element descriptionElem : XmlUtils.iterableChildElementsByTagName(functionElem, "description")) {
 			newDescriptions.add(descriptionElem.getTextContent());
 		}
 		this.descriptions = AoCollections.optimalUnmodifiableList(newDescriptions);
 
-		List<String> newDisplayNames = new ArrayList<String>();
+		List<String> newDisplayNames = new ArrayList<>();
 		for(Element displayNameElem : XmlUtils.iterableChildElementsByTagName(functionElem, "display-name")) {
 			newDisplayNames.add(displayNameElem.getTextContent());
 		}

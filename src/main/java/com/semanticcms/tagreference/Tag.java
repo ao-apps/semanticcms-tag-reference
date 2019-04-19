@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2017  AO Industries, Inc.
+ * Copyright (C) 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,6 @@
  */
 package com.semanticcms.tagreference;
 
-import com.aoindustries.lang.NotImplementedException;
 import com.aoindustries.util.AoCollections;
 import com.aoindustries.xml.XmlUtils;
 import java.io.IOException;
@@ -57,19 +56,20 @@ public class Tag {
 
 	private final String descriptionSummary;
 
+	@SuppressWarnings("deprecation")
 	public Tag(
 		Taglib taglib,
 		Element tagElem
 	) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 		this.taglib = taglib;
 
-		List<String> newDescriptions = new ArrayList<String>();
+		List<String> newDescriptions = new ArrayList<>();
 		for(Element descriptionElem : XmlUtils.iterableChildElementsByTagName(tagElem, "description")) {
 			newDescriptions.add(descriptionElem.getTextContent());
 		}
 		this.descriptions = AoCollections.optimalUnmodifiableList(newDescriptions);
 
-		List<String> newDisplayNames = new ArrayList<String>();
+		List<String> newDisplayNames = new ArrayList<>();
 		for(Element displayNameElem : XmlUtils.iterableChildElementsByTagName(tagElem, "display-name")) {
 			newDisplayNames.add(displayNameElem.getTextContent());
 		}
@@ -80,18 +80,18 @@ public class Tag {
 		this.teiClass = XmlUtils.getChildTextContent(tagElem, "tei-class");
 		this.bodyContent = XmlUtils.getChildTextContent(tagElem, "body-content");
 
-		Map<String,Attribute> newAttributes = new LinkedHashMap<String,Attribute>();
+		Map<String,Attribute> newAttributes = new LinkedHashMap<>();
 		for(Element attributeElem : XmlUtils.iterableChildElementsByTagName(tagElem, "attribute")) {
 			Attribute newAttribute = new Attribute(this, attributeElem);
 			String attributeName = newAttribute.getName();
 			if(newAttributes.put(attributeName, newAttribute) != null) throw new IllegalArgumentException("Duplicate attribute name: " + attributeName);
 		}
 		this.attribute = AoCollections.optimalUnmodifiableMap(newAttributes);
-		this.attributes = AoCollections.optimalUnmodifiableList(new ArrayList<Attribute>(newAttributes.values()));
+		this.attributes = AoCollections.optimalUnmodifiableList(new ArrayList<>(newAttributes.values()));
 
 		this.dynamicAttributes = Boolean.parseBoolean(XmlUtils.getChildTextContent(tagElem, "dynamic-attributes"));
 		if(XmlUtils.iterableChildElementsByTagName(tagElem, "variable").iterator().hasNext()) {
-			throw new NotImplementedException("TODO: Document variables when first needed.  We don't use any variables at this time.");
+			throw new com.aoindustries.lang.NotImplementedException("TODO: Document variables when first needed.  We don't use any variables at this time.");
 		}
 		this.example = XmlUtils.getChildTextContent(tagElem, "example");
 

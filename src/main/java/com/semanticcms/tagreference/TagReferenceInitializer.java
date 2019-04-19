@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -80,7 +80,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this.tldBook = tldBook;
 		this.tldPath = tldPath;
 		// Add package matches
-		Map<String,String> combinedApiLinks = new LinkedHashMap<String,String>();
+		Map<String,String> combinedApiLinks = new LinkedHashMap<>();
 		combinedApiLinks.put("java.io.", javaApiLink);
 		combinedApiLinks.put("java.lang.", javaApiLink);
 		combinedApiLinks.put("java.util.", javaApiLink);
@@ -156,13 +156,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					registration.addMapping(functionServletUrlPattern);
 				}
 			}
-		} catch(IOException e) {
-			throw new ServletException(e);
-		} catch(ParserConfigurationException e) {
-			throw new ServletException(e);
-		} catch(XPathExpressionException e) {
-			throw new ServletException(e);
-		} catch(SAXException e) {
+		} catch(IOException | ParserConfigurationException | XPathExpressionException | SAXException e) {
 			throw new ServletException(e);
 		}
 	}
