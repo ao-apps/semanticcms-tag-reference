@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2017  AO Industries, Inc.
+ * Copyright (C) 2017, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -63,13 +63,13 @@ public class Taglib {
 
 		Element taglibElem = tldDoc.getDocumentElement();
 
-		List<String> newDescriptions = new ArrayList<String>();
+		List<String> newDescriptions = new ArrayList<>();
 		for(Element descriptionElem : XmlUtils.iterableChildElementsByTagName(taglibElem, "description")) {
 			newDescriptions.add(descriptionElem.getTextContent());
 		}
 		this.descriptions = AoCollections.optimalUnmodifiableList(newDescriptions);
 
-		List<String> newDisplayNames = new ArrayList<String>();
+		List<String> newDisplayNames = new ArrayList<>();
 		for(Element displayNameElem : XmlUtils.iterableChildElementsByTagName(taglibElem, "display-name")) {
 			newDisplayNames.add(displayNameElem.getTextContent());
 		}
@@ -79,23 +79,23 @@ public class Taglib {
 		this.shortName = XmlUtils.getChildTextContent(taglibElem, "short-name");
 		this.uri = XmlUtils.getChildTextContent(taglibElem, "uri");
 
-		Map<String,Tag> newTags = new LinkedHashMap<String,Tag>();
+		Map<String,Tag> newTags = new LinkedHashMap<>();
 		for(Element tagElem : XmlUtils.iterableChildElementsByTagName(taglibElem, "tag")) {
 			Tag newTag = new Tag(this, tagElem);
 			String tagName = newTag.getName();
 			if(newTags.put(tagName, newTag) != null) throw new IllegalArgumentException("Duplicate tag name: " + tagName);
 		}
 		this.tag = AoCollections.optimalUnmodifiableMap(newTags);
-		this.tags = AoCollections.optimalUnmodifiableList(new ArrayList<Tag>(newTags.values()));
+		this.tags = AoCollections.optimalUnmodifiableList(new ArrayList<>(newTags.values()));
 
-		Map<String,Function> newFunctions = new LinkedHashMap<String,Function>();
+		Map<String,Function> newFunctions = new LinkedHashMap<>();
 		for(Element functionElem : XmlUtils.iterableChildElementsByTagName(taglibElem, "function")) {
 			Function newFunction = new Function(this, functionElem, apiLinks);
 			String functionName = newFunction.getName();
 			if(newFunctions.put(functionName, newFunction) != null) throw new IllegalArgumentException("Duplicate function name: " + functionName);
 		}
 		this.function = AoCollections.optimalUnmodifiableMap(newFunctions);
-		this.functions = AoCollections.optimalUnmodifiableList(new ArrayList<Function>(newFunctions.values()));
+		this.functions = AoCollections.optimalUnmodifiableList(new ArrayList<>(newFunctions.values()));
 	}
 
 	public ResourceRef getTldRef() {

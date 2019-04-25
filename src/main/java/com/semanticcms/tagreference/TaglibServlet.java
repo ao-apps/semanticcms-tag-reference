@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2018  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -62,7 +62,7 @@ public class TaglibServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Map<String,Object> args = new LinkedHashMap<String,Object>();
+		Map<String,Object> args = new LinkedHashMap<>();
 		args.put("title", title);
 		args.put("shortTitle", shortTitle);
 		args.put("tldRef", tldRef);
