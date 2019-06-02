@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2017-08-03T11:35:29-0500"
+		dateModified="2019-06-01T18:51:51-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -54,34 +54,52 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				scmUrl="@{documented.scm.url}"
 			>
 				<ul>
-					<li>Improved performance by parsing XML on start-up instead of on-the-fly:
-						<ol>
-							<li>Benchmark before on a basic dual-core laptop:
+					<li>Added <core:link book="/core/model" page="/" /> domain support.</li>
+					<li>
+						Changed generated "Tag Summary" and "Function Summary" from
+						<ao:a href="https://www.w3.org/TR/html5/sections.html#the-section-element"><![CDATA[&lt;section&gt;]]></ao:a>
+						to <ao:a href="https://www.w3.org/TR/html5/sections.html#the-nav-element"><![CDATA[&lt;nav&gt;]]></ao:a>.
+					</li>
+				</ul>
+			</changelog:release>
+		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.1.0"
+			datePublished="2019-04-19T17:41:01-0500"
+			groupId="@{documented.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{documented.scm.url}"
+		>
+			<ul>
+				<li>Minimum Java version changed from 1.6 to 1.7.</li>
+				<li>Improved performance by parsing XML on start-up instead of on-the-fly:
+					<ol>
+						<li>Benchmark before on a basic dual-core laptop:
 <pre>ab -c 8 -n 100 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
 Benchmarking 127.0.0.1 (be patient)...apr_pollset_poll: The timeout specified has expired (70007)
 Total of 72 requests completed
 
 ab -c 4 -n 16 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
 Requests per second:    0.55 [#/sec] (mean)</pre>
-							</li>
-							<li>Benchmark so far:
+						</li>
+						<li>Benchmark so far:
 <pre>ab -c 4 -n 128 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
 Requests per second:    32.08 [#/sec] (mean)</pre>
-							</li>
-							<!-- TODO:
-							<li>TODO: Removed dynamic linked-classname.inc.jsp and function signature parsing.</li>
-							<li>TODO: Benchmark after</li>
-							-->
-						</ol>
-					</li>
-					<li>
-						Also catching formatting issues in <code>*.tld</code> files at start-up, which is better
-						than an exception later in production.
-					</li>
-					<li>Added <core:link book="/core/model" page="/" /> domain support.</li>
-				</ul>
-			</changelog:release>
-		</c:if>
+						</li>
+						<!-- TODO:
+						<li>TODO: Removed dynamic linked-classname.inc.jsp and function signature parsing.</li>
+						<li>TODO: Benchmark after</li>
+						-->
+					</ol>
+				</li>
+				<li>
+					Also catching formatting issues in <code>*.tld</code> files at start-up, which is better
+					than an exception later in production.
+				</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
