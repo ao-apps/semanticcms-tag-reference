@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -94,24 +94,24 @@ Arguments:
 	<c:if test="${!empty taglib.tags}">
 		<core:child book="${tldRef.bookName}" page="${tldRef.path}/tags" />
 		<%-- TODO: Links in section labels --%>
-		<section:section label="Tag Summary">
+		<section:nav label="Tag Summary">
 			<ao:include
 				page="tag-summary.inc.jsp"
 				arg.tldRef="${tldRef}"
 				arg.taglib="${taglib}"
 			/>
-		</section:section>
+		</section:nav>
 	</c:if>
 	<c:if test="${!empty taglib.functions}">
 		<core:child book="${tldRef.bookName}" page="${tldRef.path}/functions" />
 		<%-- TODO: Links in section labels --%>
-		<section:section label="Function Summary">
+		<section:nav label="Function Summary">
 			<ao:include
 				page="function-summary.inc.jsp"
 				arg.tldRef="${tldRef}"
 				arg.taglib="${taglib}"
 				arg.apiLinks="${apiLinks}"
 			/>
-		</section:section>
+		</section:nav>
 	</c:if>
 </core:page>
