@@ -33,6 +33,9 @@ Generates tag library descriptor documentation for .tld files.
 * [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.semanticcms%22%20AND%20a:%22semanticcms-tag-reference%22)
 * [GitHub](https://github.com/aoindustries/semanticcms-tag-reference)
 
+## Related Projects
+* [AO TLD Parser](https://github.com/aoindustries/ao-tld-parser)
+
 ## Contact Us
 For questions or support, please [contact us](https://aoindustries.com/contact):
 

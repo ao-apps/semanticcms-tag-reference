@@ -23,6 +23,9 @@
 package com.semanticcms.tagreference;
 
 import com.aoindustries.net.Path;
+import com.aoindustries.tld.parser.Function;
+import com.aoindustries.tld.parser.Tag;
+import com.aoindustries.tld.parser.Taglib;
 import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.controller.SemanticCMS;
 import com.semanticcms.core.model.BookRef;
@@ -63,6 +66,11 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 * encode them because the future is an unknown place (wink).
 	 */
 	private static final String ENCODING = "UTF-8";
+
+	/**
+	 * The css class that marks an element as being a summary.
+	 */
+	private static final String SUMMARY_CLASS = "semanticcms-tag-reference-summary";
 
 	private final String title;
 	private final String shortTitle;
@@ -135,7 +143,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			Taglib taglib;
 			{
 				try (InputStream tldIn = SemanticCMS.getInstance(servletContext).getBook(tldBookRef).getResources().getResource(tldRef.getPath()).getInputStream()) {
-					taglib = new Taglib(tldRef, DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
+					taglib = new Taglib(SUMMARY_CLASS, tldRef.toString(), DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
 				}
 			}
 			// Dynamically add servlets
