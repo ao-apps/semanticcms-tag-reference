@@ -22,6 +22,9 @@
  */
 package com.semanticcms.tagreference;
 
+import com.aoindustries.tld.parser.Function;
+import com.aoindustries.tld.parser.Tag;
+import com.aoindustries.tld.parser.Taglib;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +62,11 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 * encode them because the future is an unknown place (wink).
 	 */
 	private static final String ENCODING = "UTF-8";
+
+	/**
+	 * The css class that marks an element as being a summary.
+	 */
+	private static final String SUMMARY_CLASS = "semanticcms-tag-reference-summary";
 
 	private final String title;
 	private final String shortTitle;
@@ -101,7 +109,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				InputStream tldIn = servletContext.getResourceAsStream(tldServletPath);
 				if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
 				try {
-					taglib = new Taglib(tldRef, DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
+					taglib = new Taglib(SUMMARY_CLASS, tldRef.toString(), DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
 				} finally {
 					tldIn.close();
 				}

@@ -23,6 +23,7 @@
 package com.semanticcms.tagreference;
 
 import com.aoindustries.servlet.http.Dispatcher;
+import com.aoindustries.tld.parser.Tag;
 import com.semanticcms.core.model.PageRef;
 import com.semanticcms.core.servlet.CapturePage;
 import java.io.IOException;

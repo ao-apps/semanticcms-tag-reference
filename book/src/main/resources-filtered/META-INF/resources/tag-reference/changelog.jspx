@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2019-06-04T19:49:04-0500"
+		dateModified="2019-06-12T19:31:52-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -64,6 +64,10 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 							<li>This project uses transitive managed dependencies.</li>
 							<li>This project's managed dependencies may also be imported by other projects.</li>
 						</ol>
+					</li>
+					<li>
+						JSP taglib parser moved into its own project:
+						<ao:a href="https://aoindustries.com/ao-tld-parser/">AO TLD Parser</ao:a>.
 					</li>
 					<!--
 					<li>
