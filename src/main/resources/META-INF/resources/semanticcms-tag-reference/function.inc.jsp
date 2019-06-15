@@ -43,6 +43,7 @@ Arguments:
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/function-${core:encodeUrlParam(function.name)}"
 	title="\${${function.taglib.shortName}:${function.name}()}"
+	allowRobots="true"
 	dateCreated="${dates.created}"
 	datePublished="${dates.published}"
 	dateModified="${dates.modified}"
