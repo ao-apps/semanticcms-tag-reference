@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -38,11 +38,15 @@ Arguments:
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="function" value="${arg.function}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
+<c:set var="dates" value="${function.dates}" />
 <core:page
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/function-${core:encodeUrlParam(function.name)}"
 	title="\${${function.taglib.shortName}:${function.name}()}"
-	dateModified="${ao:getLastModified(tldRef.servletPath)}"
+	dateCreated="${dates.created}"
+	datePublished="${dates.published}"
+	dateModified="${dates.modified}"
+	dateReviewed="${dates.reviewed}"
 >
 	<core:parent
 		book="${tldRef.bookName}"

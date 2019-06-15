@@ -39,12 +39,16 @@ Arguments:
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
+<c:set var="dates" value="${taglib.taglibEffectiveDates}" />
 <core:page
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/"
 	title="${arg.title}"
 	shortTitle="${arg.shortTitle}"
-	dateModified="${ao:getLastModified(tldRef.servletPath)}"
+	dateCreated="${dates.created}"
+	datePublished="${dates.published}"
+	dateModified="${dates.modified}"
+	dateReviewed="${dates.reviewed}"
 >
 	<%-- TODO: file:file link to .tld file itself? --%>
 	<c:forEach var="description" items="${taglib.descriptions}">

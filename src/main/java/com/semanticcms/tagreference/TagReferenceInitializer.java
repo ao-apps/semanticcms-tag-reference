@@ -23,6 +23,7 @@
 package com.semanticcms.tagreference;
 
 import com.aoindustries.net.Path;
+import com.aoindustries.tld.parser.Dates;
 import com.aoindustries.tld.parser.Function;
 import com.aoindustries.tld.parser.Tag;
 import com.aoindustries.tld.parser.Taglib;
@@ -30,6 +31,8 @@ import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.controller.SemanticCMS;
 import com.semanticcms.core.model.BookRef;
 import com.semanticcms.core.model.ResourceRef;
+import com.semanticcms.core.resources.Resource;
+import com.semanticcms.core.resources.ResourceConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -44,6 +47,7 @@ import javax.servlet.ServletRegistration;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
+import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
 /**
@@ -133,6 +137,9 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		);
 	}
 
+	/**
+	 * The *.tld file is parsed entirely on start-up to maximize runtime performance.
+	 */
 	@Override
 	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
 		try {
@@ -142,8 +149,23 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			// Parse TLD
 			Taglib taglib;
 			{
-				try (InputStream tldIn = SemanticCMS.getInstance(servletContext).getBook(tldBookRef).getResources().getResource(tldRef.getPath()).getInputStream()) {
-					taglib = new Taglib(SUMMARY_CLASS, tldRef.toString(), DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
+				Resource tldResource = SemanticCMS.getInstance(servletContext).getBook(tldBookRef).getResources().getResource(tldRef.getPath());
+				try (ResourceConnection conn = tldResource.open()) {
+					long tldLastModified = conn.getLastModified();
+					try (InputStream tldIn = conn.getInputStream()) {
+						taglib = new Taglib(
+							SUMMARY_CLASS,
+							tldRef.toString(),
+							Dates.valueOf(
+								null,
+								null,
+								tldLastModified == 0 ? null : new DateTime(tldLastModified),
+								null
+							),
+							DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn),
+							apiLinks
+						);
+					}
 				}
 			}
 			// Dynamically add servlets

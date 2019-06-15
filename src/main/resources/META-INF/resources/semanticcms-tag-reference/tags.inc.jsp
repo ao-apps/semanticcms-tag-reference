@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -34,12 +34,16 @@ Arguments:
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
+<c:set var="dates" value="${taglib.tagsEffectiveDates}" />
 <core:page
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/tags"
 	title="Tag Summary"
 	shortTitle="Tags"
-	dateModified="${ao:getLastModified(tldRef.servletPath)}"
+	dateCreated="${dates.created}"
+	datePublished="${dates.published}"
+	dateModified="${dates.modified}"
+	dateReviewed="${dates.reviewed}"
 >
 	<%-- Add one child per tag --%>
 	<c:forEach var="tag" items="${taglib.tags}">
