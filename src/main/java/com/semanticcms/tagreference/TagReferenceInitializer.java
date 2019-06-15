@@ -22,6 +22,8 @@
  */
 package com.semanticcms.tagreference;
 
+import com.aoindustries.servlet.ServletContextCache;
+import com.aoindustries.tld.parser.Dates;
 import com.aoindustries.tld.parser.Function;
 import com.aoindustries.tld.parser.Tag;
 import com.aoindustries.tld.parser.Taglib;
@@ -40,6 +42,7 @@ import javax.servlet.ServletRegistration;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
+import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
 /**
@@ -97,6 +100,9 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
+	/**
+	 * The *.tld file is parsed entirely on start-up to maximize runtime performance.
+	 */
 	@Override
 	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
 		try {
@@ -109,7 +115,19 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				InputStream tldIn = servletContext.getResourceAsStream(tldServletPath);
 				if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
 				try {
-					taglib = new Taglib(SUMMARY_CLASS, tldRef.toString(), DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn), apiLinks);
+					long tldLastModified = ServletContextCache.getLastModified(servletContext, tldServletPath);
+					taglib = new Taglib(
+						SUMMARY_CLASS,
+						tldRef.toString(),
+						Dates.valueOf(
+							null,
+							null,
+							tldLastModified == 0 ? null : new DateTime(tldLastModified),
+							null
+						),
+						DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn),
+						apiLinks
+					);
 				} finally {
 					tldIn.close();
 				}

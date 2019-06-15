@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2019-06-12T19:31:52-0500"
+		dateModified="2019-06-13T04:34:22-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -69,15 +69,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						JSP taglib parser moved into its own project:
 						<ao:a href="https://aoindustries.com/ao-tld-parser/">AO TLD Parser</ao:a>.
 					</li>
-					<!--
-					<li>
-						TODO: Support specifying "datePublished", "dateModified" (and other dates) inside the tld file somehow.
-						Maybe inside a specialized comment: datePublished="2016-11-06T10:35:35-0600".
-						The effective dateModified would be the highest dateModified of the current page or all tags/functions it lists,
-							and the .tld file itself, since it has a generated version number.
-						This will help avoid all tag reference pages being considered modified on each deploy, which can distract search crawlers away from actually updated content.
-					</li>
-					-->
+					<li>Added support for dateCreated, datePublished, dateModified, and dateReviewed parsed from comments within the *.tld files.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
