@@ -42,6 +42,7 @@ Arguments:
 	path="${tldRef.path}/functions"
 	title="Function Summary"
 	shortTitle="Functions"
+	allowRobots="false"
 	dateCreated="${dates.created}"
 	datePublished="${dates.published}"
 	dateModified="${dates.modified}"
