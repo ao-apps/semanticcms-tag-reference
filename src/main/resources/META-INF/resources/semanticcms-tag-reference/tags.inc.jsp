@@ -40,7 +40,6 @@ Arguments:
 	path="${tldRef.path}/tags"
 	title="Tag Summary"
 	shortTitle="Tags"
-	allowRobots="false"
 	dateCreated="${dates.created}"
 	datePublished="${dates.published}"
 	dateModified="${dates.modified}"
