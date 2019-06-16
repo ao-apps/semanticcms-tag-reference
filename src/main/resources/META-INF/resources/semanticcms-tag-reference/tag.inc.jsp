@@ -42,7 +42,6 @@ Arguments:
 	book="${tldRef.bookName}"
 	path="${tldRef.path}/tag-${core:encodeUrlParam(tag.name)}"
 	title="<${tag.taglib.shortName}:${tag.name}>"
-	allowRobots="true"
 	dateCreated="${dates.created}"
 	datePublished="${dates.published}"
 	dateModified="${dates.modified}"

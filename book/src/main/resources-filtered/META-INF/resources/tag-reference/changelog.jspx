@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2019-06-15T15:33:20-0500"
+		dateModified="2019-06-16T01:10:23-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -70,12 +70,6 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						<ao:a href="https://aoindustries.com/ao-tld-parser/">AO TLD Parser</ao:a>.
 					</li>
 					<li>Added support for dateCreated, datePublished, dateModified, and dateReviewed parsed from comments within the *.tld files.</li>
-					<li>Set <code>/tags</code> and <code>/functions</code> to <code>allowRobots="false"</code>.
-						<p>
-							These pages are duplicate views of the tags and functions listed in the main TLD page.
-							They offer no direct benefit in search indexes.
-						</p>
-					</li>
 				</ul>
 			</changelog:release>
 		</c:if>
