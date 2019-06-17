@@ -39,5 +39,4 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		datePublished="2016-11-06T10:24:23-0600"
 		dateModified="${ao:getLastModified('index.html')}"
 	/>
-	<!-- TODO: Pick-up javadocs version, not pom version, in title, here and elsewhere -->
 </jsp:root>
