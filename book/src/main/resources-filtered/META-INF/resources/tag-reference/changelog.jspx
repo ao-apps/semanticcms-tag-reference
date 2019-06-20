@@ -36,7 +36,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2019-06-19T09:48:11-0500"
+		dateModified="2019-06-20T15:39:53-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -51,27 +51,36 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				groupId="@{documented.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{documented.scm.url}"
-			>
-				<ul>
-					<li>
-						Changed generated "Tag Summary" and "Function Summary" from
-						<ao:a href="https://www.w3.org/TR/html5/sections.html#the-section-element"><![CDATA[&lt;section&gt;]]></ao:a>
-						to <ao:a href="https://www.w3.org/TR/html5/sections.html#the-nav-element"><![CDATA[&lt;nav&gt;]]></ao:a>.
-					</li>
-					<li>Using managed dependencies:
-						<ol>
-							<li>This project uses managed dependencies.</li>
-							<li>This project's managed dependencies may also be imported by other projects.</li>
-						</ol>
-					</li>
-					<li>
-						JSP taglib parser moved into its own project:
-						<ao:a href="https://aoindustries.com/ao-tld-parser/">AO TLD Parser</ao:a>.
-					</li>
-					<li>Added support for dateCreated, datePublished, dateModified, and dateReviewed parsed from comments within the *.tld files.</li>
-				</ul>
-			</changelog:release>
+			/>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.2.0"
+			datePublished="2019-06-20T15:39:53-0500"
+			groupId="@{documented.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{documented.scm.url}"
+		>
+			<ul>
+				<li>
+					Changed generated "Tag Summary" and "Function Summary" from
+					<ao:a href="https://www.w3.org/TR/html5/sections.html#the-section-element"><![CDATA[&lt;section&gt;]]></ao:a>
+					to <ao:a href="https://www.w3.org/TR/html5/sections.html#the-nav-element"><![CDATA[&lt;nav&gt;]]></ao:a>.
+				</li>
+				<li>Using managed dependencies:
+					<ol>
+						<li>This project uses managed dependencies.</li>
+						<li>This project's managed dependencies may also be imported by other projects.</li>
+					</ol>
+				</li>
+				<li>
+					JSP taglib parser moved into its own project:
+					<ao:a href="https://aoindustries.com/ao-tld-parser/">AO TLD Parser</ao:a>.
+				</li>
+				<li>Added support for dateCreated, datePublished, dateModified, and dateReviewed parsed from comments within the *.tld files.</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
