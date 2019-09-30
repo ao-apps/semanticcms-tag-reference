@@ -49,7 +49,7 @@ Arguments:
 	<c:forEach var="tag" items="${taglib.tags}">
 		<core:child
 			book="${tldRef.bookName}"
-			page="${tldRef.path}/tag-${core:encodeUrlParam(tag.name)}"
+			page="${tldRef.path}/tag-${ao:decodeURI(ao:encodePath(tag.name))}"
 		/>
 	</c:forEach>
 	<ao:include

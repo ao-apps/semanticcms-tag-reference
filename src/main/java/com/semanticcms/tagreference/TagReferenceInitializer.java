@@ -22,6 +22,9 @@
  */
 package com.semanticcms.tagreference;
 
+import com.aoindustries.net.IRI;
+import com.aoindustries.net.URIComponent;
+import com.aoindustries.net.URIDecoder;
 import com.aoindustries.servlet.ServletContextCache;
 import com.aoindustries.tld.parser.Dates;
 import com.aoindustries.tld.parser.Function;
@@ -30,7 +33,6 @@ import com.aoindustries.tld.parser.Taglib;
 import com.semanticcms.core.model.PageRef;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -58,13 +60,6 @@ import org.xml.sax.SAXException;
  * </ol>
  */
 abstract public class TagReferenceInitializer implements ServletContainerInitializer {
-
-	/**
-	 * The encoding used within path encoding.
-	 * We do not expect special characters in tag or function names but we still
-	 * encode them because the future is an unknown place (wink).
-	 */
-	private static final String ENCODING = "UTF-8";
 
 	/**
 	 * The css class that marks an element as being a summary.
@@ -154,7 +149,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				}
 				for(Tag tag : taglib.getTags()) {
 					// /path/taglib.tld/tag-tagName
-					String tagServletUrlPattern = tldServletPath + "/tag-" + URLEncoder.encode(tag.getName(), ENCODING);
+					String tagServletUrlPattern = tldServletPath + "/tag-" + URIDecoder.decodeURI(URIComponent.BASE.encode(tag.getName(), IRI.ENCODING.name()), IRI.ENCODING.name());
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						tagServletUrlPattern,
 						new TagServlet(tldRef, tag, apiLinks)
@@ -174,7 +169,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				}
 				for(Function function : taglib.getFunctions()) {
 					// /path/taglib.tld/function-functionName
-					String functionServletUrlPattern = tldServletPath + "/function-" + URLEncoder.encode(function.getName(), ENCODING);
+					String functionServletUrlPattern = tldServletPath + "/function-" + URIDecoder.decodeURI(URIComponent.BASE.encode(function.getName(), IRI.ENCODING.name()), IRI.ENCODING.name());
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionServletUrlPattern,
 						new FunctionServlet(tldRef, function, apiLinks)
