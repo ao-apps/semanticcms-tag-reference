@@ -51,7 +51,7 @@ Arguments:
 	<c:forEach var="function" items="${taglib.functions}">
 		<core:child
 			book="${tldRef.bookName}"
-			page="${tldRef.path}/function-${core:encodeUrlParam(function.name)}"
+			page="${tldRef.path}/function-${ao:decodeURI(ao:encodePath(function.name))}"
 		/>
 	</c:forEach>
 	<ao:include

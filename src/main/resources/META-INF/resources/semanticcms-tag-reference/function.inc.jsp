@@ -41,7 +41,7 @@ Arguments:
 <c:set var="dates" value="${function.dates}" />
 <core:page
 	book="${tldRef.bookName}"
-	path="${tldRef.path}/function-${core:encodeUrlParam(function.name)}"
+	path="${tldRef.path}/function-${ao:decodeURI(ao:encodePath(function.name))}"
 	title="\${${function.taglib.shortName}:${function.name}()}"
 	dateCreated="${dates.created}"
 	datePublished="${dates.published}"

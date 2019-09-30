@@ -40,7 +40,7 @@ Arguments:
 <c:set var="dates" value="${tag.dates}" />
 <core:page
 	book="${tldRef.bookName}"
-	path="${tldRef.path}/tag-${core:encodeUrlParam(tag.name)}"
+	path="${tldRef.path}/tag-${ao:decodeURI(ao:encodePath(tag.name))}"
 	title="<${tag.taglib.shortName}:${tag.name}>"
 	dateCreated="${dates.created}"
 	datePublished="${dates.published}"

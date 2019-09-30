@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -40,7 +40,7 @@ Arguments:
 			<tr>
 				<td style="white-space:nowrap">
 					<c:set var="tagName" value="${tag.name}" />
-					&lt;<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{core:encodeUrlParam(tagName)}"
+					&lt;<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{ao:decodeURI(ao:encodePath(tagName))}"
 						><strong><ao:out value="${tagName}"
 					/></strong></core:link
 				>&gt;</td>
