@@ -54,7 +54,7 @@ Arguments:
 				</td>
 				<td style="white-space:nowrap">
 					<c:set var="functionName" value="${function.name}" />
-					\${<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{ao:decodeURI(ao:encodePath(functionName))}"
+					\${<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{ao:decodeURI(ao:encodeURIComponent(functionName))}"
 						><strong><ao:out value="${functionName}"
 					/></strong></core:link>(<c:forEach var="paramType" items="${fn:split(signatureParams, ',')}" varStatus="paramTypeStatus"
 						><ao:include
