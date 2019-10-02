@@ -40,7 +40,7 @@ Arguments:
 			<tr>
 				<td style="white-space:nowrap">
 					<c:set var="tagName" value="${tag.name}" />
-					&lt;<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{ao:decodeURI(ao:encodePath(tagName))}"
+					&lt;<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/tag-#{ao:decodeURI(ao:encodeURIComponent(tagName))}"
 						><strong><ao:out value="${tagName}"
 					/></strong></core:link
 				>&gt;</td>
