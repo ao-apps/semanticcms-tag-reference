@@ -22,9 +22,8 @@
  */
 package com.semanticcms.tagreference;
 
-import com.aoindustries.net.IRI;
-import com.aoindustries.net.URIComponent;
 import com.aoindustries.net.URIDecoder;
+import com.aoindustries.net.URIEncoder;
 import com.aoindustries.servlet.ServletContextCache;
 import com.aoindustries.tld.parser.Dates;
 import com.aoindustries.tld.parser.Function;
@@ -149,7 +148,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				}
 				for(Tag tag : taglib.getTags()) {
 					// /path/taglib.tld/tag-tagName
-					String tagServletUrlPattern = tldServletPath + "/tag-" + URIDecoder.decodeURI(URIComponent.BASE.encode(tag.getName(), IRI.ENCODING.name()), IRI.ENCODING.name());
+					String tagServletUrlPattern = tldServletPath + "/tag-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(tag.getName()));
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						tagServletUrlPattern,
 						new TagServlet(tldRef, tag, apiLinks)
@@ -169,7 +168,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				}
 				for(Function function : taglib.getFunctions()) {
 					// /path/taglib.tld/function-functionName
-					String functionServletUrlPattern = tldServletPath + "/function-" + URIDecoder.decodeURI(URIComponent.BASE.encode(function.getName(), IRI.ENCODING.name()), IRI.ENCODING.name());
+					String functionServletUrlPattern = tldServletPath + "/function-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(function.getName()));
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionServletUrlPattern,
 						new FunctionServlet(tldRef, function, apiLinks)
