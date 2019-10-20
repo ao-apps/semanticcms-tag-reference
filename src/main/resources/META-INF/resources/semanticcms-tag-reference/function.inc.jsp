@@ -99,7 +99,7 @@ Arguments:
 								<c:forEach var="displayName" items="${function.displayNames}" varStatus="displayNameStatus">
 									<ao:out value="${displayName}" type="xhtml" />
 									<c:if test="${!displayNameStatus.last}">
-										<br />
+										<ao:br />
 									</c:if>
 								</c:forEach>
 							</ao:when>
