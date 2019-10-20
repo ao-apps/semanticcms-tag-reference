@@ -93,7 +93,7 @@ Arguments:
 								<c:forEach var="displayName" items="${tag.displayNames}" varStatus="displayNameStatus">
 									<ao:out value="${displayName}" type="xhtml" />
 									<c:if test="${!displayNameStatus.last}">
-										<br />
+										<ao:br />
 									</c:if>
 								</c:forEach>
 							</ao:when>
@@ -157,7 +157,7 @@ Arguments:
 									<td>
 										<ao:out value="${attribute.rtexprvalue ? 'Runtime' : 'Static'}" />
 										<c:if test="${attribute.fragment}">
-											<br />Fragment
+											<ao:br />Fragment
 										</c:if>
 									</td>
 									<td>

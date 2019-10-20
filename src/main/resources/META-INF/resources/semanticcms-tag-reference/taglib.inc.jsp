@@ -72,7 +72,7 @@ Arguments:
 							<c:forEach var="displayName" items="${taglib.displayNames}" varStatus="displayNameStatus">
 								<ao:out value="${displayName}" type="xhtml" />
 								<c:if test="${!displayNameStatus.last}">
-									<br />
+									<ao:br />
 								</c:if>
 							</c:forEach>
 						</td>
