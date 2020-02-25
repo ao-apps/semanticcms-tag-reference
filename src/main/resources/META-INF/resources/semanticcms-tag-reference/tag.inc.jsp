@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -61,7 +61,7 @@ Arguments:
 		</section:section>
 	</c:if>
 	<section:section label="Tag Information">
-		<table class="thinTable">
+		<table class="ao-grid">
 			<tbody>
 				<tr>
 					<th>Tag Class:</th>
@@ -116,7 +116,7 @@ Arguments:
 	<section:section label="Attributes">
 		<ao:choose>
 			<ao:when test="#{!empty tag.attributes}">
-				<table class="thinTable">
+				<table class="ao-grid">
 					<thead>
 						<tr>
 							<th>Name</th>
