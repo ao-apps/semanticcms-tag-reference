@@ -68,7 +68,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 								<!-- Direct -->
 								<link>https://aoindustries.com/ao-net-types/apidocs/</link>
 								<link>https://aoindustries.com/ao-servlet-util/apidocs/</link>
-								<!-- No apidocs: <groupId>com.aoindustries</groupId><artifactId>ao-style</artifactId> -->
+								<link>https://aoindustries.com/ao-style/apidocs/</link>
 								<link>https://aoindustries.com/ao-taglib/apidocs/</link>
 								<link>https://aoindustries.com/ao-tld-parser/apidocs/</link>
 								<link>https://semanticcms.com/core/model/apidocs/</link>
