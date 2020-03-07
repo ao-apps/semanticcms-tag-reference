@@ -35,8 +35,6 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 	<properties>
 		<!-- These values are copied from the project being documented -->
 		<documented.artifactId>semanticcms-tag-reference</documented.artifactId>
-		<documented.javaVersion>1.8</documented.javaVersion>
-		<documented.javac.link.javaApi>${javac.link.javaApi.jdk8}</documented.javac.link.javaApi>
 		<documented.name>SemanticCMS Tag Reference²</documented.name>
 		<documented.shortTitle>Tag Reference</documented.shortTitle>
 		<documented.description>Generates tag library descriptor documentation for .tld files.</documented.description>
