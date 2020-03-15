@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-03-07T06:01:29-0600"
+		dateModified="2020-03-15T00:27:10-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -63,6 +63,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						Now outputting HTML or XHTML based on the current response content type.
 						This should eliminate validator warnings when used as HTML.
 					</li>
+					<li>Updated dependencies.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
