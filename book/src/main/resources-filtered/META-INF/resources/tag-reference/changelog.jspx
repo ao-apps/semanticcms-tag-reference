@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2019-11-02T16:41:06-0500"
+		dateModified="2020-03-15T00:27:10-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -56,6 +56,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				<ul>
 					<li>Added <core:link book="/core/model" page="/" /> domain support.</li>
 					<li>Minimum Java version changed from 1.7 to 1.8.</li>
+					<li>Updated dependencies.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
