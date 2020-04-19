@@ -39,7 +39,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<documented.shortTitle>Tag Reference</documented.shortTitle>
 		<documented.description>Generates tag library descriptor documentation for .tld files.</documented.description>
 
-		<description.html><![CDATA[Documentation for <a target="_top" href="${project.url}">${documented.name}</a> in <a target="_top" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
+		<description.html><![CDATA[Documentation for <a target="${javadoc.target}" href="${project.url}">${documented.name}</a> in <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
 	</properties>
 
 	<name>SemanticCMS Tag Reference² Book</name>
