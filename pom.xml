@@ -121,7 +121,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			</dependency>
 			<!-- Runtime Direct -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-taglib</artifactId><version>5.0.0${POST-SNAPSHOT}</version>
+				<groupId>com.aoindustries</groupId><artifactId>ao-taglib</artifactId><version>5.0.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<dependency>
 				<groupId>com.semanticcms</groupId><artifactId>semanticcms-core-taglib</artifactId><version>1.12.0${POST-SNAPSHOT}</version>
