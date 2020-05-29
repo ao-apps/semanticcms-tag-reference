@@ -138,7 +138,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		Set<String> packages = packageListsByJavadocLink.get(javadocLink);
 		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
 		for(String p : packages) {
-			combinedApiLinks.put(p + ".", javadocLink);
+			assert !p.endsWith(".");
+			combinedApiLinks.put(p, javadocLink);
 		}
 	}
 
@@ -148,6 +149,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private final String tldPath;
 	private final Map<String,String> apiLinks;
 
+	@SuppressWarnings("unchecked")
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
@@ -155,7 +157,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String tldPath,
 		String javadocLinkJavaSE,
 		String javadocLinkJavaEE,
-		Map<String,String> additionalApiLinks
+		Map<String,String> ... additionalApiLinks
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
@@ -181,9 +183,39 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		addPackages(javadocLinkJavaSE, combinedApiLinks);
 
 		// All additional API links added last, to override any packages in Java SE, JavaMail, or Java EE
-		combinedApiLinks.putAll(additionalApiLinks);
+		if(additionalApiLinks != null) {
+			for(Map<String,String> map : additionalApiLinks) {
+				for(Map.Entry<String,String> entry : map.entrySet()) {
+					String p = entry.getKey();
+					// Strip trailing '.' for backward compatibility
+					while(p.endsWith(".")) p = p.substring(0, p.length() - 1);
+					combinedApiLinks.put(p, entry.getValue());
+				}
+			}
+		}
 
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
+	}
+
+	@SuppressWarnings("unchecked")
+	public TagReferenceInitializer(
+		String title,
+		String shortTitle,
+		String tldBook,
+		String tldPath,
+		String javadocLinkJavaSE,
+		String javadocLinkJavaEE,
+		Map<String,String> additionalApiLinks
+	) {
+		this(
+			title,
+			shortTitle,
+			tldBook,
+			tldPath,
+			javadocLinkJavaSE,
+			javadocLinkJavaEE,
+			additionalApiLinks == null ? null : (Map<String,String>[])new Map<?,?>[] {additionalApiLinks}
+		);
 	}
 
 	/**

@@ -35,9 +35,10 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="@{documented.shortTitle}"
 		description="@{documented.description}"
 		datePublished="2016-11-06T10:40:21-0600"
-		dateModified="2020-03-24T14:01:33-05:00"
+		dateModified="2020-05-28T23:51:24-05:00"
 	>
 		<core:child page="changelog.jspx" />
+		<core:child page="tag-reference.tld/" />
 		<core:child page="apidocs/index.jspx" />
 		<header>
 			<ao:include
@@ -58,6 +59,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<ul>
 				<li><core:link page="index.jspx">Project Home</core:link></li>
 				<li><core:link page="changelog.jspx">Changelog</core:link></li>
+				<li><core:link page="tag-reference.tld/">Taglib Reference</core:link></li>
 				<li><core:link page="apidocs/index.jspx">API Docs</core:link></li>
 				<li><ao:a href="https://search.maven.org/artifact/${ao:encodeURIComponent('@{project.groupId}')}/${ao:encodeURIComponent('@{documented.artifactId}')}">Maven Central Repository</ao:a></li>
 				<li><ao:a href="@{project.scm.url}">GitHub</ao:a></li>
