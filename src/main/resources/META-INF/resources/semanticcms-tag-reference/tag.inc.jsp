@@ -86,11 +86,11 @@ Arguments:
 				</tr>
 				<tr>
 					<th>Body Content:</th>
-					<td><ao:out value="${tag.bodyContent}" /></td>
+					<td style="white-space:nowrap"><ao:out value="${tag.bodyContent}" /></td>
 				</tr>
 				<tr>
 					<th>Display Name:</th>
-					<td>
+					<td style="white-space:nowrap">
 						<c:choose>
 							<c:when test="${!empty tag.displayNames}">
 								<c:forEach var="displayName" items="${tag.displayNames}" varStatus="displayNameStatus">
@@ -109,7 +109,7 @@ Arguments:
 				<c:if test="${tag.dynamicAttributes}">
 					<tr>
 						<th>Dynamic Attributes:</th>
-						<td><ao:out value="${tag.dynamicAttributes}" /></td>
+						<td style="white-space:nowrap"><ao:out value="${tag.dynamicAttributes}" /></td>
 					</tr>
 				</c:if>
 			</tbody>
@@ -154,10 +154,10 @@ Arguments:
 								<c:set var="row" value="${row + 1}" />
 								<tr>
 									<c:if test="${row == 1}">
-										<td rowspan="${rowspan}"><ao:out value="${attribute.name}" /></td>
-										<td rowspan="${rowspan}"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.name}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
-									<td>
+									<td style="white-space:nowrap">
 										<ao:out value="${attribute.rtexprvalue ? 'Runtime' : 'Static'}" />
 										<c:if test="${attribute.fragment}">
 											<ao:br />Fragment
@@ -183,10 +183,10 @@ Arguments:
 								<c:set var="row" value="${row + 1}" />
 								<tr>
 									<c:if test="${row == 1}">
-										<td rowspan="${rowspan}"><ao:out value="${attribute.name}" /></td>
-										<td rowspan="${rowspan}"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.name}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
-									<td>Deferred-Method</td>
+									<td style="white-space:nowrap">Deferred-Method</td>
 									<td style="white-space:nowrap"><tagref:linkedSignature apiLinks="${apiLinks}" signature="${deferredMethod.methodSignature}" /></td>
 									<c:if test="${row == 1}">
 										<td rowspan="${rowspan}">
@@ -201,10 +201,10 @@ Arguments:
 								<c:set var="row" value="${row + 1}" />
 								<tr>
 									<c:if test="${row == 1}">
-										<td rowspan="${rowspan}"><ao:out value="${attribute.name}" /></td>
-										<td rowspan="${rowspan}"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.name}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
-									<td>Deferred-Value</td>
+									<td style="white-space:nowrap">Deferred-Value</td>
 									<td style="white-space:nowrap">
 										<tagref:linkedClassName
 											apiLinks="${apiLinks}"
