@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,10 +35,15 @@ import com.semanticcms.core.model.BookRef;
 import com.semanticcms.core.model.ResourceRef;
 import com.semanticcms.core.resources.Resource;
 import com.semanticcms.core.resources.ResourceConnection;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletContainerInitializer;
@@ -70,6 +75,78 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 */
 	private static final String SUMMARY_CLASS = "semanticcms-tag-reference-summary";
 
+	/**
+	 * The property name used for JavaMail API.
+	 */
+	private static final String JAVAMAIL_PROPERTY = "javadoc.link.javamail";
+
+	/**
+	 * Bundled package lists
+	 */
+	private static final Map<String,Set<String>> packageListsByJavadocLink = new HashMap<>();
+
+	private static void addPackageList(String property) throws IOException {
+		String javadocLink = Maven.properties.getProperty(property);
+		try (
+			BufferedReader in = new BufferedReader(
+				new InputStreamReader(
+					TagReferenceInitializer.class.getResourceAsStream(property),
+					StandardCharsets.UTF_8
+				)
+			)
+		) {
+			Set<String> packages = new LinkedHashSet<>();
+			String line;
+			while((line = in.readLine()) != null) {
+				line = line.trim();
+				if(
+					!line.isEmpty()
+					&& !line.startsWith("module:")
+				) {
+					if(!packages.add(line)) throw new AssertionError("Duplicate package in " + property + ": " + line);
+				}
+			}
+			if(packageListsByJavadocLink.put(javadocLink, packages) != null) throw new AssertionError("Duplicate javadocLink from " + property + ": " + javadocLink);
+		}
+	}
+
+	static {
+		try {
+			// Note: This list matches ao-oss-parent/pom.xml
+			addPackageList("javadoc.link.javase.5");
+			addPackageList("javadoc.link.javase.6");
+			addPackageList("javadoc.link.javase.7");
+			addPackageList("javadoc.link.javase.8");
+			addPackageList("javadoc.link.javase.9");
+			addPackageList("javadoc.link.javase.10");
+			addPackageList("javadoc.link.javase.11");
+			addPackageList("javadoc.link.javase.12");
+			addPackageList("javadoc.link.javase.13");
+			addPackageList("javadoc.link.javase.14");
+			addPackageList("javadoc.link.javase.15");
+
+			// Note: This list matches ao-oss-parent/pom.xml
+			addPackageList("javadoc.link.javamail");
+			addPackageList("javadoc.link.javaee.5");
+			addPackageList("javadoc.link.javaee.6");
+			addPackageList("javadoc.link.javaee.7");
+			addPackageList("javadoc.link.javaee.8");
+		} catch(IOException e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
+	/**
+	 * Adds the packages for the given API URL.
+	 */
+	private static void addPackages(String javadocLink, Map<String,String> combinedApiLinks) {
+		Set<String> packages = packageListsByJavadocLink.get(javadocLink);
+		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
+		for(String p : packages) {
+			combinedApiLinks.put(p + ".", javadocLink);
+		}
+	}
+
 	private final String title;
 	private final String shortTitle;
 	private final ResourceRef tldRef;
@@ -79,8 +156,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String title,
 		String shortTitle,
 		ResourceRef tldRef,
-		String javaApiLink,
-		String javaEEApiLink,
+		String javadocLinkJavaSE,
+		String javadocLinkJavaEE,
 		Map<String,String> additionalApiLinks
 	) {
 		this.title = title;
@@ -88,11 +165,26 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this.tldRef = tldRef;
 		// Add package matches
 		Map<String,String> combinedApiLinks = new LinkedHashMap<>();
-		combinedApiLinks.put("java.io.", javaApiLink);
-		combinedApiLinks.put("java.lang.", javaApiLink);
-		combinedApiLinks.put("java.util.", javaApiLink);
-		// TODO: Java EE as-needed
+		// TODO: Obtain this dynamically from an ao-javadoc-offlinelinks package
+		// TODO: This package would contain many of the packages we use that are not obtainable from Maven "javadoc" classifier artifacts
+		// TODO: This package would include javase and javaee, multiple versions, similar to how we have done here
+		// TODO: This package would use the "Project" class to dynamically find the version currently deployed
+		// TODO: This package would also allow the registration of additional packages, perhaps via "Service" mechanism
+		// TODO: This package would also be used for offline links during Maven builds, instead of relying on external sites to be online to be able to build
+		// TODO: Additional API Links might be by project in this case, too, including package-list/element-list
+
+		// Java EE packages added before Java SE, so when a package exists in both it will use Java SE (for example javax.annotation)
+		addPackages(javadocLinkJavaEE, combinedApiLinks);
+
+		// JavaMail added after Java EE, so when a package exists in both it will use JavaMail
+		addPackages(Maven.properties.getProperty(JAVAMAIL_PROPERTY), combinedApiLinks);
+
+		// Java SE packages added last, to override any packages found in JavaMail or Java EE
+		addPackages(javadocLinkJavaSE, combinedApiLinks);
+
+		// All additional API links added last, to override any packages in Java SE, JavaMail, or Java EE
 		combinedApiLinks.putAll(additionalApiLinks);
+
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
