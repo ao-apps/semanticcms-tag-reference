@@ -29,7 +29,7 @@ public class TagReferenceTldInitializer extends TagReferenceInitializer {
 
 	public TagReferenceTldInitializer() {
 		super(
-			"Tag Reference Taglib Reference",
+			Maven.properties.getProperty("project.name") + " Taglib Reference",
 			"Taglib Reference",
 			"/tag-reference",
 			"/tag-reference.tld",
