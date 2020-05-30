@@ -21,5 +21,4 @@
 # along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# TODO: Add top-comment to this file in all other projects
 com.semanticcms.tagreference.book.TagReferenceTldInitializer
