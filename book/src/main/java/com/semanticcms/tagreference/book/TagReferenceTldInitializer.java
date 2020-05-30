@@ -34,7 +34,7 @@ public class TagReferenceTldInitializer extends TagReferenceInitializer {
 
 	public TagReferenceTldInitializer() throws ValidationException {
 		super(
-			"Tag Reference Taglib Reference",
+			Maven.properties.getProperty("project.name") + " Taglib Reference",
 			"Taglib Reference",
 			new ResourceRef(
 				new BookRef(
