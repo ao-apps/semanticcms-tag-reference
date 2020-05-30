@@ -30,13 +30,17 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 The view of function summaries at /path/taglib.tld/functions
 
 Arguments:
-	arg.tldRef    The ResourceRef for the TLD file itself
-	arg.taglib    The parsed taglib
-	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
-	              to javadoc prefixes (including trailing '/')
+	arg.tldRef        The ResourceRef for the TLD file itself
+	arg.taglib        The parsed taglib
+	arg.requireLinks  When true, will fail when a class does not map to a
+	                  package in apiLinks.
+	                  Defaults to false.
+	arg.apiLinks      The mapping of Java package name (with optional trailing '.')
+	                  to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
+<c:set var="requireLinks" value="${arg.requireLinks}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
 <c:set var="dates" value="${taglib.functionsEffectiveDates}" />
 <core:page
@@ -60,6 +64,7 @@ Arguments:
 		page="function-summary.inc.jsp"
 		arg.tldRef="${tldRef}"
 		arg.taglib="${taglib}"
+		arg.requireLinks="${requireLinks}"
 		arg.apiLinks="${apiLinks}"
 	/>
 </core:page>

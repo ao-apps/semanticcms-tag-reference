@@ -46,15 +46,18 @@ public class FunctionServlet extends PageServlet {
 
 	private final ResourceRef tldRef;
 	private final Function function;
+	private final boolean requireLinks;
 	private final Map<String,String> apiLinks;
 
 	public FunctionServlet(
 		ResourceRef tldRef,
 		Function function,
+		boolean requireLinks,
 		Map<String,String> apiLinks
 	) {
 		this.tldRef = tldRef;
 		this.function = function;
+		this.requireLinks = requireLinks;
 		this.apiLinks = apiLinks;
 	}
 
@@ -66,6 +69,7 @@ public class FunctionServlet extends PageServlet {
 		Map<String,Object> args = new LinkedHashMap<>();
 		args.put("tldRef", tldRef);
 		args.put("function", function);
+		args.put("requireLinks", requireLinks);
 		args.put("apiLinks", apiLinks);
 
 		// TODO: Is there a way to get rid of this forward/include duality?

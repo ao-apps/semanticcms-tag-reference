@@ -32,13 +32,17 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 The view of one tag at /path/taglib.tld/tag-tagName
 
 Arguments:
-	arg.tldRef    The ResourceRef for the TLD file itself
-	arg.tag       The parsed tag
-	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
-	              to javadoc prefixes (including trailing '/')
+	arg.tldRef        The ResourceRef for the TLD file itself
+	arg.tag           The parsed tag
+	arg.requireLinks  When true, will fail when a class does not map to a
+	                  package in apiLinks.
+	                  Defaults to false.
+	arg.apiLinks      The mapping of Java package name (with optional trailing '.')
+	                  to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tag" value="${arg.tag}" />
+<c:set var="requireLinks" value="${arg.requireLinks}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
 <c:set var="dates" value="${tag.dates}" />
 <core:page
@@ -68,7 +72,7 @@ Arguments:
 				<tr>
 					<th>Tag Class:</th>
 					<td style="white-space:nowrap">
-						<tagref:linkedClassName apiLinks="${apiLinks}" className="${tag.tagClass}" />
+						<tagref:linkedClassName requireLinks="${requireLinks}" apiLinks="${apiLinks}" className="${tag.tagClass}" />
 					</td>
 				</tr>
 				<tr>
@@ -76,7 +80,7 @@ Arguments:
 					<td style="white-space:nowrap">
 						<c:choose>
 							<c:when test="${!empty tag.teiClass}">
-								<tagref:linkedClassName apiLinks="${apiLinks}" className="${tag.teiClass}" />
+								<tagref:linkedClassName requireLinks="${requireLinks}" apiLinks="${apiLinks}" className="${tag.teiClass}" />
 							</c:when>
 							<c:otherwise>
 								<em>None</em>
@@ -165,6 +169,7 @@ Arguments:
 									</td>
 									<td style="white-space:nowrap">
 										<tagref:linkedClassName
+											requireLinks="${requireLinks}"
 											apiLinks="${apiLinks}"
 											className="${!empty attribute.type ? attribute.type : attribute.fragment ? 'javax.servlet.jsp.tagext.JspFragment' : 'java.lang.String'}"
 											shortName="true"
@@ -187,7 +192,7 @@ Arguments:
 										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
 									<td style="white-space:nowrap">Deferred-Method</td>
-									<td style="white-space:nowrap"><tagref:linkedSignature apiLinks="${apiLinks}" signature="${deferredMethod.methodSignature}" /></td>
+									<td style="white-space:nowrap"><tagref:linkedSignature requireLinks="${requireLinks}" apiLinks="${apiLinks}" signature="${deferredMethod.methodSignature}" /></td>
 									<c:if test="${row == 1}">
 										<td rowspan="${rowspan}">
 											<c:forEach var="description" items="${attribute.descriptions}">
@@ -207,6 +212,7 @@ Arguments:
 									<td style="white-space:nowrap">Deferred-Value</td>
 									<td style="white-space:nowrap">
 										<tagref:linkedClassName
+											requireLinks="${requireLinks}"
 											apiLinks="${apiLinks}"
 											className="${!empty deferredValue.type ? deferredValue.type : 'java.lang.Object'}"
 											shortName="true"

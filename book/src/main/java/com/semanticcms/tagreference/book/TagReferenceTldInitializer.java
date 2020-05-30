@@ -43,6 +43,7 @@ public class TagReferenceTldInitializer extends TagReferenceInitializer {
 				),
 				Path.valueOf("/tag-reference.tld")
 			),
+			true,
 			Maven.properties.getProperty("documented.javadoc.link.javase"),
 			Maven.properties.getProperty("documented.javadoc.link.javaee"),
 			// Self

@@ -31,25 +31,29 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 Shared function summary implementation.
 
 Arguments:
-	arg.tldRef    The ResourceRef for the TLD file itself
-	arg.taglib    The parsed taglib
-	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
-	              to javadoc prefixes (including trailing '/')
+	arg.tldRef        The ResourceRef for the TLD file itself
+	arg.taglib        The parsed taglib
+	arg.requireLinks  When true, will fail when a class does not map to a
+	                  package in apiLinks.
+	                  Defaults to false.
+	arg.apiLinks      The mapping of Java package name (with optional trailing '.')
+	                  to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
+<c:set var="requireLinks" value="${arg.requireLinks}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
 <table class="ao-grid">
 	<tbody>
 		<c:forEach var="function" items="${taglib.functions}">
 			<tr>
 				<td style="white-space:nowrap">
-					<tagref:linkedSignatureReturn apiLinks="${apiLinks}" signature="${function.functionSignature}" shortName="true" />
+					<tagref:linkedSignatureReturn requireLinks="${requireLinks}" apiLinks="${apiLinks}" signature="${function.functionSignature}" shortName="true" />
 				</td>
 				<td style="white-space:nowrap">
 					\${<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{ao:decodeURI(ao:encodeURIComponent(function.name))}"
 						><strong><ao:out value="${function.name}"
-					/></strong></core:link><tagref:linkedSignatureParams apiLinks="${apiLinks}" signature="${function.functionSignature}" shortName="true"
+					/></strong></core:link><tagref:linkedSignatureParams requireLinks="${requireLinks}" apiLinks="${apiLinks}" signature="${function.functionSignature}" shortName="true"
 				/>}</td>
 				<td><ao:out value="${function.descriptionSummary}" type="xhtml" /></td>
 			</tr>
