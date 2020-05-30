@@ -230,9 +230,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			// Parse TLD
 			Taglib taglib;
 			{
-				InputStream tldIn = servletContext.getResourceAsStream(tldServletPath);
-				if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
-				try {
+				try (InputStream tldIn = servletContext.getResourceAsStream(tldServletPath)) {
+					if(tldIn == null) throw new IOException("TLD not found: " + tldServletPath);
 					long tldLastModified = ServletContextCache.getLastModified(servletContext, tldServletPath);
 					taglib = new Taglib(
 						SUMMARY_CLASS,
@@ -246,8 +245,6 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 						DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn),
 						apiLinks
 					);
-				} finally {
-					tldIn.close();
 				}
 			}
 			// Dynamically add servlets
