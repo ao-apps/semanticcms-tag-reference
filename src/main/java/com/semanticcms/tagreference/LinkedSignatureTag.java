@@ -41,6 +41,7 @@ public class LinkedSignatureTag extends TagSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	private boolean requireLinks;
 	private Map<String,String> apiLinks;
 	private String signature;
 	private boolean shortName;
@@ -50,9 +51,19 @@ public class LinkedSignatureTag extends TagSupport {
 	}
 
 	private void init() {
+		requireLinks = false;
 		apiLinks = null;
 		signature = null;
 		shortName = false;
+	}
+
+	/**
+	 * @param requireLinks  When {@code true}, will fail when a class does not map to a
+	 *                      package in {@linkplain #setApiLinks(java.util.Map) apiLinks}.
+	 *                      Defaults to {@code false}.
+	 */
+	public void setRequireLinks(boolean requireLinks) {
+		this.requireLinks = requireLinks;
 	}
 
 	/**
@@ -81,6 +92,7 @@ public class LinkedSignatureTag extends TagSupport {
 	// TODO: Use ao-fluent-html
 	public static void writeLinkedSignature(
 		PageContext pageContext,
+		boolean requireLinks,
 		Map<String,String> apiLinks,
 		String signature,
 		boolean shortName,
@@ -91,16 +103,16 @@ public class LinkedSignatureTag extends TagSupport {
 			int leftParen = signature.indexOf('(');
 			if(leftParen == -1) {
 				// No left parenthesis found, just run the whole thing through class name linking
-				LinkedClassNameTag.writeLinkedClassName(pageContext, apiLinks, signature, shortName, out);
+				LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature, shortName, out);
 			} else {
 				int space = signature.lastIndexOf(' ', leftParen - 1);
 				if(space != -1) {
 					// Space found, assume everything left of space is the return type
-					LinkedClassNameTag.writeLinkedClassName(pageContext, apiLinks, signature.substring(0, space), shortName, out);
+					LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature.substring(0, space), shortName, out);
 					out.append(' ');
 				}
 				encodeTextInXhtml(signature.substring(space + 1, leftParen).trim(), out);
-				LinkedClassNameTag.writeLinkedClassName(pageContext, apiLinks, signature.substring(leftParen), shortName, out);
+				LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature.substring(leftParen), shortName, out);
 			}
 		}
 	}
@@ -108,7 +120,7 @@ public class LinkedSignatureTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspTagException {
 		try {
-			writeLinkedSignature(pageContext, apiLinks, signature, shortName, pageContext.getOut());
+			writeLinkedSignature(pageContext, requireLinks, apiLinks, signature, shortName, pageContext.getOut());
 			return SKIP_BODY;
 		} catch(IOException err) {
 			throw new JspTagException(err.getMessage(), err);

@@ -147,6 +147,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private final String shortTitle;
 	private final String tldBook;
 	private final String tldPath;
+	private final boolean requireLinks;
 	private final Map<String,String> apiLinks;
 
 	@SuppressWarnings("unchecked")
@@ -155,6 +156,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String shortTitle,
 		String tldBook,
 		String tldPath,
+		boolean requireLinks,
 		String javadocLinkJavaSE,
 		String javadocLinkJavaEE,
 		Map<String,String> ... additionalApiLinks
@@ -163,6 +165,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this.shortTitle = shortTitle;
 		this.tldBook = tldBook;
 		this.tldPath = tldPath;
+		this.requireLinks = requireLinks;
 		// Add package matches
 		Map<String,String> combinedApiLinks = new LinkedHashMap<>();
 		// TODO: Obtain this dynamically from an ao-javadoc-offlinelinks package
@@ -203,6 +206,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String shortTitle,
 		String tldBook,
 		String tldPath,
+		boolean requireLinks,
 		String javadocLinkJavaSE,
 		String javadocLinkJavaEE,
 		Map<String,String> additionalApiLinks
@@ -212,9 +216,39 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			shortTitle,
 			tldBook,
 			tldPath,
+			requireLinks,
 			javadocLinkJavaSE,
 			javadocLinkJavaEE,
 			additionalApiLinks == null ? null : (Map<String,String>[])new Map<?,?>[] {additionalApiLinks}
+		);
+	}
+
+	/**
+	 * Calls {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)},
+	 * with {@code requireLinks = false} for backward compatibility.
+	 *
+	 * @deprecated  Please provide {@code requireLinks} to either {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
+	 *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map...)}
+	 */
+	@Deprecated
+	public TagReferenceInitializer(
+		String title,
+		String shortTitle,
+		String tldBook,
+		String tldPath,
+		String javadocLinkJavaSE,
+		String javadocLinkJavaEE,
+		Map<String,String> additionalApiLinks
+	) {
+		this(
+			title,
+			shortTitle,
+			tldBook,
+			tldPath,
+			false,
+			javadocLinkJavaSE,
+			javadocLinkJavaEE,
+			additionalApiLinks
 		);
 	}
 
@@ -242,8 +276,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 							tldLastModified == 0 ? null : new DateTime(tldLastModified),
 							null
 						),
-						DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn),
-						apiLinks
+						DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn)
 					);
 				}
 			}
@@ -253,7 +286,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 				String taglibServletUrlPattern = tldServletPath + "/";
 				ServletRegistration.Dynamic registration = servletContext.addServlet(
 					taglibServletUrlPattern,
-					new TaglibServlet(title, shortTitle, tldRef, taglib, apiLinks)
+					new TaglibServlet(title, shortTitle, tldRef, taglib, requireLinks, apiLinks)
 				);
 				registration.addMapping(taglibServletUrlPattern);
 			}
@@ -272,7 +305,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					String tagServletUrlPattern = tldServletPath + "/tag-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(tag.getName()));
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						tagServletUrlPattern,
-						new TagServlet(tldRef, tag, apiLinks)
+						new TagServlet(tldRef, tag, requireLinks, apiLinks)
 					);
 					registration.addMapping(tagServletUrlPattern);
 				}
@@ -283,7 +316,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					String functionsServletUrlPattern = tldServletPath + "/functions";
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionsServletUrlPattern,
-						new FunctionsServlet(tldRef, taglib, apiLinks)
+						new FunctionsServlet(tldRef, taglib, requireLinks, apiLinks)
 					);
 					registration.addMapping(functionsServletUrlPattern);
 				}
@@ -292,7 +325,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 					String functionServletUrlPattern = tldServletPath + "/function-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(function.getName()));
 					ServletRegistration.Dynamic registration = servletContext.addServlet(
 						functionServletUrlPattern,
-						new FunctionServlet(tldRef, function, apiLinks)
+						new FunctionServlet(tldRef, function, requireLinks, apiLinks)
 					);
 					registration.addMapping(functionServletUrlPattern);
 				}

@@ -38,6 +38,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 	<uri>@{project.url}</uri>
 	<tag>
 		<!-- datePublished="2020-05-28T23:51:24-05:00" -->
+		<!-- dateModified="2020-05-29T22:59:03-05:00" -->
 		<description><![CDATA[
 			<p class="semanticcms-tag-reference-summary">
 				Displays a class name, possibly linked to javadocs apis.
@@ -49,6 +50,19 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<name>linkedClassName</name>
 		<tag-class>com.semanticcms.tagreference.LinkedClassNameTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[
+				<p>
+					When <code>true</code>, will fail when a class does not map to a
+					package in <code>apiLinks</code>.
+					Defaults to <code>false</code>.
+				</p>
+			]]></description>
+			<name>requireLinks</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<description><![CDATA[
 				<p>
@@ -87,6 +101,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 	</tag>
 	<tag>
 		<!-- datePublished="2020-05-29T16:29:39-05:00" -->
+		<!-- dateModified="2020-05-29T22:59:03-05:00" -->
 		<description><![CDATA[
 			<p class="semanticcms-tag-reference-summary">
 				Displays a full function or method signature, possibly linked to javadocs apis.
@@ -98,6 +113,19 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<name>linkedSignature</name>
 		<tag-class>com.semanticcms.tagreference.LinkedSignatureTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[
+				<p>
+					When <code>true</code>, will fail when a class does not map to a
+					package in <code>apiLinks</code>.
+					Defaults to <code>false</code>.
+				</p>
+			]]></description>
+			<name>requireLinks</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<description><![CDATA[
 				<p>
@@ -136,6 +164,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 	</tag>
 	<tag>
 		<!-- datePublished="2020-05-29T17:27:56-05:00" -->
+		<!-- dateModified="2020-05-29T22:59:03-05:00" -->
 		<description><![CDATA[
 			<p class="semanticcms-tag-reference-summary">
 				Displays a function or method signature, possibly linked to javadocs apis.
@@ -147,6 +176,19 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<name>linkedSignatureReturn</name>
 		<tag-class>com.semanticcms.tagreference.LinkedSignatureReturnTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[
+				<p>
+					When <code>true</code>, will fail when a class does not map to a
+					package in <code>apiLinks</code>.
+					Defaults to <code>false</code>.
+				</p>
+			]]></description>
+			<name>requireLinks</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<description><![CDATA[
 				<p>
@@ -185,6 +227,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 	</tag>
 	<tag>
 		<!-- datePublished="2020-05-29T17:32:05-05:00" -->
+		<!-- dateModified="2020-05-29T22:59:03-05:00" -->
 		<description><![CDATA[
 			<p class="semanticcms-tag-reference-summary">
 				Displays function or method parameters including parentheses, possibly linked to javadocs apis.
@@ -196,6 +239,19 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<name>linkedSignatureParams</name>
 		<tag-class>com.semanticcms.tagreference.LinkedSignatureParamsTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[
+				<p>
+					When <code>true</code>, will fail when a class does not map to a
+					package in <code>apiLinks</code>.
+					Defaults to <code>false</code>.
+				</p>
+			]]></description>
+			<name>requireLinks</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<description><![CDATA[
 				<p>

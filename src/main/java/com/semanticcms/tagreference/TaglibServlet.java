@@ -48,6 +48,7 @@ public class TaglibServlet extends PageServlet {
 	private final String shortTitle;
 	private final PageRef tldRef;
 	private final Taglib taglib;
+	private final boolean requireLinks;
 	private final Map<String,String> apiLinks;
 
 	public TaglibServlet(
@@ -55,12 +56,14 @@ public class TaglibServlet extends PageServlet {
 		String shortTitle,
 		PageRef tldRef,
 		Taglib taglib,
+		boolean requireLinks,
 		Map<String,String> apiLinks
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
 		this.tldRef = tldRef;
 		this.taglib = taglib;
+		this.requireLinks = requireLinks;
 		this.apiLinks = apiLinks;
 	}
 
@@ -74,6 +77,7 @@ public class TaglibServlet extends PageServlet {
 		args.put("shortTitle", shortTitle);
 		args.put("tldRef", tldRef);
 		args.put("taglib", taglib);
+		args.put("requireLinks", requireLinks);
 		args.put("apiLinks", apiLinks);
 
 		// TODO: Faster/better to setup page here and call-out to JSP only during capturelevel >= META?

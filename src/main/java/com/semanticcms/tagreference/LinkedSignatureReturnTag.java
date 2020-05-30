@@ -40,6 +40,7 @@ public class LinkedSignatureReturnTag extends TagSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	private boolean requireLinks;
 	private Map<String,String> apiLinks;
 	private String signature;
 	private boolean shortName;
@@ -49,9 +50,19 @@ public class LinkedSignatureReturnTag extends TagSupport {
 	}
 
 	private void init() {
+		requireLinks = false;
 		apiLinks = null;
 		signature = null;
 		shortName = false;
+	}
+
+	/**
+	 * @param requireLinks  When {@code true}, will fail when a class does not map to a
+	 *                      package in {@linkplain #setApiLinks(java.util.Map) apiLinks}.
+	 *                      Defaults to {@code false}.
+	 */
+	public void setRequireLinks(boolean requireLinks) {
+		this.requireLinks = requireLinks;
 	}
 
 	/**
@@ -80,6 +91,7 @@ public class LinkedSignatureReturnTag extends TagSupport {
 	// TODO: Use ao-fluent-html
 	public static void writeLinkedSignatureReturn(
 		PageContext pageContext,
+		boolean requireLinks,
 		Map<String,String> apiLinks,
 		String signature,
 		boolean shortName,
@@ -92,7 +104,7 @@ public class LinkedSignatureReturnTag extends TagSupport {
 				int space = signature.lastIndexOf(' ', leftParen - 1);
 				if(space != -1) {
 					// Space found, assume everything left of space is the return type
-					LinkedClassNameTag.writeLinkedClassName(pageContext, apiLinks, signature.substring(0, space), shortName, out);
+					LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature.substring(0, space), shortName, out);
 				}
 			}
 		}
@@ -101,7 +113,7 @@ public class LinkedSignatureReturnTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspTagException {
 		try {
-			writeLinkedSignatureReturn(pageContext, apiLinks, signature, shortName, pageContext.getOut());
+			writeLinkedSignatureReturn(pageContext, requireLinks, apiLinks, signature, shortName, pageContext.getOut());
 			return SKIP_BODY;
 		} catch(IOException err) {
 			throw new JspTagException(err.getMessage(), err);

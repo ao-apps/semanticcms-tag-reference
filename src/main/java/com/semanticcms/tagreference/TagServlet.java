@@ -46,15 +46,18 @@ public class TagServlet extends PageServlet {
 
 	private final PageRef tldRef;
 	private final Tag tag;
+	private final boolean requireLinks;
 	private final Map<String,String> apiLinks;
 
 	public TagServlet(
 		PageRef tldRef,
 		Tag tag,
+		boolean requireLinks,
 		Map<String,String> apiLinks
 	) {
 		this.tldRef = tldRef;
 		this.tag = tag;
+		this.requireLinks = requireLinks;
 		this.apiLinks = apiLinks;
 	}
 
@@ -66,6 +69,7 @@ public class TagServlet extends PageServlet {
 		Map<String,Object> args = new LinkedHashMap<>();
 		args.put("tldRef", tldRef);
 		args.put("tag", tag);
+		args.put("requireLinks", requireLinks);
 		args.put("apiLinks", apiLinks);
 
 		// TODO: Is there a way to get rid of this forward/include duality?

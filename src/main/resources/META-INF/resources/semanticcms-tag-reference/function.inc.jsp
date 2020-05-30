@@ -32,13 +32,17 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 The view of one function at /path/taglib.tld/function-functionName
 
 Arguments:
-	arg.tldRef    The PageRef for the TLD file itself
-	arg.function  The parsed function
-	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
-	              to javadoc prefixes (including trailing '/')
+	arg.tldRef        The PageRef for the TLD file itself
+	arg.function      The parsed function
+	arg.requireLinks  When true, will fail when a class does not map to a
+	                  package in apiLinks.
+	                  Defaults to false.
+	arg.apiLinks      The mapping of Java package name (with optional trailing '.')
+	                  to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="function" value="${arg.function}" />
+<c:set var="requireLinks" value="${arg.requireLinks}" />
 <c:set var="apiLinks" value="${arg.apiLinks}" />
 <c:set var="dates" value="${function.dates}" />
 <core:page
@@ -68,12 +72,12 @@ Arguments:
 				<tr>
 					<th>Function Class:</th>
 					<td style="white-space:nowrap">
-						<tagref:linkedClassName apiLinks="${apiLinks}" className="${function.functionClass}" />
+						<tagref:linkedClassName requireLinks="${requireLinks}" apiLinks="${apiLinks}" className="${function.functionClass}" />
 					</td>
 				</tr>
 				<tr>
 					<th>Function Signature:</th>
-					<td style="white-space:nowrap"><tagref:linkedSignature apiLinks="${apiLinks}" signature="${function.functionSignature}" /></td>
+					<td style="white-space:nowrap"><tagref:linkedSignature requireLinks="${requireLinks}" apiLinks="${apiLinks}" signature="${function.functionSignature}" /></td>
 				</tr>
 				<tr>
 					<th>Display Name:</th>
