@@ -158,7 +158,7 @@ public class LinkedClassNameTag extends TagSupport {
 								encodeTextInXhtmlAttribute(
 									HttpServletUtil.buildURL(
 										pageContext,
-										javadocLink + token.replace('.', '/') + ".html",
+										javadocLink + token.replace('.', '/').replace('$', '.') + ".html",
 										EmptyURIParameters.getInstance(),
 										false,
 										true // Javadocs do not take parameters, even within the same site
