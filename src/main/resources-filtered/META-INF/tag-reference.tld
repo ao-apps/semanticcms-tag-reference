@@ -52,7 +52,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<attribute>
 			<description><![CDATA[
 				<p>
-					The mapping of java package name (with optional trailing <code>'.'</code>)
+					The mapping of Java package name (with optional trailing <code>'.'</code>)
 					to javadoc prefixes (including trailing <code>'/'</code>).
 				</p>
 			]]></description>
@@ -101,7 +101,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<attribute>
 			<description><![CDATA[
 				<p>
-					The mapping of java package name (with optional trailing <code>'.'</code>)
+					The mapping of Java package name (with optional trailing <code>'.'</code>)
 					to javadoc prefixes (including trailing <code>'/'</code>).
 				</p>
 			]]></description>
@@ -150,7 +150,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<attribute>
 			<description><![CDATA[
 				<p>
-					The mapping of java package name (with optional trailing <code>'.'</code>)
+					The mapping of Java package name (with optional trailing <code>'.'</code>)
 					to javadoc prefixes (including trailing <code>'/'</code>).
 				</p>
 			]]></description>
@@ -199,7 +199,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<attribute>
 			<description><![CDATA[
 				<p>
-					The mapping of java package name (with optional trailing <code>'.'</code>)
+					The mapping of Java package name (with optional trailing <code>'.'</code>)
 					to javadoc prefixes (including trailing <code>'/'</code>).
 				</p>
 			]]></description>

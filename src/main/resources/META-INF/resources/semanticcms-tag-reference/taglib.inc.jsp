@@ -35,7 +35,7 @@ Arguments:
 	arg.shortTitle  The page shortTitle
 	arg.tldRef      The PageRef for the TLD file itself
 	arg.taglib      The parsed taglib
-	arg.apiLinks    The mapping of java package name (with optional trailing '.')
+	arg.apiLinks    The mapping of Java package name (with optional trailing '.')
 	                to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />

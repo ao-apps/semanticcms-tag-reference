@@ -34,7 +34,7 @@ The view of one tag at /path/taglib.tld/tag-tagName
 Arguments:
 	arg.tldRef    The PageRef for the TLD file itself
 	arg.tag       The parsed tag
-	arg.apiLinks  The mapping of java package name (with optional trailing '.')
+	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
 	              to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />

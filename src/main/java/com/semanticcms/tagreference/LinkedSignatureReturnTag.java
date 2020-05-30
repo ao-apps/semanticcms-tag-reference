@@ -55,7 +55,7 @@ public class LinkedSignatureReturnTag extends TagSupport {
 	}
 
 	/**
-	 * @param apiLinks  The mapping of java package name (with optional trailing {@code '.'})
+	 * @param apiLinks  The mapping of Java package name (with optional trailing {@code '.'})
 	 *                  to javadoc prefixes (including trailing {@code '/'}).
 	 */
 	public void setApiLinks(Map<String,String> apiLinks) {
