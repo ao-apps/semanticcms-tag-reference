@@ -34,6 +34,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 
 	<properties>
 		<shortTitle>Tag Reference</shortTitle>
+		<javadoc.taglibReference><![CDATA[<li><a target="${javadoc.target}" href="${project.url}tag-reference.tld/">Taglib Reference</a></li>]]></javadoc.taglibReference>
 	</properties>
 
 	<name>SemanticCMS Tag Reference²</name>
@@ -66,6 +67,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 								<!-- Java EE -->
 								<link>${javadoc.link.javaee}</link>
 								<!-- Direct -->
+								<link>https://aoindustries.com/ao-encoding/apidocs/</link>
 								<link>https://aoindustries.com/ao-lang/apidocs/</link>
 								<link>https://aoindustries.com/ao-net-types/apidocs/</link>
 								<link>https://aoindustries.com/ao-servlet-util/apidocs/</link>
@@ -95,6 +97,9 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				<scope>import</scope>
 			</dependency>
 			<!-- Direct -->
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-encoding</artifactId><version>3.0.0${POST-SNAPSHOT}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.3.1${POST-SNAPSHOT}</version>
 			</dependency>
@@ -155,6 +160,9 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<scope>provided</scope>
 		</dependency>
 		<!-- Direct -->
+		<dependency>
+			<groupId>com.aoindustries</groupId><artifactId>ao-encoding</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId>
 		</dependency>

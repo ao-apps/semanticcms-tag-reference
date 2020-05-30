@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-05-28T16:53:58-05:00"
+		dateModified="2020-05-29T16:01:16-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -58,6 +58,18 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 					<li>Added all Java SE packages for versions 1.5 through 15.</li>
 					<li>Added all <ao:a href="https://javaee.github.io/javamail/docs/api/package-list">JavaMail packages</ao:a>.</li>
 					<li>Added all Java EE packages for versions 5 though 8.</li>
+					<li>
+						Package names may now be provided without the trailing <code>'.'</code>, and is preferred in this form.
+						Any trailing <code>'.'</code> are stripped for backward compatibility.
+					</li>
+					<li>Classname linking is now performed in custom tags, versus the previous ugly JSP include.</li>
+					<li>Classname linking now supports generics and multidimensional arrays.</li>
+					<li>Classname links are now in canonical form, which will suppress URL rewriting for intra-site links.</li>
+					<li>
+						Corrected default type of attribute is either <code>javax.servlet.jsp.tagext.JspFragment</code> or <code>java.lang.String</code>,
+						not <code>java.lang.Object</code>.
+					</li>
+					<!-- TODO: <li>Selective use of non-breaking space to allow for graceful word wrapping.</li> -->
 				</ul>
 			</changelog:release>
 		</c:if>
@@ -152,10 +164,6 @@ Requests per second:    0.55 [#/sec] (mean)</pre>
 <pre>ab -c 4 -n 128 http://127.0.0.1:8086/docs/ao-taglib/ao.tld/
 Requests per second:    32.08 [#/sec] (mean)</pre>
 						</li>
-						<!-- TODO:
-						<li>TODO: Removed dynamic linked-classname.inc.jsp and function signature parsing.</li>
-						<li>TODO: Benchmark after</li>
-						-->
 					</ol>
 				</li>
 				<li>

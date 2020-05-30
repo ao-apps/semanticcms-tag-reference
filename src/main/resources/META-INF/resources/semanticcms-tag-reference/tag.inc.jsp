@@ -26,6 +26,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
 <%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
+<%@ taglib prefix="tagref" uri="https://semanticcms.com/tag-reference/" %>
 
 <%--
 The view of one tag at /path/taglib.tld/tag-tagName
@@ -33,7 +34,8 @@ The view of one tag at /path/taglib.tld/tag-tagName
 Arguments:
 	arg.tldRef    The ResourceRef for the TLD file itself
 	arg.tag       The parsed tag
-	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
+	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
+	              to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="tag" value="${arg.tag}" />
@@ -65,57 +67,57 @@ Arguments:
 			<tbody>
 				<tr>
 					<th>Tag Class:</th>
-					<td>
-						<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${tag.tagClass}" />
+					<td style="white-space:nowrap">
+						<tagref:linkedClassName apiLinks="${apiLinks}" className="${tag.tagClass}" />
 					</td>
 				</tr>
 				<tr>
 					<th>TagExtraInfo Class:</th>
-					<td>
-						<ao:choose>
-							<ao:when test="#{!empty tag.teiClass}">
-								<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${tag.teiClass}" />
-							</ao:when>
-							<ao:otherwise>
+					<td style="white-space:nowrap">
+						<c:choose>
+							<c:when test="${!empty tag.teiClass}">
+								<tagref:linkedClassName apiLinks="${apiLinks}" className="${tag.teiClass}" />
+							</c:when>
+							<c:otherwise>
 								<em>None</em>
-							</ao:otherwise>
-						</ao:choose>
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 				<tr>
 					<th>Body Content:</th>
-					<td><ao:out value="${tag.bodyContent}" /></td>
+					<td style="white-space:nowrap"><ao:out value="${tag.bodyContent}" /></td>
 				</tr>
 				<tr>
 					<th>Display Name:</th>
-					<td>
-						<ao:choose>
-							<ao:when test="#{!empty tag.displayNames}">
+					<td style="white-space:nowrap">
+						<c:choose>
+							<c:when test="${!empty tag.displayNames}">
 								<c:forEach var="displayName" items="${tag.displayNames}" varStatus="displayNameStatus">
 									<ao:out value="${displayName}" type="xhtml" />
 									<c:if test="${!displayNameStatus.last}">
 										<ao:br />
 									</c:if>
 								</c:forEach>
-							</ao:when>
-							<ao:otherwise>
+							</c:when>
+							<c:otherwise>
 								<em>None</em>
-							</ao:otherwise>
-						</ao:choose>
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 				<c:if test="${tag.dynamicAttributes}">
 					<tr>
 						<th>Dynamic Attributes:</th>
-						<td><ao:out value="${tag.dynamicAttributes}" /></td>
+						<td style="white-space:nowrap"><ao:out value="${tag.dynamicAttributes}" /></td>
 					</tr>
 				</c:if>
 			</tbody>
 		</table>
 	</section:section>
 	<section:section label="Attributes">
-		<ao:choose>
-			<ao:when test="#{!empty tag.attributes}">
+		<c:choose>
+			<c:when test="${!empty tag.attributes}">
 				<table class="ao-grid">
 					<thead>
 						<tr>
@@ -152,34 +154,21 @@ Arguments:
 								<c:set var="row" value="${row + 1}" />
 								<tr>
 									<c:if test="${row == 1}">
-										<td rowspan="${rowspan}"><ao:out value="${attribute.name}" /></td>
-										<td rowspan="${rowspan}"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.name}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
-									<td>
+									<td style="white-space:nowrap">
 										<ao:out value="${attribute.rtexprvalue ? 'Runtime' : 'Static'}" />
 										<c:if test="${attribute.fragment}">
 											<ao:br />Fragment
 										</c:if>
 									</td>
-									<td>
-										<ao:choose>
-											<ao:when test="#{!empty attribute.type}">
-												<ao:include
-													page="linked-classname.inc.jsp"
-													arg.apiLinks="${apiLinks}"
-													arg.className="${attribute.type}"
-													arg.shortName="true"
-												/>
-											</ao:when>
-											<ao:otherwise>
-												<ao:include
-													page="linked-classname.inc.jsp"
-													arg.apiLinks="${apiLinks}"
-													arg.className="java.lang.Object"
-													arg.shortName="true"
-												/>
-											</ao:otherwise>
-										</ao:choose>
+									<td style="white-space:nowrap">
+										<tagref:linkedClassName
+											apiLinks="${apiLinks}"
+											className="${!empty attribute.type ? attribute.type : attribute.fragment ? 'javax.servlet.jsp.tagext.JspFragment' : 'java.lang.String'}"
+											shortName="true"
+										/>
 									</td>
 									<c:if test="${row == 1}">
 										<td rowspan="${rowspan}">
@@ -194,11 +183,11 @@ Arguments:
 								<c:set var="row" value="${row + 1}" />
 								<tr>
 									<c:if test="${row == 1}">
-										<td rowspan="${rowspan}"><ao:out value="${attribute.name}" /></td>
-										<td rowspan="${rowspan}"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.name}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
-									<td>Deferred-Method</td>
-									<td><ao:out value="${deferredMethod.methodSignature}" /></td>
+									<td style="white-space:nowrap">Deferred-Method</td>
+									<td style="white-space:nowrap"><tagref:linkedSignature apiLinks="${apiLinks}" signature="${deferredMethod.methodSignature}" /></td>
 									<c:if test="${row == 1}">
 										<td rowspan="${rowspan}">
 											<c:forEach var="description" items="${attribute.descriptions}">
@@ -212,29 +201,16 @@ Arguments:
 								<c:set var="row" value="${row + 1}" />
 								<tr>
 									<c:if test="${row == 1}">
-										<td rowspan="${rowspan}"><ao:out value="${attribute.name}" /></td>
-										<td rowspan="${rowspan}"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.name}" /></td>
+										<td rowspan="${rowspan}" style="white-space:nowrap"><ao:out value="${attribute.required ? 'Yes' : 'No'}" /></td>
 									</c:if>
-									<td>Deferred-Value</td>
-									<td>
-										<ao:choose>
-											<ao:when test="#{deferredValue.type != null}">
-												<ao:include
-													page="linked-classname.inc.jsp"
-													arg.apiLinks="${apiLinks}"
-													arg.className="${deferredValue.type}"
-													arg.shortName="true"
-												/>
-											</ao:when>
-											<ao:otherwise>
-												<ao:include
-													page="linked-classname.inc.jsp"
-													arg.apiLinks="${apiLinks}"
-													arg.className="java.lang.Object"
-													arg.shortName="true"
-												/>
-											</ao:otherwise>
-										</ao:choose>
+									<td style="white-space:nowrap">Deferred-Value</td>
+									<td style="white-space:nowrap">
+										<tagref:linkedClassName
+											apiLinks="${apiLinks}"
+											className="${!empty deferredValue.type ? deferredValue.type : 'java.lang.Object'}"
+											shortName="true"
+										/>
 									</td>
 									<c:if test="${row == 1}">
 										<td rowspan="${rowspan}">
@@ -248,24 +224,24 @@ Arguments:
 						</c:forEach>
 					</tbody>
 				</table>
-			</ao:when>
-			<ao:otherwise>
+			</c:when>
+			<c:otherwise>
 				<em>No Attributes Defined.</em>
-			</ao:otherwise>
-		</ao:choose>
+			</c:otherwise>
+		</c:choose>
 	</section:section>
 	<section:section label="Variables">
 		<%-- TODO:
-		<ao:choose>
-			<ao:when test="#{!empty tag.variables}">
+		<c:choose>
+			<c:when test="${!empty tag.variables}">
 				TODO: Document a variable when first needed.  We don't use any variables at this time.
-			</ao:when>
-			<ao:otherwise>
+			</c:when>
+			<c:otherwise>
 		--%>
 				<em>No Variables Defined.</em>
 		<%-- TODO:
-			</ao:otherwise>
-		</ao:choose>
+			</c:otherwise>
+		</c:choose>
 		--%>
 	</section:section>
 </core:page>

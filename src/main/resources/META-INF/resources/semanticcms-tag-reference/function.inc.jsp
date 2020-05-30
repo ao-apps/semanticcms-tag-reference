@@ -25,8 +25,8 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
+<%@ taglib prefix="tagref" uri="https://semanticcms.com/tag-reference/" %>
 
 <%--
 The view of one function at /path/taglib.tld/function-functionName
@@ -34,7 +34,8 @@ The view of one function at /path/taglib.tld/function-functionName
 Arguments:
 	arg.tldRef    The ResourceRef for the TLD file itself
 	arg.function  The parsed function
-	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
+	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
+	              to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="function" value="${arg.function}" />
@@ -67,47 +68,29 @@ Arguments:
 				<tr>
 					<th>Function Class:</th>
 					<td style="white-space:nowrap">
-						<ao:include page="linked-classname.inc.jsp" arg.apiLinks="${apiLinks}" arg.className="${function.functionClass}" />
+						<tagref:linkedClassName apiLinks="${apiLinks}" className="${function.functionClass}" />
 					</td>
 				</tr>
 				<tr>
 					<th>Function Signature:</th>
-					<td style="white-space:nowrap">
-						<c:set var="functionSignature" value="${function.functionSignature}" />
-						<c:set var="returnType" value="${fn:substringBefore(functionSignature, ' ')}" />
-						<c:set var="signatureFunction" value="${fn:trim(fn:substringBefore(fn:substringAfter(functionSignature, ' '), '('))}" />
-						<c:set var="signatureParams" value="${fn:substringBefore(fn:substringAfter(functionSignature, '('), ')')}" />
-						<ao:include
-							page="linked-classname.inc.jsp"
-							arg.apiLinks="${apiLinks}"
-							arg.className="${returnType}"
-						/>
-						<ao:out value="${signatureFunction}"
-						/>(<c:forEach var="paramType" items="${fn:split(signatureParams, ',')}" varStatus="paramTypeStatus"
-							><ao:include
-								page="linked-classname.inc.jsp"
-								arg.apiLinks="${apiLinks}"
-								arg.className="${paramType}"
-							/><c:if test="${!paramTypeStatus.last}">, </c:if
-						></c:forEach>)
-					</td>
+					<td style="white-space:nowrap"><tagref:linkedSignature apiLinks="${apiLinks}" signature="${function.functionSignature}" /></td>
 				</tr>
 				<tr>
 					<th>Display Name:</th>
 					<td style="white-space:nowrap">
-						<ao:choose>
-							<ao:when test="#{!empty function.displayNames}">
+						<c:choose>
+							<c:when test="${!empty function.displayNames}">
 								<c:forEach var="displayName" items="${function.displayNames}" varStatus="displayNameStatus">
 									<ao:out value="${displayName}" type="xhtml" />
 									<c:if test="${!displayNameStatus.last}">
 										<ao:br />
 									</c:if>
 								</c:forEach>
-							</ao:when>
-							<ao:otherwise>
+							</c:when>
+							<c:otherwise>
 								<em>None</em>
-							</ao:otherwise>
-						</ao:choose>
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 			</tbody>

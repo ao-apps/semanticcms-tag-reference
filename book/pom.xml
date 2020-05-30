@@ -59,6 +59,77 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<url>https://github.com/aoindustries/semanticcms-tag-reference/issues</url>
 	</issueManagement>
 
+	<build>
+		<plugins>
+			<!-- Add a copy of the taglib files from dependencies -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack.tld</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.5.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+									<type>jar</type>
+									<includes>META-INF/tag-reference.tld</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy.tld</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/dependency/META-INF</directory>
+									<includes>
+										<include>tag-reference.tld</include>
+									</includes>
+								</resource>
+							</resources>
+							<!-- Put into META-INF/resources to be accessible as website content when jar included in WEB-INF/lib -->
+							<outputDirectory>${project.build.outputDirectory}/META-INF/resources/tag-reference</outputDirectory>
+						</configuration>
+					</execution>
+					<!-- Create a second copy in the resource directory used by maven-bundle-plugin -->
+					<execution>
+						<id>copy.tld-bundle</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/dependency/META-INF</directory>
+									<includes>
+										<include>tag-reference.tld</include>
+									</includes>
+								</resource>
+							</resources>
+							<!-- Put into META-INF/resources to be accessible as website content when jar included in WEB-INF/lib -->
+							<outputDirectory>${project.build.directory}/resources-filtered/META-INF/resources/tag-reference</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- Java EE -->
@@ -80,9 +151,21 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<groupId>javax.servlet.jsp</groupId><artifactId>javax.servlet.jsp-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Direct -->
+		<dependency>
+			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.3.1${POST-SNAPSHOT}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>2.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+		</dependency>
 		<!-- Runtime Direct -->
 		<dependency>
 			<groupId>com.aoindustries</groupId><artifactId>ao-badges</artifactId><version>2.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<!-- Mapping for *.tld -->
+			<groupId>com.aoindustries</groupId><artifactId>ao-mime-mappings</artifactId><version>1.0.0${POST-SNAPSHOT}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

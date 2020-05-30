@@ -25,7 +25,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 <%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="tagref" uri="https://semanticcms.com/tag-reference/" %>
 
 <%--
 Shared function summary implementation.
@@ -33,7 +33,8 @@ Shared function summary implementation.
 Arguments:
 	arg.tldRef    The ResourceRef for the TLD file itself
 	arg.taglib    The parsed taglib
-	arg.apiLinks  The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
+	arg.apiLinks  The mapping of Java package name (with optional trailing '.')
+	              to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
@@ -41,31 +42,15 @@ Arguments:
 <table class="ao-grid">
 	<tbody>
 		<c:forEach var="function" items="${taglib.functions}">
-			<c:set var="functionSignature" value="${function.functionSignature}" />
-			<c:set var="returnType" value="${fn:substringBefore(functionSignature, ' ')}" />
-			<c:set var="signatureParams" value="${fn:substringBefore(fn:substringAfter(functionSignature, '('), ')')}" />
 			<tr>
 				<td style="white-space:nowrap">
-					<ao:include
-						page="linked-classname.inc.jsp"
-						arg.apiLinks="${apiLinks}"
-						arg.className="${returnType}"
-						arg.shortName="true"
-					/>
+					<tagref:linkedSignatureReturn apiLinks="${apiLinks}" signature="${function.functionSignature}" shortName="true" />
 				</td>
 				<td style="white-space:nowrap">
-					<c:set var="functionName" value="${function.name}" />
-					\${<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{ao:decodeURI(ao:encodeURIComponent(functionName))}"
-						><strong><ao:out value="${functionName}"
-					/></strong></core:link>(<c:forEach var="paramType" items="${fn:split(signatureParams, ',')}" varStatus="paramTypeStatus"
-						><ao:include
-							page="linked-classname.inc.jsp"
-							arg.apiLinks="${apiLinks}"
-							arg.className="${paramType}"
-							arg.shortName="true"
-						/><c:if test="${!paramTypeStatus.last}">, </c:if
-					></c:forEach
-				>)}</td>
+					\${<ao:out value="${taglib.shortName}" />:<core:link book="#{tldRef.bookName}" page="#{tldRef.path}/function-#{ao:decodeURI(ao:encodeURIComponent(function.name))}"
+						><strong><ao:out value="${function.name}"
+					/></strong></core:link><tagref:linkedSignatureParams apiLinks="${apiLinks}" signature="${function.functionSignature}" shortName="true"
+				/>}</td>
 				<td><ao:out value="${function.descriptionSummary}" type="xhtml" /></td>
 			</tr>
 		</c:forEach>

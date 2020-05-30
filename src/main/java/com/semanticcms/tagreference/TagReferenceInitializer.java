@@ -22,14 +22,12 @@
  */
 package com.semanticcms.tagreference;
 
-import com.aoindustries.net.Path;
 import com.aoindustries.net.URIDecoder;
 import com.aoindustries.net.URIEncoder;
 import com.aoindustries.tld.parser.Dates;
 import com.aoindustries.tld.parser.Function;
 import com.aoindustries.tld.parser.Tag;
 import com.aoindustries.tld.parser.Taglib;
-import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.controller.SemanticCMS;
 import com.semanticcms.core.model.BookRef;
 import com.semanticcms.core.model.ResourceRef;
@@ -143,7 +141,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		Set<String> packages = packageListsByJavadocLink.get(javadocLink);
 		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
 		for(String p : packages) {
-			combinedApiLinks.put(p + ".", javadocLink);
+			assert !p.endsWith(".");
+			combinedApiLinks.put(p, javadocLink);
 		}
 	}
 
@@ -152,13 +151,14 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private final ResourceRef tldRef;
 	private final Map<String,String> apiLinks;
 
+	@SuppressWarnings("unchecked")
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
 		ResourceRef tldRef,
 		String javadocLinkJavaSE,
 		String javadocLinkJavaEE,
-		Map<String,String> additionalApiLinks
+		Map<String,String> ... additionalApiLinks
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
@@ -183,43 +183,36 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		addPackages(javadocLinkJavaSE, combinedApiLinks);
 
 		// All additional API links added last, to override any packages in Java SE, JavaMail, or Java EE
-		combinedApiLinks.putAll(additionalApiLinks);
+		if(additionalApiLinks != null) {
+			for(Map<String,String> map : additionalApiLinks) {
+				for(Map.Entry<String,String> entry : map.entrySet()) {
+					String p = entry.getKey();
+					// Strip trailing '.' for backward compatibility
+					while(p.endsWith(".")) p = p.substring(0, p.length() - 1);
+					combinedApiLinks.put(p, entry.getValue());
+				}
+			}
+		}
 
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
-	private static Path toPath(String path) {
-		try {
-			return Path.valueOf(path);
-		} catch(ValidationException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
-
-	/**
-	 * Uses default domain of {@link BookRef#DEFAULT_DOMAIN}.
-	 *
-	 * @see  #TagReferenceInitializer(java.lang.String, java.lang.String, com.semanticcms.core.model.ResourceRef, java.lang.String, java.lang.String, java.util.Map)
-	 *
-	 * @deprecated  Please provide domain
-	 */
-	@Deprecated
+	@SuppressWarnings("unchecked")
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
-		String tldBook,
-		String tldPath,
-		String javaApiLink,
-		String javaEEApiLink,
+		ResourceRef tldRef,
+		String javadocLinkJavaSE,
+		String javadocLinkJavaEE,
 		Map<String,String> additionalApiLinks
 	) {
 		this(
 			title,
 			shortTitle,
-			new ResourceRef(new BookRef(BookRef.DEFAULT_DOMAIN, toPath(tldBook)), toPath(tldPath)),
-			javaApiLink,
-			javaEEApiLink,
-			additionalApiLinks
+			tldRef,
+			javadocLinkJavaSE,
+			javadocLinkJavaEE,
+			additionalApiLinks == null ? null : (Map<String,String>[])new Map<?,?>[] {additionalApiLinks}
 		);
 	}
 

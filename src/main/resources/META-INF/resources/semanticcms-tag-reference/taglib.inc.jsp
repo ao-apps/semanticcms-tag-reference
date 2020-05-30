@@ -35,7 +35,8 @@ Arguments:
 	arg.shortTitle  The page shortTitle
 	arg.tldRef      The ResourceRef for the TLD file itself
 	arg.taglib      The parsed taglib
-	arg.apiLinks    The mapping of java package prefix (including trailing '.') to javadoc prefixes (including trailing '/')
+	arg.apiLinks    The mapping of Java package name (with optional trailing '.')
+	                to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
@@ -69,7 +70,7 @@ Arguments:
 				<c:if test="${!empty taglib.displayNames}">
 					<tr>
 						<th>Display Name:</th>
-						<td>
+						<td style="white-space:nowrap">
 							<c:forEach var="displayName" items="${taglib.displayNames}" varStatus="displayNameStatus">
 								<ao:out value="${displayName}" type="xhtml" />
 								<c:if test="${!displayNameStatus.last}">
@@ -81,16 +82,16 @@ Arguments:
 				</c:if>
 				<tr>
 					<th>Version:</th>
-					<td><ao:out value="${taglib.tlibVersion}" /></td>
+					<td style="white-space:nowrap"><ao:out value="${taglib.tlibVersion}" /></td>
 				</tr>
 				<tr>
 					<th>Short Name:</th>
-					<td><ao:out value="${taglib.shortName}" /></td>
+					<td style="white-space:nowrap"><ao:out value="${taglib.shortName}" /></td>
 				</tr>
 				<c:if test="${!empty taglib.uri}">
 					<tr>
 						<th>URI:</th>
-						<td><ao:out value="${taglib.uri}" /></td>
+						<td style="white-space:nowrap"><ao:out value="${taglib.uri}" /></td>
 					</tr>
 				</c:if>
 			</tbody>
