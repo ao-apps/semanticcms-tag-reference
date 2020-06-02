@@ -83,12 +83,12 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 */
 	private static final Map<String,Set<String>> packageListsByJavadocLink = new HashMap<>();
 
-	private static void addPackageList(String property) throws IOException {
+	private static void addPackageList(String property, String resource) throws IOException {
 		String javadocLink = Maven.properties.getProperty(property);
 		try (
 			BufferedReader in = new BufferedReader(
 				new InputStreamReader(
-					TagReferenceInitializer.class.getResourceAsStream(property),
+					TagReferenceInitializer.class.getResourceAsStream(resource),
 					StandardCharsets.UTF_8
 				)
 			)
@@ -110,25 +110,25 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 
 	static {
 		try {
-			// Note: This list matches ao-oss-parent/pom.xml
-			addPackageList("javadoc.link.javase.5");
-			addPackageList("javadoc.link.javase.6");
-			addPackageList("javadoc.link.javase.7");
-			addPackageList("javadoc.link.javase.8");
-			addPackageList("javadoc.link.javase.9");
-			addPackageList("javadoc.link.javase.10");
-			addPackageList("javadoc.link.javase.11");
-			addPackageList("javadoc.link.javase.12");
-			addPackageList("javadoc.link.javase.13");
-			addPackageList("javadoc.link.javase.14");
-			addPackageList("javadoc.link.javase.15");
+			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
+			addPackageList("javadoc.link.javase.5",  "/com/aoindustries/javadoc/offline/javase/5/package-list");
+			addPackageList("javadoc.link.javase.6",  "/com/aoindustries/javadoc/offline/javase/6/package-list");
+			addPackageList("javadoc.link.javase.7",  "/com/aoindustries/javadoc/offline/javase/7/package-list");
+			addPackageList("javadoc.link.javase.8",  "/com/aoindustries/javadoc/offline/javase/8/package-list");
+			addPackageList("javadoc.link.javase.9",  "/com/aoindustries/javadoc/offline/javase/9/package-list");
+			addPackageList("javadoc.link.javase.10", "/com/aoindustries/javadoc/offline/javase/10/element-list");
+			addPackageList("javadoc.link.javase.11", "/com/aoindustries/javadoc/offline/javase/11/element-list");
+			addPackageList("javadoc.link.javase.12", "/com/aoindustries/javadoc/offline/javase/12/element-list");
+			addPackageList("javadoc.link.javase.13", "/com/aoindustries/javadoc/offline/javase/13/element-list");
+			addPackageList("javadoc.link.javase.14", "/com/aoindustries/javadoc/offline/javase/14/element-list");
+			addPackageList("javadoc.link.javase.15", "/com/aoindustries/javadoc/offline/javase/15/element-list");
 
-			// Note: This list matches ao-oss-parent/pom.xml
-			addPackageList("javadoc.link.javamail");
-			addPackageList("javadoc.link.javaee.5");
-			addPackageList("javadoc.link.javaee.6");
-			addPackageList("javadoc.link.javaee.7");
-			addPackageList("javadoc.link.javaee.8");
+			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
+			addPackageList("javadoc.link.javamail", "/com/aoindustries/javadoc/offline/com.sun.mail/javax.mail/package-list");
+			addPackageList("javadoc.link.javaee.5", "/com/aoindustries/javadoc/offline/javaee/5/package-list");
+			addPackageList("javadoc.link.javaee.6", "/com/aoindustries/javadoc/offline/javaee/6/package-list");
+			addPackageList("javadoc.link.javaee.7", "/com/aoindustries/javadoc/offline/javaee/7/package-list");
+			addPackageList("javadoc.link.javaee.8", "/com/aoindustries/javadoc/offline/javaee/8/package-list");
 		} catch(IOException e) {
 			throw new ExceptionInInitializerError(e);
 		}
@@ -158,8 +158,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String shortTitle,
 		ResourceRef tldRef,
 		boolean requireLinks,
-		String javadocLinkJavaSE,
-		String javadocLinkJavaEE,
+		String javadocLinkJavaSE, // TODO: Pass javase.release instead
+		String javadocLinkJavaEE, // TODO: Pass javaee.version instead
 		Map<String,String> ... additionalApiLinks
 	) {
 		this.title = title;
@@ -168,13 +168,6 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this.requireLinks = requireLinks;
 		// Add package matches
 		Map<String,String> combinedApiLinks = new LinkedHashMap<>();
-		// TODO: Obtain this dynamically from an ao-javadoc-offlinelinks package
-		// TODO: This package would contain many of the packages we use that are not obtainable from Maven "javadoc" classifier artifacts
-		// TODO: This package would include javase and javaee, multiple versions, similar to how we have done here
-		// TODO: This package would use the "Project" class to dynamically find the version currently deployed
-		// TODO: This package would also allow the registration of additional packages, perhaps via "Service" mechanism
-		// TODO: This package would also be used for offline links during Maven builds, instead of relying on external sites to be online to be able to build
-		// TODO: Additional API Links might be by project in this case, too, including package-list/element-list
 
 		// Java EE packages added before Java SE, so when a package exists in both it will use Java SE (for example javax.annotation)
 		addPackages(javadocLinkJavaEE, combinedApiLinks);
@@ -206,8 +199,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String shortTitle,
 		ResourceRef tldRef,
 		boolean requireLinks,
-		String javadocLinkJavaSE,
-		String javadocLinkJavaEE,
+		String javadocLinkJavaSE, // TODO: Pass javase.release instead
+		String javadocLinkJavaEE, // TODO: Pass javaee.version instead
 		Map<String,String> additionalApiLinks
 	) {
 		this(
@@ -218,33 +211,6 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			javadocLinkJavaSE,
 			javadocLinkJavaEE,
 			additionalApiLinks == null ? null : (Map<String,String>[])new Map<?,?>[] {additionalApiLinks}
-		);
-	}
-
-	/**
-	 * Calls {@link #TagReferenceInitializer(java.lang.String, java.lang.String, com.semanticcms.core.model.ResourceRef, boolean, java.lang.String, java.lang.String, java.util.Map)},
-	 * with {@code requireLinks = false} for backward compatibility.
-	 *
-	 * @deprecated  Please provide {@code requireLinks} to either {@link #TagReferenceInitializer(java.lang.String, java.lang.String, com.semanticcms.core.model.ResourceRef, boolean, java.lang.String, java.lang.String, java.util.Map)}
-	 *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, com.semanticcms.core.model.ResourceRef, boolean, java.lang.String, java.lang.String, java.util.Map...)}
-	 */
-	@Deprecated
-	public TagReferenceInitializer(
-		String title,
-		String shortTitle,
-		ResourceRef tldRef,
-		String javadocLinkJavaSE,
-		String javadocLinkJavaEE,
-		Map<String,String> additionalApiLinks
-	) {
-		this(
-			title,
-			shortTitle,
-			tldRef,
-			false,
-			javadocLinkJavaSE,
-			javadocLinkJavaEE,
-			additionalApiLinks
 		);
 	}
 
