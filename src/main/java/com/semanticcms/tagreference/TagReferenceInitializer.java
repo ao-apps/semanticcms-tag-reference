@@ -68,7 +68,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	/**
 	 * The css class that marks an element as being a summary.
 	 */
-	private static final String SUMMARY_CLASS = "semanticcms-tag-reference-summary";
+	public static final String SUMMARY_CLASS = "semanticcms-tag-reference-summary";
 
 	/**
 	 * The property name used for JavaMail API.
@@ -121,7 +121,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			addPackageList("javadoc.link.javase.15", "/com/aoindustries/javadoc/offline/javase/15/element-list");
 
 			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-			addPackageList("javadoc.link.javamail", "/com/aoindustries/javadoc/offline/com.sun.mail/javax.mail/package-list");
+			addPackageList(JAVAMAIL_PROPERTY, "/com/aoindustries/javadoc/offline/com.sun.mail/javax.mail/package-list");
 			addPackageList("javadoc.link.javaee.5", "/com/aoindustries/javadoc/offline/javaee/5/package-list");
 			addPackageList("javadoc.link.javaee.6", "/com/aoindustries/javadoc/offline/javaee/6/package-list");
 			addPackageList("javadoc.link.javaee.7", "/com/aoindustries/javadoc/offline/javaee/7/package-list");
@@ -139,7 +139,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
 		for(String p : packages) {
 			assert !p.endsWith(".");
-			combinedApiLinks.put(p, javadocLink);
+			if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, javadocLink);
 		}
 	}
 
@@ -150,16 +150,25 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private final boolean requireLinks;
 	private final Map<String,String> apiLinks;
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * @param javadocLinkJavaSE  The Java SE API URL.
+	 *                           This matches values used in Maven build property <code>${javadoc.link.javase}</code>.
+	 *
+	 * @param javadocLinkJavaEE  The Java EE API URL.
+	 *                           This matches values used in Maven build property <code>${javadoc.link.javaee}</code>.
+	 *
+	 * @param additionalApiLinks  Additional API links.
+	 *                            When there are duplicate packages, the first match wins.
+	 */
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
 		String tldBook,
 		String tldPath,
 		boolean requireLinks,
-		String javadocLinkJavaSE, // TODO: Pass javase.release instead
-		String javadocLinkJavaEE, // TODO: Pass javaee.version instead
-		Map<String,String> ... additionalApiLinks
+		String javadocLinkJavaSE,
+		String javadocLinkJavaEE,
+		Map<String,String> additionalApiLinks
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
@@ -169,40 +178,59 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		// Add package matches
 		Map<String,String> combinedApiLinks = new LinkedHashMap<>();
 
-		// Java EE packages added before Java SE, so when a package exists in both it will use Java SE (for example javax.annotation)
-		addPackages(javadocLinkJavaEE, combinedApiLinks);
-
-		// JavaMail added after Java EE, so when a package exists in both it will use JavaMail
-		addPackages(Maven.properties.getProperty(JAVAMAIL_PROPERTY), combinedApiLinks);
-
-		// Java SE packages added last, to override any packages found in JavaMail or Java EE
-		addPackages(javadocLinkJavaSE, combinedApiLinks);
-
-		// All additional API links added last, to override any packages in Java SE, JavaMail, or Java EE
+		// All additional API links added first, to override any packages in Java SE, JavaMail, or Java EE
 		if(additionalApiLinks != null) {
-			for(Map<String,String> map : additionalApiLinks) {
-				for(Map.Entry<String,String> entry : map.entrySet()) {
-					String p = entry.getKey();
-					// Strip trailing '.' for backward compatibility
-					while(p.endsWith(".")) p = p.substring(0, p.length() - 1);
-					combinedApiLinks.put(p, entry.getValue());
-				}
+			for(Map.Entry<String,String> entry : additionalApiLinks.entrySet()) {
+				String p = entry.getKey();
+				// Strip trailing '.' for backward compatibility
+				while(p.endsWith(".")) p = p.substring(0, p.length() - 1);
+				if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, entry.getValue());
 			}
 		}
+
+		// Java SE packages added next, to override any packages found in JavaMail or Java EE
+		addPackages(javadocLinkJavaSE, combinedApiLinks);
+
+		// JavaMail added before Java EE, so when a package exists in both it will use JavaMail
+		addPackages(Maven.properties.getProperty(JAVAMAIL_PROPERTY), combinedApiLinks);
+
+		// Java EE packages added after Java SE, so when a package exists in both it will use Java SE (for example javax.annotation)
+		addPackages(javadocLinkJavaEE, combinedApiLinks);
 
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
-	@SuppressWarnings("unchecked")
+	private static Map<String,String> convertToMap(String ... additionalApiLinks) {
+		if(additionalApiLinks == null) return null;
+		int len = additionalApiLinks.length;
+		if((len & 1) != 0) throw new IllegalArgumentException("Uneven number of elements in additionalApiLinks, must be in even pairs (package, apiLinks), ...");
+		Map<String,String> map = new LinkedHashMap<>(len/2 * 4/3+1);
+		for(int i = 0; i < len; i += 2) {
+			String p = additionalApiLinks[i];
+			if(!map.containsKey(p)) map.put(p, additionalApiLinks[i + 1]);
+		}
+		return map;
+	}
+
+	/**
+	 * @param javadocLinkJavaSE  The Java SE API URL.
+	 *                           This matches values used in Maven build property <code>${javadoc.link.javase}</code>.
+	 *
+	 * @param javadocLinkJavaEE  The Java EE API URL.
+	 *                           This matches values used in Maven build property <code>${javadoc.link.javaee}</code>.
+	 *
+	 * @param additionalApiLinks  Additional API links, must be in even pairs (package, apiLinks), ...
+	 *                            When there are duplicate packages, the first match wins.)
+	 */
 	public TagReferenceInitializer(
 		String title,
 		String shortTitle,
 		String tldBook,
 		String tldPath,
 		boolean requireLinks,
-		String javadocLinkJavaSE, // TODO: Pass javase.release instead
-		String javadocLinkJavaEE, // TODO: Pass javaee.version instead
-		Map<String,String> additionalApiLinks
+		String javadocLinkJavaSE,
+		String javadocLinkJavaEE,
+		String ... additionalApiLinks
 	) {
 		this(
 			title,
@@ -212,7 +240,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			requireLinks,
 			javadocLinkJavaSE,
 			javadocLinkJavaEE,
-			additionalApiLinks == null ? null : (Map<String,String>[])new Map<?,?>[] {additionalApiLinks}
+			convertToMap(additionalApiLinks)
 		);
 	}
 
@@ -221,7 +249,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 * with {@code requireLinks = false} for backward compatibility.
 	 *
 	 * @deprecated  Please provide {@code requireLinks} to either {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
-	 *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map...)}
+	 *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String...)}
 	 */
 	@Deprecated
 	public TagReferenceInitializer(
@@ -239,8 +267,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			tldBook,
 			tldPath,
 			false,
-			javadocLinkJavaSE, // TODO: Convert to javase.release
-			javadocLinkJavaEE, // TODO: Convert to javaee.version
+			javadocLinkJavaSE,
+			javadocLinkJavaEE,
 			additionalApiLinks
 		);
 	}
