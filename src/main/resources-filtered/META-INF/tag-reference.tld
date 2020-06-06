@@ -73,7 +73,8 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<name>apiLinks</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String,java.lang.String>]]></type>
+			<type>java.util.Map</type>
+			<!-- type="java.util.Map<java.lang.String,java.lang.String>" -->
 		</attribute>
 		<attribute>
 			<description><![CDATA[
@@ -136,7 +137,8 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<name>apiLinks</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String,java.lang.String>]]></type>
+			<type>java.util.Map</type>
+			<!-- type="java.util.Map<java.lang.String,java.lang.String>" -->
 		</attribute>
 		<attribute>
 			<description><![CDATA[
@@ -199,7 +201,8 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<name>apiLinks</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String,java.lang.String>]]></type>
+			<type>java.util.Map</type>
+			<!-- type="java.util.Map<java.lang.String,java.lang.String>" -->
 		</attribute>
 		<attribute>
 			<description><![CDATA[
@@ -262,7 +265,8 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<name>apiLinks</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String,java.lang.String>]]></type>
+			<type>java.util.Map</type>
+			<!-- type="java.util.Map<java.lang.String,java.lang.String>" -->
 		</attribute>
 		<attribute>
 			<description><![CDATA[
