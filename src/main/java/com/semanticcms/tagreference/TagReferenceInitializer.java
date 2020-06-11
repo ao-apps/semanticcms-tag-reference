@@ -70,6 +70,8 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 */
 	public static final String SUMMARY_CLASS = "semanticcms-tag-reference-summary";
 
+	public static final String NOFOLLOW_PREFIX = "nofollow:";
+
 	/**
 	 * The property name used for JavaMail API.
 	 */
@@ -134,12 +136,12 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	/**
 	 * Adds the packages for the given API URL.
 	 */
-	private static void addPackages(String javadocLink, Map<String,String> combinedApiLinks) {
+	private static void addPackages(String javadocLink, Map<String,String> combinedApiLinks, boolean nofollow) {
 		Set<String> packages = packageListsByJavadocLink.get(javadocLink);
 		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
 		for(String p : packages) {
 			assert !p.endsWith(".");
-			if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, javadocLink);
+			if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, nofollow ? (NOFOLLOW_PREFIX + javadocLink) : javadocLink);
 		}
 	}
 
@@ -159,6 +161,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 *
 	 * @param additionalApiLinks  Additional API links.
 	 *                            When there are duplicate packages, the first match wins.
+	 *                            The API links may be prefixed with {@link #NOFOLLOW_PREFIX} to have <code>rel="nofollow"</code> in the generated links.
 	 */
 	public TagReferenceInitializer(
 		String title,
@@ -189,13 +192,13 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		}
 
 		// Java SE packages added next, to override any packages found in JavaMail or Java EE
-		addPackages(javadocLinkJavaSE, combinedApiLinks);
+		addPackages(javadocLinkJavaSE, combinedApiLinks, true);
 
 		// JavaMail added before Java EE, so when a package exists in both it will use JavaMail
-		addPackages(Maven.properties.getProperty(JAVAMAIL_PROPERTY), combinedApiLinks);
+		addPackages(Maven.properties.getProperty(JAVAMAIL_PROPERTY), combinedApiLinks, true);
 
 		// Java EE packages added after Java SE, so when a package exists in both it will use Java SE (for example javax.annotation)
-		addPackages(javadocLinkJavaEE, combinedApiLinks);
+		addPackages(javadocLinkJavaEE, combinedApiLinks, true);
 
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}

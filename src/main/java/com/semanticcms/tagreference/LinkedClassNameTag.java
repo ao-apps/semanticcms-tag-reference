@@ -167,16 +167,9 @@ public class LinkedClassNameTag extends TagSupport {
 							if(javadocLink != null) {
 								// Link to javadocs
 								out.append("<a ");
-								if(
-									// TODO: Support from within ao-tld-parser instead of hard-coded
-									   javadocLink.startsWith("https://docs.oracle.com/")
-									|| javadocLink.startsWith("http://docs.oracle.com/")
-									|| javadocLink.startsWith("https://oracle.com/")
-									|| javadocLink.startsWith("http://oracle.com/")
-									|| javadocLink.startsWith("https://download.java.net/")
-									|| javadocLink.startsWith("http://download.java.net/")
-								) {
+								if(javadocLink.startsWith(TagReferenceInitializer.NOFOLLOW_PREFIX)) {
 									out.append("rel=\"nofollow\" ");
+									javadocLink = javadocLink.substring(TagReferenceInitializer.NOFOLLOW_PREFIX.length());
 								}
 								out.append("href=\"");
 								encodeTextInXhtmlAttribute(
