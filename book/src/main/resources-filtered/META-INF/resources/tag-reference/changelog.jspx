@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-06-11T02:55:48-05:00"
+		dateModified="2020-06-11T03:10:39-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -74,6 +74,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						package in <code>apiLinks</code>.
 						Defaults to <code>false</code>.
 					</li>
+					<li>API links may now be prefixed with <code>nofollow:</code> to have <code>rel="nofollow"</code> in the generated links.</li>
 					<li>Added <code>rel="nofollow"</code> to Java SE and Java EE links.</li>
 					<!-- TODO: <li>Selective use of non-breaking space to allow for graceful word wrapping.</li> -->
 				</ul>
