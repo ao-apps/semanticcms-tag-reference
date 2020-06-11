@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-06-11T03:10:39-05:00"
+		dateModified="2020-06-11T03:34:39-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -53,33 +53,42 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
-				<ul>
-					<li>Added <core:link book="/core/model" page="/" /> domain support.</li>
-					<li>Added all Java SE packages for versions 1.5 through 15.</li>
-					<li>Added all <ao:a href="https://javaee.github.io/javamail/docs/api/package-list">JavaMail packages</ao:a>.</li>
-					<li>Added all Java EE packages for versions 5 though 8.</li>
-					<li>
-						Package names may now be provided without the trailing <code>'.'</code>, and is preferred in this form.
-						Any trailing <code>'.'</code> are stripped for backward compatibility.
-					</li>
-					<li>Classname linking is now performed in custom tags, versus the previous ugly JSP include.</li>
-					<li>Classname linking now supports generics and multidimensional arrays.</li>
-					<li>Classname links are now in canonical form, which will suppress URL rewriting for intra-site links.</li>
-					<li>
-						Corrected default type of attribute is either <code>javax.servlet.jsp.tagext.JspFragment</code> or <code>java.lang.String</code>,
-						not <code>java.lang.Object</code>.
-					</li>
-					<li>
-						New option <code>requireLinks</code> that will fail when a class does not map to a
-						package in <code>apiLinks</code>.
-						Defaults to <code>false</code>.
-					</li>
-					<li>API links may now be prefixed with <code>nofollow:</code> to have <code>rel="nofollow"</code> in the generated links.</li>
-					<li>Added <code>rel="nofollow"</code> to Java SE and Java EE links.</li>
-					<!-- TODO: <li>Selective use of non-breaking space to allow for graceful word wrapping.</li> -->
-				</ul>
+				<!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
 			</changelog:release>
 		</c:if>
+
+		<changelog:release
+			projectName="@{documented.name}"
+			version="1.5.0"
+			datePublished="2020-06-11T03:34:39-05:00"
+			groupId="@{project.groupId}"
+			artifactId="@{documented.artifactId}"
+			scmUrl="@{project.scm.url}"
+		>
+			<ul>
+				<li>Added all Java SE packages for versions 1.5 through 15.</li>
+				<li>Added all <ao:a href="https://javaee.github.io/javamail/docs/api/package-list">JavaMail packages</ao:a>.</li>
+				<li>Added all Java EE packages for versions 5 though 8.</li>
+				<li>
+					Package names may now be provided without the trailing <code>'.'</code>, and is preferred in this form.
+					Any trailing <code>'.'</code> are stripped for backward compatibility.
+				</li>
+				<li>Classname linking is now performed in custom tags, versus the previous ugly JSP include.</li>
+				<li>Classname linking now supports generics and multidimensional arrays.</li>
+				<li>Classname links are now in canonical form, which will suppress URL rewriting for intra-site links.</li>
+				<li>
+					Corrected default type of attribute is either <code>javax.servlet.jsp.tagext.JspFragment</code> or <code>java.lang.String</code>,
+					not <code>java.lang.Object</code>.
+				</li>
+				<li>
+					New option <code>requireLinks</code> that will fail when a class does not map to a
+					package in <code>apiLinks</code>.
+					Defaults to <code>false</code>.
+				</li>
+				<li>API links may now be prefixed with <code>nofollow:</code> to have <code>rel="nofollow"</code> in the generated links.</li>
+				<li>Added <code>rel="nofollow"</code> to Java SE and Java EE links.</li>
+			</ul>
+		</changelog:release>
 
 		<changelog:release
 			projectName="@{documented.name}"
