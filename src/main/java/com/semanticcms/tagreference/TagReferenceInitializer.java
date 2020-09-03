@@ -186,7 +186,9 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			for(Map.Entry<String,String> entry : additionalApiLinks.entrySet()) {
 				String p = entry.getKey();
 				// Strip trailing '.' for backward compatibility
-				while(p.endsWith(".")) p = p.substring(0, p.length() - 1);
+				while(p.endsWith(".")) {
+					p = p.substring(0, p.length() - 1);
+				}
 				if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, entry.getValue());
 			}
 		}
