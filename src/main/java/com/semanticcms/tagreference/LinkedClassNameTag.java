@@ -74,6 +74,7 @@ public class LinkedClassNameTag extends TagSupport {
 	 * @param apiLinks  The mapping of Java package name (with optional trailing {@code '.'})
 	 *                  to javadoc prefixes (including trailing {@code '/'}).
 	 */
+	@SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter") // Passed unmodifiable
 	public void setApiLinks(Map<String,String> apiLinks) {
 		this.apiLinks = apiLinks;
 	}
