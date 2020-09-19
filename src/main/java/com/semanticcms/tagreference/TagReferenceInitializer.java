@@ -22,6 +22,7 @@
  */
 package com.semanticcms.tagreference;
 
+import com.aoindustries.collections.AoCollections;
 import com.aoindustries.net.URIDecoder;
 import com.aoindustries.net.URIEncoder;
 import com.aoindustries.servlet.ServletContextCache;
@@ -209,7 +210,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		if(additionalApiLinks == null) return null;
 		int len = additionalApiLinks.length;
 		if((len & 1) != 0) throw new IllegalArgumentException("Uneven number of elements in additionalApiLinks, must be in even pairs (package, apiLinks), ...");
-		Map<String,String> map = new LinkedHashMap<>(len/2 * 4/3+1);
+		Map<String,String> map = AoCollections.newLinkedHashMap(len >> 1);
 		for(int i = 0; i < len; i += 2) {
 			String p = additionalApiLinks[i];
 			if(!map.containsKey(p)) map.put(p, additionalApiLinks[i + 1]);
