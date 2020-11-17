@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-06-11T03:34:39-05:00"
+		dateModified="2020-11-16T23:45:23-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -53,6 +53,15 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
+				<ul>
+					<li>Java updates:
+						<ol>
+							<li>Java 14 is now end-of-life</li>
+							<li>Java 15 is now current stable</li>
+							<li>Java 16 is new beta</li>
+						</ol>
+					</li>
+				</ul>
 				<!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
 			</changelog:release>
 		</c:if>
