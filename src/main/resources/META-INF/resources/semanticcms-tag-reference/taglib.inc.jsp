@@ -55,6 +55,7 @@ Arguments:
 	datePublished="${dates.published}"
 	dateModified="${dates.modified}"
 	dateReviewed="${dates.reviewed}"
+	allowRobots="${taglib.allowRobots}"
 >
 	<%-- TODO: file:file link to .tld file itself? --%>
 	<c:forEach var="description" items="${taglib.descriptions}">

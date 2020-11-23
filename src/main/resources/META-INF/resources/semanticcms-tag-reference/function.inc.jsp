@@ -53,6 +53,7 @@ Arguments:
 	datePublished="${dates.published}"
 	dateModified="${dates.modified}"
 	dateReviewed="${dates.reviewed}"
+	allowRobots="${function.allowRobots}"
 >
 	<core:parent
 		book="${tldRef.bookName}"
