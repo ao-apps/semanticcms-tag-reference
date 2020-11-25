@@ -25,6 +25,7 @@ package com.semanticcms.tagreference;
 import static com.aoindustries.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 import java.io.IOException;
 import java.util.Map;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -119,7 +120,7 @@ public class LinkedSignatureTag extends TagSupport {
 	}
 
 	@Override
-	public int doStartTag() throws JspTagException {
+	public int doStartTag() throws JspException {
 		try {
 			writeLinkedSignature(pageContext, requireLinks, apiLinks, signature, shortName, pageContext.getOut());
 			return SKIP_BODY;
