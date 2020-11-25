@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-11-23T02:15:57-06:00"
+		dateModified="2020-11-24T12:46:17-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.semanticcms:semanticcms-tag-reference:pom.version}" />
@@ -62,6 +62,12 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						</ol>
 					</li>
 					<li>Added support for allowRobots parsed from comments within the *.tld files.</li>
+					<li>
+						Cleaned-up use of <code>JspTagException</code> versus <code>JspException</code>.  Generally,
+						methods declare <code>throws JspException</code> while actually throwing instances of
+						<code>JspTagException</code>.  The exceptions to this are attribute setters and private
+						implemententation methods that both declare and throw <code>JspTagException</code>.
+					</li>
 				</ul>
 				<!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
 			</changelog:release>
