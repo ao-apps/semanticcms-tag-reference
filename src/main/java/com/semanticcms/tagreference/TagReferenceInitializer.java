@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -188,7 +188,9 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 			for(Map.Entry<String,String> entry : additionalApiLinks.entrySet()) {
 				String p = entry.getKey();
 				// Strip trailing '.' for backward compatibility
-				while(p.endsWith(".")) p = p.substring(0, p.length() - 1);
+				while(p.endsWith(".")) {
+					p = p.substring(0, p.length() - 1);
+				}
 				if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, entry.getValue());
 			}
 		}
