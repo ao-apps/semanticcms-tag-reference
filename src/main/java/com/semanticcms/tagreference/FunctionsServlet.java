@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -47,13 +47,13 @@ public class FunctionsServlet extends PageServlet {
 	private final ResourceRef tldRef;
 	private final Taglib taglib;
 	private final boolean requireLinks;
-	private final Map<String,String> apiLinks;
+	private final Map<String, String> apiLinks;
 
 	public FunctionsServlet(
 		ResourceRef tldRef,
 		Taglib taglib,
 		boolean requireLinks,
-		Map<String,String> apiLinks
+		Map<String, String> apiLinks
 	) {
 		this.tldRef = tldRef;
 		this.taglib = taglib;
@@ -66,7 +66,7 @@ public class FunctionsServlet extends PageServlet {
 		// We use ao-style directly, activate
 		RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
 
-		Map<String,Object> args = new LinkedHashMap<>();
+		Map<String, Object> args = new LinkedHashMap<>();
 		args.put("tldRef", tldRef);
 		args.put("taglib", taglib);
 		args.put("requireLinks", requireLinks);
