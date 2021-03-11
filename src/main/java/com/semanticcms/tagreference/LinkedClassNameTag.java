@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2020  AO Industries, Inc.
+ * Copyright (C) 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -47,7 +47,7 @@ public class LinkedClassNameTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 
 	private boolean requireLinks;
-	private Map<String,String> apiLinks;
+	private Map<String, String> apiLinks;
 	private String className;
 	private boolean shortName;
 
@@ -76,7 +76,7 @@ public class LinkedClassNameTag extends TagSupport {
 	 *                  to javadoc prefixes (including trailing {@code '/'}).
 	 */
 	@SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter") // Passed unmodifiable
-	public void setApiLinks(Map<String,String> apiLinks) {
+	public void setApiLinks(Map<String, String> apiLinks) {
 		this.apiLinks = apiLinks;
 	}
 
@@ -99,7 +99,7 @@ public class LinkedClassNameTag extends TagSupport {
 	public static void writeLinkedClassName(
 		PageContext pageContext,
 		boolean requireLinks,
-		Map<String,String> apiLinks,
+		Map<String, String> apiLinks,
 		String className,
 		boolean shortName,
 		Appendable out

@@ -81,7 +81,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	/**
 	 * Bundled package lists
 	 */
-	private static final Map<String,Set<String>> packageListsByJavadocLink = new HashMap<>();
+	private static final Map<String, Set<String>> packageListsByJavadocLink = new HashMap<>();
 
 	private static void addPackageList(String property, String resource) throws IOException {
 		String javadocLink = Maven.properties.getProperty(property);
@@ -138,7 +138,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	/**
 	 * Adds the packages for the given API URL.
 	 */
-	private static void addPackages(String javadocLink, Map<String,String> combinedApiLinks, boolean nofollow) {
+	private static void addPackages(String javadocLink, Map<String, String> combinedApiLinks, boolean nofollow) {
 		Set<String> packages = packageListsByJavadocLink.get(javadocLink);
 		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
 		for(String p : packages) {
@@ -152,7 +152,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private final String tldBook;
 	private final String tldPath;
 	private final boolean requireLinks;
-	private final Map<String,String> apiLinks;
+	private final Map<String, String> apiLinks;
 
 	/**
 	 * @param javadocLinkJavaSE  The Java SE API URL.
@@ -173,7 +173,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		boolean requireLinks,
 		String javadocLinkJavaSE,
 		String javadocLinkJavaEE,
-		Map<String,String> additionalApiLinks
+		Map<String, String> additionalApiLinks
 	) {
 		this.title = title;
 		this.shortTitle = shortTitle;
@@ -181,11 +181,11 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		this.tldPath = tldPath;
 		this.requireLinks = requireLinks;
 		// Add package matches
-		Map<String,String> combinedApiLinks = new LinkedHashMap<>();
+		Map<String, String> combinedApiLinks = new LinkedHashMap<>();
 
 		// All additional API links added first, to override any packages in Java SE, JavaMail, or Java EE
 		if(additionalApiLinks != null) {
-			for(Map.Entry<String,String> entry : additionalApiLinks.entrySet()) {
+			for(Map.Entry<String, String> entry : additionalApiLinks.entrySet()) {
 				String p = entry.getKey();
 				// Strip trailing '.' for backward compatibility
 				while(p.endsWith(".")) {
@@ -207,11 +207,11 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		apiLinks = Collections.unmodifiableMap(combinedApiLinks);
 	}
 
-	private static Map<String,String> convertToMap(String ... additionalApiLinks) {
+	private static Map<String, String> convertToMap(String ... additionalApiLinks) {
 		if(additionalApiLinks == null) return null;
 		int len = additionalApiLinks.length;
 		if((len & 1) != 0) throw new IllegalArgumentException("Uneven number of elements in additionalApiLinks, must be in even pairs (package, apiLinks), ...");
-		Map<String,String> map = AoCollections.newLinkedHashMap(len >> 1);
+		Map<String, String> map = AoCollections.newLinkedHashMap(len >> 1);
 		for(int i = 0; i < len; i += 2) {
 			String p = additionalApiLinks[i];
 			if(!map.containsKey(p)) map.put(p, additionalApiLinks[i + 1]);
@@ -266,7 +266,7 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 		String tldPath,
 		String javadocLinkJavaSE,
 		String javadocLinkJavaEE,
-		Map<String,String> additionalApiLinks
+		Map<String, String> additionalApiLinks
 	) {
 		this(
 			title,
