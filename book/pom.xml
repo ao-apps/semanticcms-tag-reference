@@ -25,11 +25,11 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.semanticcms</groupId><artifactId>semanticcms-parent</artifactId><version>1.11.1-POST-SNAPSHOT</version>
+		<groupId>com.semanticcms</groupId><artifactId>semanticcms-parent</artifactId><version>1.11.2-POST-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference-book</artifactId><version>1.6.0-POST-SNAPSHOT</version>
+	<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference-book</artifactId><version>1.6.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -109,7 +109,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.6.0${POST-SNAPSHOT}</version>
+									<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.6.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 									<type>jar</type>
 									<includes>META-INF/tag-reference.tld</includes>
 								</artifactItem>
@@ -119,7 +119,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.6.0${POST-SNAPSHOT}</version>
+						<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.6.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 						<type>jar</type>
 					</dependency>
 				</dependencies>
@@ -151,7 +151,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<dependencies>
 			<!-- Direct -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-badges</artifactId><version>1.5.0${POST-SNAPSHOT}</version>
+				<groupId>com.aoindustries</groupId><artifactId>ao-badges</artifactId><version>1.5.1${POST-SNAPSHOT}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.17.0${POST-SNAPSHOT}</version>
@@ -171,7 +171,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				<groupId>com.semanticcms</groupId><artifactId>semanticcms-section-taglib</artifactId><version>1.8.1${POST-SNAPSHOT}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.6.0${POST-SNAPSHOT}</version>
+				<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.6.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<!-- Transitive -->
 			<dependency>
@@ -271,7 +271,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<!-- javaee-web-api-bom: <groupId>org.glassfish.web</groupId><artifactId>jstl-impl</artifactId> -->
 			<!-- Runtime Transitive -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-javadoc-offline</artifactId><version>2.0.0${POST-SNAPSHOT}</version>
+				<groupId>com.aoindustries</groupId><artifactId>ao-javadoc-offline</artifactId><version>2.0.1${POST-SNAPSHOT}</version>
 			</dependency>
 			<!-- BOM -->
 			<dependency>

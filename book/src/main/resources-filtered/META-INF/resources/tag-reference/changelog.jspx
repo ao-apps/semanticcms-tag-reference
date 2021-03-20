@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-0600"
-		dateModified="2020-11-25T07:09:05-06:00"
+		dateModified="2021-03-20T08:30:22-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -48,6 +48,15 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				scmUrl="@{project.scm.url}"
 			>
 				<!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
+				<ul>
+					<li>Java updates:
+						<ol>
+							<li>Java 15 is now end-of-life</li>
+							<li>Java 16 is now current stable</li>
+							<li>Java 17 is new beta</li>
+						</ol>
+					</li>
+				</ul>
 			</changelog:release>
 		</c:if>
 
