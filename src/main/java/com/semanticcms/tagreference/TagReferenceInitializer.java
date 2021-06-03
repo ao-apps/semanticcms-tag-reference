@@ -114,26 +114,26 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	static {
 		try {
 			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-			addPackageList("javadoc.link.javase.5",  "/com/aoindustries/javadoc/offline/javase/5/package-list");
-			addPackageList("javadoc.link.javase.6",  "/com/aoindustries/javadoc/offline/javase/6/package-list");
-			addPackageList("javadoc.link.javase.7",  "/com/aoindustries/javadoc/offline/javase/7/package-list");
-			addPackageList("javadoc.link.javase.8",  "/com/aoindustries/javadoc/offline/javase/8/package-list");
-			addPackageList("javadoc.link.javase.9",  "/com/aoindustries/javadoc/offline/javase/9/package-list");
-			addPackageList("javadoc.link.javase.10", "/com/aoindustries/javadoc/offline/javase/10/element-list");
-			addPackageList("javadoc.link.javase.11", "/com/aoindustries/javadoc/offline/javase/11/element-list");
-			addPackageList("javadoc.link.javase.12", "/com/aoindustries/javadoc/offline/javase/12/element-list");
-			addPackageList("javadoc.link.javase.13", "/com/aoindustries/javadoc/offline/javase/13/element-list");
-			addPackageList("javadoc.link.javase.14", "/com/aoindustries/javadoc/offline/javase/14/element-list");
-			addPackageList("javadoc.link.javase.15", "/com/aoindustries/javadoc/offline/javase/15/element-list");
-			addPackageList("javadoc.link.javase.16", "/com/aoindustries/javadoc/offline/javase/16/element-list");
-			addPackageList("javadoc.link.javase.17", "/com/aoindustries/javadoc/offline/javase/17/element-list");
+			addPackageList("javadoc.link.javase.5",  "/com/aoapps/javadoc/offline/javase/5/package-list");
+			addPackageList("javadoc.link.javase.6",  "/com/aoapps/javadoc/offline/javase/6/package-list");
+			addPackageList("javadoc.link.javase.7",  "/com/aoapps/javadoc/offline/javase/7/package-list");
+			addPackageList("javadoc.link.javase.8",  "/com/aoapps/javadoc/offline/javase/8/package-list");
+			addPackageList("javadoc.link.javase.9",  "/com/aoapps/javadoc/offline/javase/9/package-list");
+			addPackageList("javadoc.link.javase.10", "/com/aoapps/javadoc/offline/javase/10/element-list");
+			addPackageList("javadoc.link.javase.11", "/com/aoapps/javadoc/offline/javase/11/element-list");
+			addPackageList("javadoc.link.javase.12", "/com/aoapps/javadoc/offline/javase/12/element-list");
+			addPackageList("javadoc.link.javase.13", "/com/aoapps/javadoc/offline/javase/13/element-list");
+			addPackageList("javadoc.link.javase.14", "/com/aoapps/javadoc/offline/javase/14/element-list");
+			addPackageList("javadoc.link.javase.15", "/com/aoapps/javadoc/offline/javase/15/element-list");
+			addPackageList("javadoc.link.javase.16", "/com/aoapps/javadoc/offline/javase/16/element-list");
+			addPackageList("javadoc.link.javase.17", "/com/aoapps/javadoc/offline/javase/17/element-list");
 
 			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-			addPackageList(JAVAMAIL_PROPERTY, "/com/aoindustries/javadoc/offline/com.sun.mail/javax.mail/package-list");
-			addPackageList("javadoc.link.javaee.5", "/com/aoindustries/javadoc/offline/javaee/5/package-list");
-			addPackageList("javadoc.link.javaee.6", "/com/aoindustries/javadoc/offline/javaee/6/package-list");
-			addPackageList("javadoc.link.javaee.7", "/com/aoindustries/javadoc/offline/javaee/7/package-list");
-			addPackageList("javadoc.link.javaee.8", "/com/aoindustries/javadoc/offline/javaee/8/package-list");
+			addPackageList(JAVAMAIL_PROPERTY,       "/com/aoapps/javadoc/offline/com.sun.mail/javax.mail/package-list");
+			addPackageList("javadoc.link.javaee.5", "/com/aoapps/javadoc/offline/javaee/5/package-list");
+			addPackageList("javadoc.link.javaee.6", "/com/aoapps/javadoc/offline/javaee/6/package-list");
+			addPackageList("javadoc.link.javaee.7", "/com/aoapps/javadoc/offline/javaee/7/package-list");
+			addPackageList("javadoc.link.javaee.8", "/com/aoapps/javadoc/offline/javaee/8/package-list");
 		} catch(IOException e) {
 			throw new ExceptionInInitializerError(e);
 		}
