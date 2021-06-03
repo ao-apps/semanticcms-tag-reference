@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -22,7 +22,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 --%>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page session="false" %>
-<%@ taglib prefix="ao" uri="https://aoindustries.com/ao-taglib/" %>
+<%@ taglib prefix="ao" uri="https://oss.aoapps.com/taglib/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="core" uri="https://semanticcms.com/core/taglib/" %>
 <%@ taglib prefix="section" uri="https://semanticcms.com/section/taglib/" %>
