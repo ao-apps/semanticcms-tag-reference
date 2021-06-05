@@ -22,10 +22,10 @@
  */
 package com.semanticcms.tagreference;
 
-import static com.aoindustries.encoding.TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute;
-import static com.aoindustries.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
-import com.aoindustries.net.EmptyURIParameters;
-import com.aoindustries.servlet.http.HttpServletUtil;
+import static com.aoapps.encoding.TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute;
+import static com.aoapps.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
+import com.aoapps.net.EmptyURIParameters;
+import com.aoapps.servlet.http.HttpServletUtil;
 import java.io.IOException;
 import java.util.Map;
 import java.util.StringTokenizer;
