@@ -22,13 +22,13 @@
  */
 package com.semanticcms.tagreference;
 
-import com.aoindustries.collections.AoCollections;
-import com.aoindustries.net.URIDecoder;
-import com.aoindustries.net.URIEncoder;
-import com.aoindustries.tld.parser.Dates;
-import com.aoindustries.tld.parser.Function;
-import com.aoindustries.tld.parser.Tag;
-import com.aoindustries.tld.parser.Taglib;
+import com.aoapps.collections.AoCollections;
+import com.aoapps.net.URIDecoder;
+import com.aoapps.net.URIEncoder;
+import com.aoapps.tldparser.Dates;
+import com.aoapps.tldparser.Function;
+import com.aoapps.tldparser.Tag;
+import com.aoapps.tldparser.Taglib;
 import com.semanticcms.core.controller.SemanticCMS;
 import com.semanticcms.core.model.BookRef;
 import com.semanticcms.core.model.ResourceRef;

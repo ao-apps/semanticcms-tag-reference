@@ -22,11 +22,11 @@
  */
 package com.semanticcms.tagreference;
 
-import com.aoindustries.servlet.http.Dispatcher;
-import com.aoindustries.style.AoStyle;
-import com.aoindustries.tld.parser.Tag;
-import com.aoindustries.web.resources.servlet.PageServlet;
-import com.aoindustries.web.resources.servlet.RegistryEE;
+import com.aoapps.servlet.http.Dispatcher;
+import com.aoapps.style.AoStyle;
+import com.aoapps.tldparser.Tag;
+import com.aoapps.web.resources.servlet.PageServlet;
+import com.aoapps.web.resources.servlet.RegistryEE;
 import com.semanticcms.core.model.ResourceRef;
 import com.semanticcms.core.pages.local.CaptureContext;
 import java.io.IOException;
