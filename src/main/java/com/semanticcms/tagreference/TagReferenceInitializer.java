@@ -42,7 +42,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletContainerInitializer;
@@ -82,58 +81,66 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	private static final String JAVAMAIL_PROPERTY = "javadoc.link.javamail";
 
 	/**
-	 * Bundled package lists
+	 * Bundled package maps.  The key is the javadoc link, the value is a mapping from package to module javadoc link,
+	 * including any necessary module path.
 	 */
-	private static final Map<String, Set<String>> packageListsByJavadocLink = new HashMap<>();
+	private static final Map<String, Map<String, String>> packageMapsByJavadocLink = new HashMap<>();
 
-	private static void addPackageList(String property, String resource) throws IOException {
+	private static void addPackageMap(String property, String resource) throws IOException {
 		String javadocLink = Maven.properties.getProperty(property);
-		try (
-			BufferedReader in = new BufferedReader(
-				new InputStreamReader(
-					TagReferenceInitializer.class.getResourceAsStream(resource),
-					StandardCharsets.UTF_8
-				)
-			)
-		) {
-			Set<String> packages = new LinkedHashSet<>();
+		InputStream resourceIn = TagReferenceInitializer.class.getResourceAsStream("/" + resource);
+		if(resourceIn == null) {
+			// Try ClassLoader for when modules enabled
+			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+			resourceIn = (classloader != null)
+				? classloader.getResourceAsStream(resource)
+				: ClassLoader.getSystemResourceAsStream(resource);
+		}
+		if(resourceIn == null) throw new IOException("Resource not found: " + resource);
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(resourceIn, StandardCharsets.UTF_8))) {
+			Map<String, String> packages = new LinkedHashMap<>();
+			String moduleLink = javadocLink;
 			String line;
 			while((line = in.readLine()) != null) {
 				line = line.trim();
-				if(
-					!line.isEmpty()
-					&& !line.startsWith("module:")
-				) {
-					if(!packages.add(line)) throw new AssertionError("Duplicate package in " + property + ": " + line);
+				if(!line.isEmpty()) {
+					final String MODULE_PREFIX = "module:";
+					if(line.startsWith(MODULE_PREFIX)) {
+						moduleLink = javadocLink + line.substring(MODULE_PREFIX.length()).trim() + '/';
+					} else if(packages.put(line, moduleLink) != null) {
+						throw new AssertionError("Duplicate package in " + property + ": " + line);
+					}
 				}
 			}
-			if(packageListsByJavadocLink.put(javadocLink, packages) != null) throw new AssertionError("Duplicate javadocLink from " + property + ": " + javadocLink);
+			if(packageMapsByJavadocLink.put(javadocLink, packages) != null) {
+				throw new AssertionError("Duplicate javadocLink from " + property + ": " + javadocLink);
+			}
 		}
 	}
 
 	static {
 		try {
 			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-			addPackageList("javadoc.link.javase.5",  "/com/aoapps/javadoc/offline/javase/5/package-list");
-			addPackageList("javadoc.link.javase.6",  "/com/aoapps/javadoc/offline/javase/6/package-list");
-			addPackageList("javadoc.link.javase.7",  "/com/aoapps/javadoc/offline/javase/7/package-list");
-			addPackageList("javadoc.link.javase.8",  "/com/aoapps/javadoc/offline/javase/8/package-list");
-			addPackageList("javadoc.link.javase.9",  "/com/aoapps/javadoc/offline/javase/9/package-list");
-			addPackageList("javadoc.link.javase.10", "/com/aoapps/javadoc/offline/javase/10/element-list");
-			addPackageList("javadoc.link.javase.11", "/com/aoapps/javadoc/offline/javase/11/element-list");
-			addPackageList("javadoc.link.javase.12", "/com/aoapps/javadoc/offline/javase/12/element-list");
-			addPackageList("javadoc.link.javase.13", "/com/aoapps/javadoc/offline/javase/13/element-list");
-			addPackageList("javadoc.link.javase.14", "/com/aoapps/javadoc/offline/javase/14/element-list");
-			addPackageList("javadoc.link.javase.15", "/com/aoapps/javadoc/offline/javase/15/element-list");
-			addPackageList("javadoc.link.javase.16", "/com/aoapps/javadoc/offline/javase/16/element-list");
-			addPackageList("javadoc.link.javase.17", "/com/aoapps/javadoc/offline/javase/17/element-list");
+			addPackageMap("javadoc.link.javase.5",  "com/aoapps/javadoc/offline/javase/5/package-list");
+			addPackageMap("javadoc.link.javase.6",  "com/aoapps/javadoc/offline/javase/6/package-list");
+			addPackageMap("javadoc.link.javase.7",  "com/aoapps/javadoc/offline/javase/7/package-list");
+			addPackageMap("javadoc.link.javase.8",  "com/aoapps/javadoc/offline/javase/8/package-list");
+			addPackageMap("javadoc.link.javase.9",  "com/aoapps/javadoc/offline/javase/9/package-list");
+			addPackageMap("javadoc.link.javase.10", "com/aoapps/javadoc/offline/javase/10/element-list");
+			addPackageMap("javadoc.link.javase.11", "com/aoapps/javadoc/offline/javase/11/element-list");
+			addPackageMap("javadoc.link.javase.12", "com/aoapps/javadoc/offline/javase/12/element-list");
+			addPackageMap("javadoc.link.javase.13", "com/aoapps/javadoc/offline/javase/13/element-list");
+			addPackageMap("javadoc.link.javase.14", "com/aoapps/javadoc/offline/javase/14/element-list");
+			addPackageMap("javadoc.link.javase.15", "com/aoapps/javadoc/offline/javase/15/element-list");
+			addPackageMap("javadoc.link.javase.16", "com/aoapps/javadoc/offline/javase/16/element-list");
+			addPackageMap("javadoc.link.javase.17", "com/aoapps/javadoc/offline/javase/17/element-list");
 
 			// Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-			addPackageList(JAVAMAIL_PROPERTY,       "/com/aoapps/javadoc/offline/com.sun.mail/javax.mail/package-list");
-			addPackageList("javadoc.link.javaee.5", "/com/aoapps/javadoc/offline/javaee/5/package-list");
-			addPackageList("javadoc.link.javaee.6", "/com/aoapps/javadoc/offline/javaee/6/package-list");
-			addPackageList("javadoc.link.javaee.7", "/com/aoapps/javadoc/offline/javaee/7/package-list");
-			addPackageList("javadoc.link.javaee.8", "/com/aoapps/javadoc/offline/javaee/8/package-list");
+			addPackageMap(JAVAMAIL_PROPERTY,       "com/aoapps/javadoc/offline/com.sun.mail/javax.mail/package-list");
+			addPackageMap("javadoc.link.javaee.5", "com/aoapps/javadoc/offline/javaee/5/package-list");
+			addPackageMap("javadoc.link.javaee.6", "com/aoapps/javadoc/offline/javaee/6/package-list");
+			addPackageMap("javadoc.link.javaee.7", "com/aoapps/javadoc/offline/javaee/7/package-list");
+			addPackageMap("javadoc.link.javaee.8", "com/aoapps/javadoc/offline/javaee/8/package-list");
 		} catch(IOException e) {
 			throw new ExceptionInInitializerError(e);
 		}
@@ -143,11 +150,15 @@ abstract public class TagReferenceInitializer implements ServletContainerInitial
 	 * Adds the packages for the given API URL.
 	 */
 	private static void addPackages(String javadocLink, Map<String, String> combinedApiLinks, boolean nofollow) {
-		Set<String> packages = packageListsByJavadocLink.get(javadocLink);
+		Map<String, String> packages = packageMapsByJavadocLink.get(javadocLink);
 		if(packages == null) throw new IllegalArgumentException("Bundled package list not found: " + javadocLink);
-		for(String p : packages) {
+		for(Map.Entry<String, String> entry : packages.entrySet()) {
+			String p = entry.getKey();
 			assert !p.endsWith(".");
-			if(!combinedApiLinks.containsKey(p)) combinedApiLinks.put(p, nofollow ? (NOFOLLOW_PREFIX + javadocLink) : javadocLink);
+			if(!combinedApiLinks.containsKey(p)) {
+				String moduleLink = entry.getValue();
+				combinedApiLinks.put(p, nofollow ? (NOFOLLOW_PREFIX + moduleLink) : moduleLink);
+			}
 		}
 	}
 
