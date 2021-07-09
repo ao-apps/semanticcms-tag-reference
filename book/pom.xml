@@ -140,6 +140,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 					<dependency>
 						<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.0${POST-SNAPSHOT}</version>
 						<type>jar</type>
+						<exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
 					</dependency>
 				</dependencies>
 			</plugin>
