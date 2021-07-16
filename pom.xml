@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
 / <a target="${javadoc.target}" href="${project.url}">Tag Reference</a>]]></javadoc.breadcrumbs>
 		<javadoc.taglibReference><![CDATA[<li><a target="${javadoc.target}" href="${project.url}tag-reference.tld/">Taglib Reference</a></li>]]></javadoc.taglibReference>
-		<!-- SonarCloud.io -->
+		<!-- SonarQube -->
 		<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
 		<sonar.organization>aoindustries</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
