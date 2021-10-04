@@ -66,7 +66,7 @@ import org.xml.sax.SAXException;
  *   <li>/path/taglib.tld/function-functionName  The detailed per-function documentation</li>
  * </ol>
  */
-abstract public class TagReferenceInitializer implements ServletContainerInitializer {
+public abstract class TagReferenceInitializer implements ServletContainerInitializer {
 
 	/**
 	 * The css class that marks an element as being a summary.
