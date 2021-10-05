@@ -185,7 +185,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 			<ul>
 				<li>
 					Now encoding path components via <code><ao:a href="https://oss.aoapps.com/net-types/apidocs/com.aoapps.net.types/com/aoapps/net/URIEncoder.html#encodeURIComponent(java.lang.String)">URIEncoder.encoderURIComponent(String)</ao:a></code>
-					instead of <code>URLEncoder.encode(String,String)</code> for space to be properly encoded as "%20" instead of "+".
+					instead of <code>URLEncoder.encode(String, String)</code> for space to be properly encoded as "%20" instead of "+".
 				</li>
 			</ul>
 		</changelog:release>
