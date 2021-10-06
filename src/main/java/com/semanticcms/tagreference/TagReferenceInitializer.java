@@ -23,6 +23,7 @@
 package com.semanticcms.tagreference;
 
 import com.aoapps.collections.AoCollections;
+import com.aoapps.lang.xml.XmlUtils;
 import com.aoapps.net.URIDecoder;
 import com.aoapps.net.URIEncoder;
 import com.aoapps.tldparser.Dates;
@@ -48,7 +49,6 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import org.joda.time.DateTime;
@@ -286,7 +286,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
 								tldLastModified == 0 ? null : new DateTime(tldLastModified),
 								null
 							),
-							DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(tldIn)
+							XmlUtils.parseXml(tldIn)
 						);
 					}
 				}
