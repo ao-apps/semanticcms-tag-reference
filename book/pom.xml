@@ -29,7 +29,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference-book</artifactId><version>1.7.0-POST-SNAPSHOT</version>
+	<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference-book</artifactId><version>1.7.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -133,7 +133,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.0${POST-SNAPSHOT}</version>
+									<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 									<type>jar</type>
 									<includes>META-INF/tag-reference.tld</includes>
 								</artifactItem>
@@ -143,7 +143,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.0${POST-SNAPSHOT}</version>
+						<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 						<type>jar</type>
 						<exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
 					</dependency>
@@ -225,7 +225,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				<groupId>com.semanticcms</groupId><artifactId>semanticcms-section-taglib</artifactId><version>1.9.0${POST-SNAPSHOT}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.0${POST-SNAPSHOT}</version>
+				<groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.7.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<!-- javaee-web-api-bom: <groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-spec</artifactId> -->
 			<!-- Transitive -->
