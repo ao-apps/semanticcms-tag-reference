@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-11-06T10:35:35-06:00"
-		dateModified="2021-10-16T00:29:56-05:00"
+		dateModified="2021-10-16T09:30:18-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -49,6 +49,15 @@ along with semanticcms-tag-reference.  If not, see <http://www.gnu.org/licenses 
 				scmUrl="@{project.scm.url}"
 			>
 				<!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
+				<ul>
+					<li>Java updates:
+						<ol>
+							<li>Java 16 is now end-of-life</li>
+							<li>Java 17 is now current stable</li>
+							<li>Java 18 is new beta</li>
+						</ol>
+					</li>
+				</ul>
 			</changelog:release>
 		</c:if>
 
