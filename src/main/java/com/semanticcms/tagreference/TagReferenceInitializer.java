@@ -271,7 +271,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
 	 * @deprecated  Please provide {@code requireLinks} to either {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
 	 *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String...)}
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	protected TagReferenceInitializer(
 		String title,
 		String shortTitle,
