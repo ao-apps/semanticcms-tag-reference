@@ -20,6 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package com.semanticcms.tagreference;
 
 import com.aoapps.collections.AoCollections;
