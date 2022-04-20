@@ -1,2 +1,6 @@
 # Significant manual code formatting clean-up…
 88f576476d1685971b683d26737cf5a63bf06f0e
+# Added missing spaces after comma
+c05f37699708bdaec6dd86e625628e968065e8fe
+# Created AnyContent interface and AnyDocument base implementation
+8bb301577cc91d38c14070b22679c94661dd00c5
