@@ -40,88 +40,88 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class LinkedSignatureParamsTag extends TagSupport {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private boolean requireLinks;
-	private Map<String, String> apiLinks;
-	private String signature;
-	private boolean shortName;
+  private boolean requireLinks;
+  private Map<String, String> apiLinks;
+  private String signature;
+  private boolean shortName;
 
-	public LinkedSignatureParamsTag() {
-		init();
-	}
+  public LinkedSignatureParamsTag() {
+    init();
+  }
 
-	private void init() {
-		requireLinks = false;
-		apiLinks = null;
-		signature = null;
-		shortName = false;
-	}
+  private void init() {
+    requireLinks = false;
+    apiLinks = null;
+    signature = null;
+    shortName = false;
+  }
 
-	/**
-	 * @param requireLinks  When {@code true}, will fail when a class does not map to a
-	 *                      package in {@linkplain #setApiLinks(java.util.Map) apiLinks}.
-	 *                      Defaults to {@code false}.
-	 */
-	public void setRequireLinks(boolean requireLinks) {
-		this.requireLinks = requireLinks;
-	}
+  /**
+   * @param requireLinks  When {@code true}, will fail when a class does not map to a
+   *                      package in {@linkplain #setApiLinks(java.util.Map) apiLinks}.
+   *                      Defaults to {@code false}.
+   */
+  public void setRequireLinks(boolean requireLinks) {
+    this.requireLinks = requireLinks;
+  }
 
-	/**
-	 * @param apiLinks  The mapping of Java package name (with optional trailing {@code '.'})
-	 *                  to javadoc prefixes (including trailing {@code '/'}).
-	 */
-	@SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter") // Passed unmodifiable
-	public void setApiLinks(Map<String, String> apiLinks) {
-		this.apiLinks = apiLinks;
-	}
+  /**
+   * @param apiLinks  The mapping of Java package name (with optional trailing {@code '.'})
+   *                  to javadoc prefixes (including trailing {@code '/'}).
+   */
+  @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter") // Passed unmodifiable
+  public void setApiLinks(Map<String, String> apiLinks) {
+    this.apiLinks = apiLinks;
+  }
 
-	/**
-	 * @param signature  The signature to display the parameters of.
-	 */
-	public void setSignature(String signature) {
-		this.signature = signature.trim();
-	}
+  /**
+   * @param signature  The signature to display the parameters of.
+   */
+  public void setSignature(String signature) {
+    this.signature = signature.trim();
+  }
 
-	/**
-	 * @param shortName  When {@code true}, will display class names in short format.
-	 *                   Defaults to {@code false}.
-	 */
-	public void setShortName(boolean shortName) {
-		this.shortName = shortName;
-	}
+  /**
+   * @param shortName  When {@code true}, will display class names in short format.
+   *                   Defaults to {@code false}.
+   */
+  public void setShortName(boolean shortName) {
+    this.shortName = shortName;
+  }
 
-	// TODO: Use ao-fluent-html
-	public static void writeLinkedSignatureParams(
-		PageContext pageContext,
-		boolean requireLinks,
-		Map<String, String> apiLinks,
-		String signature,
-		boolean shortName,
-		Appendable out
-	) throws IOException, JspTagException {
-		if(signature != null) {
-			signature = signature.trim();
-			int leftParen = signature.indexOf('(');
-			if(leftParen == -1) {
-				// No left parenthesis found, just run the whole thing through class name linking
-				LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature, shortName, out);
-			} else {
-				int space = signature.lastIndexOf(' ', leftParen - 1);
-				LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature.substring(leftParen), shortName, out);
-			}
-		}
-	}
+  // TODO: Use ao-fluent-html
+  public static void writeLinkedSignatureParams(
+    PageContext pageContext,
+    boolean requireLinks,
+    Map<String, String> apiLinks,
+    String signature,
+    boolean shortName,
+    Appendable out
+  ) throws IOException, JspTagException {
+    if (signature != null) {
+      signature = signature.trim();
+      int leftParen = signature.indexOf('(');
+      if (leftParen == -1) {
+        // No left parenthesis found, just run the whole thing through class name linking
+        LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature, shortName, out);
+      } else {
+        int space = signature.lastIndexOf(' ', leftParen - 1);
+        LinkedClassNameTag.writeLinkedClassName(pageContext, requireLinks, apiLinks, signature.substring(leftParen), shortName, out);
+      }
+    }
+  }
 
-	@Override
-	public int doStartTag() throws JspException {
-		try {
-			writeLinkedSignatureParams(pageContext, requireLinks, apiLinks, signature, shortName, pageContext.getOut());
-			return SKIP_BODY;
-		} catch(IOException err) {
-			throw new JspTagException(err.getMessage(), err);
-		} finally {
-			init();
-		}
-	}
+  @Override
+  public int doStartTag() throws JspException {
+    try {
+      writeLinkedSignatureParams(pageContext, requireLinks, apiLinks, signature, shortName, pageContext.getOut());
+      return SKIP_BODY;
+    } catch (IOException err) {
+      throw new JspTagException(err.getMessage(), err);
+    } finally {
+      init();
+    }
+  }
 }

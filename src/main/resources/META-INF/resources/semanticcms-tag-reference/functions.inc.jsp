@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -30,13 +30,13 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
 The view of function summaries at /path/taglib.tld/functions
 
 Arguments:
-	arg.tldRef        The ResourceRef for the TLD file itself
-	arg.taglib        The parsed taglib
-	arg.requireLinks  When true, will fail when a class does not map to a
-	                  package in apiLinks.
-	                  Defaults to false.
-	arg.apiLinks      The mapping of Java package name (with optional trailing '.')
-	                  to javadoc prefixes (including trailing '/')
+  arg.tldRef        The ResourceRef for the TLD file itself
+  arg.taglib        The parsed taglib
+  arg.requireLinks  When true, will fail when a class does not map to a
+                    package in apiLinks.
+                    Defaults to false.
+  arg.apiLinks      The mapping of Java package name (with optional trailing '.')
+                    to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
@@ -44,27 +44,27 @@ Arguments:
 <c:set var="apiLinks" value="${arg.apiLinks}" />
 <c:set var="dates" value="${taglib.functionsEffectiveDates}" />
 <core:page
-	book="${tldRef.bookName}"
-	path="${tldRef.path}/functions"
-	title="Function Summary"
-	shortTitle="Functions"
-	dateCreated="${dates.created}"
-	datePublished="${dates.published}"
-	dateModified="${dates.modified}"
-	dateReviewed="${dates.reviewed}"
+  book="${tldRef.bookName}"
+  path="${tldRef.path}/functions"
+  title="Function Summary"
+  shortTitle="Functions"
+  dateCreated="${dates.created}"
+  datePublished="${dates.published}"
+  dateModified="${dates.modified}"
+  dateReviewed="${dates.reviewed}"
 >
-	<%-- Add one child per function --%>
-	<c:forEach var="function" items="${taglib.functions}">
-		<core:child
-			book="${tldRef.bookName}"
-			page="${tldRef.path}/function-${ao:decodeURI(ao:encodeURIComponent(function.name))}"
-		/>
-	</c:forEach>
-	<ao:include
-		page="function-summary.inc.jsp"
-		arg.tldRef="${tldRef}"
-		arg.taglib="${taglib}"
-		arg.requireLinks="${requireLinks}"
-		arg.apiLinks="${apiLinks}"
-	/>
+  <%-- Add one child per function --%>
+  <c:forEach var="function" items="${taglib.functions}">
+    <core:child
+      book="${tldRef.bookName}"
+      page="${tldRef.path}/function-${ao:decodeURI(ao:encodeURIComponent(function.name))}"
+    />
+  </c:forEach>
+  <ao:include
+    page="function-summary.inc.jsp"
+    arg.tldRef="${tldRef}"
+    arg.taglib="${taglib}"
+    arg.requireLinks="${requireLinks}"
+    arg.apiLinks="${apiLinks}"
+  />
 </core:page>

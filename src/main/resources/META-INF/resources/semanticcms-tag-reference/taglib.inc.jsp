@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -31,15 +31,15 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
 The overall view of the taglib at /path/taglib.tld/
 
 Arguments:
-	arg.title         The page title
-	arg.shortTitle    The page shortTitle
-	arg.tldRef        The ResourceRef for the TLD file itself
-	arg.taglib        The parsed taglib
-	arg.requireLinks  When true, will fail when a class does not map to a
-	                  package in apiLinks.
-	                  Defaults to false.
-	arg.apiLinks      The mapping of Java package name (with optional trailing '.')
-	                  to javadoc prefixes (including trailing '/')
+  arg.title         The page title
+  arg.shortTitle    The page shortTitle
+  arg.tldRef        The ResourceRef for the TLD file itself
+  arg.taglib        The parsed taglib
+  arg.requireLinks  When true, will fail when a class does not map to a
+                    package in apiLinks.
+                    Defaults to false.
+  arg.apiLinks      The mapping of Java package name (with optional trailing '.')
+                    to javadoc prefixes (including trailing '/')
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
@@ -47,83 +47,83 @@ Arguments:
 <c:set var="apiLinks" value="${arg.apiLinks}" />
 <c:set var="dates" value="${taglib.taglibEffectiveDates}" />
 <core:page
-	book="${tldRef.bookName}"
-	path="${tldRef.path}/"
-	title="${arg.title}"
-	shortTitle="${arg.shortTitle}"
-	dateCreated="${dates.created}"
-	datePublished="${dates.published}"
-	dateModified="${dates.modified}"
-	dateReviewed="${dates.reviewed}"
-	allowRobots="${taglib.allowRobots}"
+  book="${tldRef.bookName}"
+  path="${tldRef.path}/"
+  title="${arg.title}"
+  shortTitle="${arg.shortTitle}"
+  dateCreated="${dates.created}"
+  datePublished="${dates.published}"
+  dateModified="${dates.modified}"
+  dateReviewed="${dates.reviewed}"
+  allowRobots="${taglib.allowRobots}"
 >
-	<%-- TODO: file:file link to .tld file itself? --%>
-	<c:forEach var="description" items="${taglib.descriptions}">
-		<ao:out value="${description}" type="xhtml" />
-	</c:forEach>
-	<section:section label="Usage">
-		<section:section label="Standard Syntax">
-			<code>&lt;%@ taglib prefix="<ao:out value="${taglib.shortName}" />" uri="<ao:out value="${taglib.uri}" />" %&gt;</code>
-		</section:section>
-		<section:section label="XML Syntax">
-			<code>&lt;anyxmlelement xmlns:<ao:out value="${taglib.shortName}" />="<ao:out value="${taglib.uri}" />" /&gt;</code>
-		</section:section>
-	</section:section>
-	<section:section label="Tag Library Information">
-		<table class="ao-grid">
-			<tbody>
-				<c:if test="${!empty taglib.displayNames}">
-					<tr>
-						<th>Display Name:</th>
-						<td style="white-space:nowrap">
-							<c:forEach var="displayName" items="${taglib.displayNames}" varStatus="displayNameStatus">
-								<ao:out value="${displayName}" type="xhtml" />
-								<c:if test="${!displayNameStatus.last}">
-									<ao:br />
-								</c:if>
-							</c:forEach>
-						</td>
-					</tr>
-				</c:if>
-				<tr>
-					<th>Version:</th>
-					<td style="white-space:nowrap"><ao:out value="${taglib.tlibVersion}" /></td>
-				</tr>
-				<tr>
-					<th>Short Name:</th>
-					<td style="white-space:nowrap"><ao:out value="${taglib.shortName}" /></td>
-				</tr>
-				<c:if test="${!empty taglib.uri}">
-					<tr>
-						<th>URI:</th>
-						<td style="white-space:nowrap"><ao:out value="${taglib.uri}" /></td>
-					</tr>
-				</c:if>
-			</tbody>
-		</table>
-	</section:section>
-	<c:if test="${!empty taglib.tags}">
-		<core:child book="${tldRef.bookName}" page="${tldRef.path}/tags" />
-		<%-- TODO: Links in section labels --%>
-		<section:nav label="Tag Summary">
-			<ao:include
-				page="tag-summary.inc.jsp"
-				arg.tldRef="${tldRef}"
-				arg.taglib="${taglib}"
-			/>
-		</section:nav>
-	</c:if>
-	<c:if test="${!empty taglib.functions}">
-		<core:child book="${tldRef.bookName}" page="${tldRef.path}/functions" />
-		<%-- TODO: Links in section labels --%>
-		<section:nav label="Function Summary">
-			<ao:include
-				page="function-summary.inc.jsp"
-				arg.tldRef="${tldRef}"
-				arg.taglib="${taglib}"
-				arg.requireLinks="${requireLinks}"
-				arg.apiLinks="${apiLinks}"
-			/>
-		</section:nav>
-	</c:if>
+  <%-- TODO: file:file link to .tld file itself? --%>
+  <c:forEach var="description" items="${taglib.descriptions}">
+    <ao:out value="${description}" type="xhtml" />
+  </c:forEach>
+  <section:section label="Usage">
+    <section:section label="Standard Syntax">
+      <code>&lt;%@ taglib prefix="<ao:out value="${taglib.shortName}" />" uri="<ao:out value="${taglib.uri}" />" %&gt;</code>
+    </section:section>
+    <section:section label="XML Syntax">
+      <code>&lt;anyxmlelement xmlns:<ao:out value="${taglib.shortName}" />="<ao:out value="${taglib.uri}" />" /&gt;</code>
+    </section:section>
+  </section:section>
+  <section:section label="Tag Library Information">
+    <table class="ao-grid">
+      <tbody>
+        <c:if test="${!empty taglib.displayNames}">
+          <tr>
+            <th>Display Name:</th>
+            <td style="white-space:nowrap">
+              <c:forEach var="displayName" items="${taglib.displayNames}" varStatus="displayNameStatus">
+                <ao:out value="${displayName}" type="xhtml" />
+                <c:if test="${!displayNameStatus.last}">
+                  <ao:br />
+                </c:if>
+              </c:forEach>
+            </td>
+          </tr>
+        </c:if>
+        <tr>
+          <th>Version:</th>
+          <td style="white-space:nowrap"><ao:out value="${taglib.tlibVersion}" /></td>
+        </tr>
+        <tr>
+          <th>Short Name:</th>
+          <td style="white-space:nowrap"><ao:out value="${taglib.shortName}" /></td>
+        </tr>
+        <c:if test="${!empty taglib.uri}">
+          <tr>
+            <th>URI:</th>
+            <td style="white-space:nowrap"><ao:out value="${taglib.uri}" /></td>
+          </tr>
+        </c:if>
+      </tbody>
+    </table>
+  </section:section>
+  <c:if test="${!empty taglib.tags}">
+    <core:child book="${tldRef.bookName}" page="${tldRef.path}/tags" />
+    <%-- TODO: Links in section labels --%>
+    <section:nav label="Tag Summary">
+      <ao:include
+        page="tag-summary.inc.jsp"
+        arg.tldRef="${tldRef}"
+        arg.taglib="${taglib}"
+      />
+    </section:nav>
+  </c:if>
+  <c:if test="${!empty taglib.functions}">
+    <core:child book="${tldRef.bookName}" page="${tldRef.path}/functions" />
+    <%-- TODO: Links in section labels --%>
+    <section:nav label="Function Summary">
+      <ao:include
+        page="function-summary.inc.jsp"
+        arg.tldRef="${tldRef}"
+        arg.taglib="${taglib}"
+        arg.requireLinks="${requireLinks}"
+        arg.apiLinks="${apiLinks}"
+      />
+    </section:nav>
+  </c:if>
 </core:page>

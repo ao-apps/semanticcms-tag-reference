@@ -32,22 +32,22 @@ import com.semanticcms.tagreference.TagReferenceInitializer;
 
 public class TagReferenceTldInitializer extends TagReferenceInitializer {
 
-	public TagReferenceTldInitializer() throws ValidationException {
-		super(
-			Maven.properties.getProperty("documented.name") + " Taglib Reference",
-			"Taglib Reference",
-			new ResourceRef(
-				new BookRef(
-					DomainName.valueOf("semanticcms.com"),
-					Path.valueOf("/tag-reference")
-				),
-				Path.valueOf("/tag-reference.tld")
-			),
-			true,
-			Maven.properties.getProperty("documented.javadoc.link.javase"),
-			Maven.properties.getProperty("documented.javadoc.link.javaee"),
-			// Self
-			"com.semanticcms.tagreference", Maven.properties.getProperty("project.url") + "apidocs/com.semanticcms.tagreference/"
-		);
-	}
+  public TagReferenceTldInitializer() throws ValidationException {
+    super(
+      Maven.properties.getProperty("documented.name") + " Taglib Reference",
+      "Taglib Reference",
+      new ResourceRef(
+        new BookRef(
+          DomainName.valueOf("semanticcms.com"),
+          Path.valueOf("/tag-reference")
+        ),
+        Path.valueOf("/tag-reference.tld")
+      ),
+      true,
+      Maven.properties.getProperty("documented.javadoc.link.javase"),
+      Maven.properties.getProperty("documented.javadoc.link.javaee"),
+      // Self
+      "com.semanticcms.tagreference", Maven.properties.getProperty("project.url") + "apidocs/com.semanticcms.tagreference/"
+    );
+  }
 }

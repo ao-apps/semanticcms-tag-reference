@@ -41,73 +41,73 @@ import javax.servlet.jsp.SkipPageException;
 
 public class TaglibServlet extends PageServlet {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static final String JSPX_TARGET = "/semanticcms-tag-reference/taglib.inc.jsp";
+  private static final String JSPX_TARGET = "/semanticcms-tag-reference/taglib.inc.jsp";
 
-	private final String title;
-	private final String shortTitle;
-	private final ResourceRef tldRef;
-	private final Taglib taglib;
-	private final boolean requireLinks;
-	private final Map<String, String> apiLinks;
+  private final String title;
+  private final String shortTitle;
+  private final ResourceRef tldRef;
+  private final Taglib taglib;
+  private final boolean requireLinks;
+  private final Map<String, String> apiLinks;
 
-	public TaglibServlet(
-		String title,
-		String shortTitle,
-		ResourceRef tldRef,
-		Taglib taglib,
-		boolean requireLinks,
-		Map<String, String> apiLinks
-	) {
-		this.title = title;
-		this.shortTitle = shortTitle;
-		this.tldRef = tldRef;
-		this.taglib = taglib;
-		this.requireLinks = requireLinks;
-		this.apiLinks = apiLinks;
-	}
+  public TaglibServlet(
+    String title,
+    String shortTitle,
+    ResourceRef tldRef,
+    Taglib taglib,
+    boolean requireLinks,
+    Map<String, String> apiLinks
+  ) {
+    this.title = title;
+    this.shortTitle = shortTitle;
+    this.tldRef = tldRef;
+    this.taglib = taglib;
+    this.requireLinks = requireLinks;
+    this.apiLinks = apiLinks;
+  }
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// We use ao-style directly, activate
-		RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // We use ao-style directly, activate
+    RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
 
-		Map<String, Object> args = new LinkedHashMap<>();
-		args.put("title", title);
-		args.put("shortTitle", shortTitle);
-		args.put("tldRef", tldRef);
-		args.put("taglib", taglib);
-		args.put("requireLinks", requireLinks);
-		args.put("apiLinks", apiLinks);
+    Map<String, Object> args = new LinkedHashMap<>();
+    args.put("title", title);
+    args.put("shortTitle", shortTitle);
+    args.put("tldRef", tldRef);
+    args.put("taglib", taglib);
+    args.put("requireLinks", requireLinks);
+    args.put("apiLinks", apiLinks);
 
-		// TODO: Faster/better to setup page here and call-out to JSP only during capturelevel >= META?
+    // TODO: Faster/better to setup page here and call-out to JSP only during capturelevel >= META?
 
-		// TODO: Is there a way to get rid of this forward/include duality?
-		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
-		ServletContext servletContext = getServletContext();
-		if(CaptureContext.getCaptureContext(req) == null) {
-			// Forward required so can set content type
-			Dispatcher.forward(
-				servletContext,
-				JSPX_TARGET,
-				req,
-				resp,
-				args
-			);
-		} else {
-			try {
-				// Include required on capture since forward interrupts the final output
-				Dispatcher.include(
-					servletContext,
-					JSPX_TARGET,
-					req,
-					resp,
-					args
-				);
-			} catch(SkipPageException e) {
-				throw new ServletException(e);
-			}
-		}
-	}
+    // TODO: Is there a way to get rid of this forward/include duality?
+    // TODO: Perhaps something clever with the way forward is handled inside of a capture?
+    ServletContext servletContext = getServletContext();
+    if (CaptureContext.getCaptureContext(req) == null) {
+      // Forward required so can set content type
+      Dispatcher.forward(
+        servletContext,
+        JSPX_TARGET,
+        req,
+        resp,
+        args
+      );
+    } else {
+      try {
+        // Include required on capture since forward interrupts the final output
+        Dispatcher.include(
+          servletContext,
+          JSPX_TARGET,
+          req,
+          resp,
+          args
+        );
+      } catch (SkipPageException e) {
+        throw new ServletException(e);
+      }
+    }
+  }
 }

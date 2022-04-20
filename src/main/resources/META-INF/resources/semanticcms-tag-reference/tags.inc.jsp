@@ -1,6 +1,6 @@
 <%--
 semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
-Copyright (C) 2016, 2017, 2019, 2021  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2021, 2022  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -30,32 +30,32 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
 The view of tag summaries at /path/taglib.tld/tags
 
 Arguments:
-	arg.tldRef   The ResourceRef for the TLD file itself
-	arg.taglib   The parsed taglib
+  arg.tldRef   The ResourceRef for the TLD file itself
+  arg.taglib   The parsed taglib
 --%>
 <c:set var="tldRef" value="${arg.tldRef}" />
 <c:set var="taglib" value="${arg.taglib}" />
 <c:set var="dates" value="${taglib.tagsEffectiveDates}" />
 <core:page
-	book="${tldRef.bookName}"
-	path="${tldRef.path}/tags"
-	title="Tag Summary"
-	shortTitle="Tags"
-	dateCreated="${dates.created}"
-	datePublished="${dates.published}"
-	dateModified="${dates.modified}"
-	dateReviewed="${dates.reviewed}"
+  book="${tldRef.bookName}"
+  path="${tldRef.path}/tags"
+  title="Tag Summary"
+  shortTitle="Tags"
+  dateCreated="${dates.created}"
+  datePublished="${dates.published}"
+  dateModified="${dates.modified}"
+  dateReviewed="${dates.reviewed}"
 >
-	<%-- Add one child per tag --%>
-	<c:forEach var="tag" items="${taglib.tags}">
-		<core:child
-			book="${tldRef.bookName}"
-			page="${tldRef.path}/tag-${ao:decodeURI(ao:encodeURIComponent(tag.name))}"
-		/>
-	</c:forEach>
-	<ao:include
-		page="tag-summary.inc.jsp"
-		arg.tldRef="${tldRef}"
-		arg.taglib="${taglib}"
-	/>
+  <%-- Add one child per tag --%>
+  <c:forEach var="tag" items="${taglib.tags}">
+    <core:child
+      book="${tldRef.bookName}"
+      page="${tldRef.path}/tag-${ao:decodeURI(ao:encodeURIComponent(tag.name))}"
+    />
+  </c:forEach>
+  <ao:include
+    page="tag-summary.inc.jsp"
+    arg.tldRef="${tldRef}"
+    arg.taglib="${taglib}"
+  />
 </core:page>

@@ -41,63 +41,63 @@ import javax.servlet.jsp.SkipPageException;
 
 public class FunctionServlet extends PageServlet {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static final String JSPX_TARGET = "/semanticcms-tag-reference/function.inc.jsp";
+  private static final String JSPX_TARGET = "/semanticcms-tag-reference/function.inc.jsp";
 
-	private final ResourceRef tldRef;
-	private final Function function;
-	private final boolean requireLinks;
-	private final Map<String, String> apiLinks;
+  private final ResourceRef tldRef;
+  private final Function function;
+  private final boolean requireLinks;
+  private final Map<String, String> apiLinks;
 
-	public FunctionServlet(
-		ResourceRef tldRef,
-		Function function,
-		boolean requireLinks,
-		Map<String, String> apiLinks
-	) {
-		this.tldRef = tldRef;
-		this.function = function;
-		this.requireLinks = requireLinks;
-		this.apiLinks = apiLinks;
-	}
+  public FunctionServlet(
+    ResourceRef tldRef,
+    Function function,
+    boolean requireLinks,
+    Map<String, String> apiLinks
+  ) {
+    this.tldRef = tldRef;
+    this.function = function;
+    this.requireLinks = requireLinks;
+    this.apiLinks = apiLinks;
+  }
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// We use ao-style directly, activate
-		RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // We use ao-style directly, activate
+    RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
 
-		Map<String, Object> args = new LinkedHashMap<>();
-		args.put("tldRef", tldRef);
-		args.put("function", function);
-		args.put("requireLinks", requireLinks);
-		args.put("apiLinks", apiLinks);
+    Map<String, Object> args = new LinkedHashMap<>();
+    args.put("tldRef", tldRef);
+    args.put("function", function);
+    args.put("requireLinks", requireLinks);
+    args.put("apiLinks", apiLinks);
 
-		// TODO: Is there a way to get rid of this forward/include duality?
-		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
-		ServletContext servletContext = getServletContext();
-		if(CaptureContext.getCaptureContext(req) == null) {
-			// Forward required so can set content type
-			Dispatcher.forward(
-				servletContext,
-				JSPX_TARGET,
-				req,
-				resp,
-				args
-			);
-		} else {
-			try {
-				// Include required on capture since forward interrupts the final output
-				Dispatcher.include(
-					servletContext,
-					JSPX_TARGET,
-					req,
-					resp,
-					args
-				);
-			} catch(SkipPageException e) {
-				throw new ServletException(e);
-			}
-		}
-	}
+    // TODO: Is there a way to get rid of this forward/include duality?
+    // TODO: Perhaps something clever with the way forward is handled inside of a capture?
+    ServletContext servletContext = getServletContext();
+    if (CaptureContext.getCaptureContext(req) == null) {
+      // Forward required so can set content type
+      Dispatcher.forward(
+        servletContext,
+        JSPX_TARGET,
+        req,
+        resp,
+        args
+      );
+    } else {
+      try {
+        // Include required on capture since forward interrupts the final output
+        Dispatcher.include(
+          servletContext,
+          JSPX_TARGET,
+          req,
+          resp,
+          args
+        );
+      } catch (SkipPageException e) {
+        throw new ServletException(e);
+      }
+    }
+  }
 }

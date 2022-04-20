@@ -41,52 +41,52 @@ import javax.servlet.jsp.SkipPageException;
 
 public class TagsServlet extends PageServlet {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static final String JSPX_TARGET = "/semanticcms-tag-reference/tags.inc.jsp";
+  private static final String JSPX_TARGET = "/semanticcms-tag-reference/tags.inc.jsp";
 
-	private final ResourceRef tldRef;
-	private final Taglib taglib;
+  private final ResourceRef tldRef;
+  private final Taglib taglib;
 
-	public TagsServlet(ResourceRef tldRef, Taglib taglib) {
-		this.tldRef = tldRef;
-		this.taglib = taglib;
-	}
+  public TagsServlet(ResourceRef tldRef, Taglib taglib) {
+    this.tldRef = tldRef;
+    this.taglib = taglib;
+  }
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// We use ao-style directly, activate
-		RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // We use ao-style directly, activate
+    RegistryEE.Page.get(req).activate(AoStyle.RESOURCE_GROUP);
 
-		Map<String, Object> args = new LinkedHashMap<>();
-		args.put("tldRef", tldRef);
-		args.put("taglib", taglib);
+    Map<String, Object> args = new LinkedHashMap<>();
+    args.put("tldRef", tldRef);
+    args.put("taglib", taglib);
 
-		// TODO: Is there a way to get rid of this forward/include duality?
-		// TODO: Perhaps something clever with the way forward is handled inside of a capture?
-		ServletContext servletContext = getServletContext();
-		if(CaptureContext.getCaptureContext(req) == null) {
-			// Forward required so can set content type
-			Dispatcher.forward(
-				servletContext,
-				JSPX_TARGET,
-				req,
-				resp,
-				args
-			);
-		} else {
-			try {
-				// Include required on capture since forward interrupts the final output
-				Dispatcher.include(
-					servletContext,
-					JSPX_TARGET,
-					req,
-					resp,
-					args
-				);
-			} catch(SkipPageException e) {
-				throw new ServletException(e);
-			}
-		}
-	}
+    // TODO: Is there a way to get rid of this forward/include duality?
+    // TODO: Perhaps something clever with the way forward is handled inside of a capture?
+    ServletContext servletContext = getServletContext();
+    if (CaptureContext.getCaptureContext(req) == null) {
+      // Forward required so can set content type
+      Dispatcher.forward(
+        servletContext,
+        JSPX_TARGET,
+        req,
+        resp,
+        args
+      );
+    } else {
+      try {
+        // Include required on capture since forward interrupts the final output
+        Dispatcher.include(
+          servletContext,
+          JSPX_TARGET,
+          req,
+          resp,
+          args
+        );
+      } catch (SkipPageException e) {
+        throw new ServletException(e);
+      }
+    }
+  }
 }
