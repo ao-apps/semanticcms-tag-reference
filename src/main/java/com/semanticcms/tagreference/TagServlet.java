@@ -51,10 +51,10 @@ public class TagServlet extends PageServlet {
   private final Map<String, String> apiLinks;
 
   public TagServlet(
-    PageRef tldRef,
-    Tag tag,
-    boolean requireLinks,
-    Map<String, String> apiLinks
+      PageRef tldRef,
+      Tag tag,
+      boolean requireLinks,
+      Map<String, String> apiLinks
   ) {
     this.tldRef = tldRef;
     this.tag = tag;
@@ -79,21 +79,21 @@ public class TagServlet extends PageServlet {
     if (CapturePage.getCaptureContext(req) == null) {
       // Forward required so can set content type
       Dispatcher.forward(
-        servletContext,
-        JSPX_TARGET,
-        req,
-        resp,
-        args
-      );
-    } else {
-      try {
-        // Include required on capture since forward interrupts the final output
-        Dispatcher.include(
           servletContext,
           JSPX_TARGET,
           req,
           resp,
           args
+      );
+    } else {
+      try {
+        // Include required on capture since forward interrupts the final output
+        Dispatcher.include(
+            servletContext,
+            JSPX_TARGET,
+            req,
+            resp,
+            args
         );
       } catch (SkipPageException e) {
         throw new ServletException(e);

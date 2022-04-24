@@ -98,12 +98,12 @@ public class LinkedClassNameTag extends TagSupport {
 
   // TODO: Use ao-fluent-html
   public static void writeLinkedClassName(
-    PageContext pageContext,
-    boolean requireLinks,
-    Map<String, String> apiLinks,
-    String className,
-    boolean shortName,
-    Appendable out
+      PageContext pageContext,
+      boolean requireLinks,
+      Map<String, String> apiLinks,
+      String className,
+      boolean shortName,
+      Appendable out
   ) throws IOException, JspTagException {
     if (className != null) {
       className = className.trim();
@@ -123,18 +123,18 @@ public class LinkedClassNameTag extends TagSupport {
         } else {
           token = token.trim();
           if (
-            // Primitives
-               "boolean".equals(token)
-            || "byte"   .equals(token)
-            || "char"   .equals(token)
-            || "short"  .equals(token)
-            || "int"    .equals(token)
-            || "long"   .equals(token)
-            || "float"  .equals(token)
-            || "double" .equals(token)
-            // Other keywords
-            || "void"   .equals(token) // Can be seen in deferred-method signature
-            || "?"      .equals(token) // Unbounded generics <?>
+              // Primitives
+              "boolean".equals(token)
+                  || "byte"   .equals(token)
+                  || "char"   .equals(token)
+                  || "short"  .equals(token)
+                  || "int"    .equals(token)
+                  || "long"   .equals(token)
+                  || "float"  .equals(token)
+                  || "double" .equals(token)
+                  // Other keywords
+                  || "void"   .equals(token) // Can be seen in deferred-method signature
+                  || "?"      .equals(token) // Unbounded generics <?>
           ) {
             encodeTextInXhtml(token, out);
           } else {
@@ -176,14 +176,14 @@ public class LinkedClassNameTag extends TagSupport {
                 }
                 out.append("href=\"");
                 encodeTextInXhtmlAttribute(
-                  HttpServletUtil.buildURL(
-                    pageContext,
-                    javadocLink + token.replace('.', '/').replace('$', '.') + ".html",
-                    EmptyURIParameters.getInstance(),
-                    false,
-                    true // Javadocs do not take parameters, even within the same site
-                  ),
-                  out
+                    HttpServletUtil.buildURL(
+                        pageContext,
+                        javadocLink + token.replace('.', '/').replace('$', '.') + ".html",
+                        EmptyURIParameters.getInstance(),
+                        false,
+                        true // Javadocs do not take parameters, even within the same site
+                    ),
+                    out
                 );
                 out.append("\">");
                 encodeTextInXhtml(shortName ? nameOnly : token, out);
