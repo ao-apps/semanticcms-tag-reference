@@ -94,12 +94,12 @@ public class LinkedSignatureTag extends TagSupport {
 
   // TODO: Use ao-fluent-html
   public static void writeLinkedSignature(
-    PageContext pageContext,
-    boolean requireLinks,
-    Map<String, String> apiLinks,
-    String signature,
-    boolean shortName,
-    Appendable out
+      PageContext pageContext,
+      boolean requireLinks,
+      Map<String, String> apiLinks,
+      String signature,
+      boolean shortName,
+      Appendable out
   ) throws IOException, JspTagException {
     if (signature != null) {
       signature = signature.trim();

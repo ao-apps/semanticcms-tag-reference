@@ -51,10 +51,10 @@ public class FunctionsServlet extends PageServlet {
   private final Map<String, String> apiLinks;
 
   public FunctionsServlet(
-    ResourceRef tldRef,
-    Taglib taglib,
-    boolean requireLinks,
-    Map<String, String> apiLinks
+      ResourceRef tldRef,
+      Taglib taglib,
+      boolean requireLinks,
+      Map<String, String> apiLinks
   ) {
     this.tldRef = tldRef;
     this.taglib = taglib;
@@ -79,21 +79,21 @@ public class FunctionsServlet extends PageServlet {
     if (CaptureContext.getCaptureContext(req) == null) {
       // Forward required so can set content type
       Dispatcher.forward(
-        servletContext,
-        JSPX_TARGET,
-        req,
-        resp,
-        args
-      );
-    } else {
-      try {
-        // Include required on capture since forward interrupts the final output
-        Dispatcher.include(
           servletContext,
           JSPX_TARGET,
           req,
           resp,
           args
+      );
+    } else {
+      try {
+        // Include required on capture since forward interrupts the final output
+        Dispatcher.include(
+            servletContext,
+            JSPX_TARGET,
+            req,
+            resp,
+            args
         );
       } catch (SkipPageException e) {
         throw new ServletException(e);
