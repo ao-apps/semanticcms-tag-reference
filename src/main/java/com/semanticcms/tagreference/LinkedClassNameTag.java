@@ -125,16 +125,16 @@ public class LinkedClassNameTag extends TagSupport {
           if (
               // Primitives
               "boolean".equals(token)
-                  || "byte"   .equals(token)
-                  || "char"   .equals(token)
-                  || "short"  .equals(token)
-                  || "int"    .equals(token)
-                  || "long"   .equals(token)
-                  || "float"  .equals(token)
-                  || "double" .equals(token)
+                  || "byte".equals(token)
+                  || "char".equals(token)
+                  || "short".equals(token)
+                  || "int".equals(token)
+                  || "long".equals(token)
+                  || "float".equals(token)
+                  || "double".equals(token)
                   // Other keywords
-                  || "void"   .equals(token) // Can be seen in deferred-method signature
-                  || "?"      .equals(token) // Unbounded generics <?>
+                  || "void".equals(token) // Can be seen in deferred-method signature
+                  || "?".equals(token) // Unbounded generics <?>
           ) {
             encodeTextInXhtml(token, out);
           } else {
