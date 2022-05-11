@@ -53,8 +53,8 @@ import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
 /**
+ * Initializes a tag reference during {@linkplain ServletContainerInitializer application start-up}.
  * The following URL patterns are registered:
- *
  * <ol>
  *   <li>/path/taglib.tld   The taglib file itself available for download (handled by default servlet)</li>
  *   <li>/path/taglib.tld/  The documentation for the taglib overall</li>
@@ -104,9 +104,9 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       while ((line = in.readLine()) != null) {
         line = line.trim();
         if (!line.isEmpty()) {
-          final String MODULE_PREFIX = "module:";
-          if (line.startsWith(MODULE_PREFIX)) {
-            moduleLink = javadocLink + line.substring(MODULE_PREFIX.length()).trim() + '/';
+          final String modulePrefix = "module:";
+          if (line.startsWith(modulePrefix)) {
+            moduleLink = javadocLink + line.substring(modulePrefix.length()).trim() + '/';
           } else if (packages.put(line, moduleLink) != null) {
             throw new AssertionError("Duplicate package in " + property + ": " + line);
           }
@@ -174,6 +174,8 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
   private final Map<String, String> apiLinks;
 
   /**
+   * Parses the TLD file.
+   *
    * @param javadocLinkJavaSE  The Java SE API URL.
    *                           This matches values used in Maven build property <code>${javadoc.link.javase}</code>.
    *
@@ -247,6 +249,8 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
   }
 
   /**
+   * Parses the TLD file.
+   *
    * @param javadocLinkJavaSE  The Java SE API URL.
    *                           This matches values used in Maven build property <code>${javadoc.link.javase}</code>.
    *
@@ -279,10 +283,14 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
   }
 
   /**
+   * Parses the TLD file.
+   * <p>
    * Calls {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)},
    * with {@code requireLinks = false} for backward compatibility.
+   * </p>
    *
-   * @deprecated  Please provide {@code requireLinks} to either {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
+   * @deprecated  Please provide {@code requireLinks} to either
+   *              {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
    *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String...)}
    */
   @Deprecated(forRemoval = true)
@@ -318,45 +326,45 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       String tldServletPath = tldRef.getServletPath();
       // Parse TLD
       Taglib taglib;
-      {
-        try (InputStream tldIn = servletContext.getResourceAsStream(tldServletPath)) {
-          if (tldIn == null) {
-            throw new IOException("TLD not found: " + tldServletPath);
-          }
-          long tldLastModified = ServletContextCache.getLastModified(servletContext, tldServletPath);
-          taglib = new Taglib(
-              SUMMARY_CLASS,
-              tldRef.toString(),
-              Dates.valueOf(
-                  null,
-                  null,
-                  tldLastModified == 0 ? null : new DateTime(tldLastModified),
-                  null
-              ),
-              XmlUtils.parseXml(tldIn)
-          );
-        }
-      }
-      // Dynamically add servlets
-      {
-        // /path/taglib.tld/
-        String taglibServletUrlPattern = tldServletPath + "/";
-        ServletRegistration.Dynamic registration = servletContext.addServlet(
-            taglibServletUrlPattern,
-            new TaglibServlet(title, shortTitle, tldRef, taglib, requireLinks, apiLinks)
-        );
-        registration.addMapping(taglibServletUrlPattern);
-      }
-      if (!taglib.getTags().isEmpty()) {
         {
-          // /path/taglib.tld/tags
-          String tagsServletUrlPattern = tldServletPath + "/tags";
-          ServletRegistration.Dynamic registration = servletContext.addServlet(
-              tagsServletUrlPattern,
-              new TagsServlet(tldRef, taglib)
-          );
-          registration.addMapping(tagsServletUrlPattern);
+          try (InputStream tldIn = servletContext.getResourceAsStream(tldServletPath)) {
+            if (tldIn == null) {
+              throw new IOException("TLD not found: " + tldServletPath);
+            }
+            long tldLastModified = ServletContextCache.getLastModified(servletContext, tldServletPath);
+            taglib = new Taglib(
+                SUMMARY_CLASS,
+                tldRef.toString(),
+                Dates.valueOf(
+                    null,
+                    null,
+                    tldLastModified == 0 ? null : new DateTime(tldLastModified),
+                    null
+                ),
+                XmlUtils.parseXml(tldIn)
+            );
+          }
         }
+        // Dynamically add servlets
+        {
+          // /path/taglib.tld/
+          String taglibServletUrlPattern = tldServletPath + "/";
+          ServletRegistration.Dynamic registration = servletContext.addServlet(
+              taglibServletUrlPattern,
+              new TaglibServlet(title, shortTitle, tldRef, taglib, requireLinks, apiLinks)
+          );
+          registration.addMapping(taglibServletUrlPattern);
+        }
+      if (!taglib.getTags().isEmpty()) {
+          {
+            // /path/taglib.tld/tags
+            String tagsServletUrlPattern = tldServletPath + "/tags";
+            ServletRegistration.Dynamic registration = servletContext.addServlet(
+                tagsServletUrlPattern,
+                new TagsServlet(tldRef, taglib)
+            );
+            registration.addMapping(tagsServletUrlPattern);
+          }
         for (Tag tag : taglib.getTags()) {
           // /path/taglib.tld/tag-tagName
           String tagServletUrlPattern = tldServletPath + "/tag-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(tag.getName()));
@@ -368,15 +376,15 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
         }
       }
       if (!taglib.getFunctions().isEmpty()) {
-        {
-          // /path/taglib.tld/functions
-          String functionsServletUrlPattern = tldServletPath + "/functions";
-          ServletRegistration.Dynamic registration = servletContext.addServlet(
-              functionsServletUrlPattern,
-              new FunctionsServlet(tldRef, taglib, requireLinks, apiLinks)
-          );
-          registration.addMapping(functionsServletUrlPattern);
-        }
+          {
+            // /path/taglib.tld/functions
+            String functionsServletUrlPattern = tldServletPath + "/functions";
+            ServletRegistration.Dynamic registration = servletContext.addServlet(
+                functionsServletUrlPattern,
+                new FunctionsServlet(tldRef, taglib, requireLinks, apiLinks)
+            );
+            registration.addMapping(functionsServletUrlPattern);
+          }
         for (Function function : taglib.getFunctions()) {
           // /path/taglib.tld/function-functionName
           String functionServletUrlPattern = tldServletPath + "/function-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(function.getName()));

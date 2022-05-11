@@ -24,9 +24,16 @@
 package com.semanticcms.tagreference.book;
 
 import com.semanticcms.tagreference.TagReferenceInitializer;
+import javax.servlet.ServletContainerInitializer;
 
+/**
+ * Initializes a tag reference during {@linkplain ServletContainerInitializer application start-up}.
+ */
 public class TagReferenceTldInitializer extends TagReferenceInitializer {
 
+  /**
+   * Parses the TLD file.
+   */
   public TagReferenceTldInitializer() {
     super(
         Maven.properties.getProperty("documented.name") + " Taglib Reference",

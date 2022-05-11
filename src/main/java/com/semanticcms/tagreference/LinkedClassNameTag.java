@@ -25,6 +25,7 @@ package com.semanticcms.tagreference;
 
 import static com.aoapps.encoding.TextInXhtmlAttributeEncoder.encodeTextInXhtmlAttribute;
 import static com.aoapps.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
+
 import com.aoapps.net.EmptyURIParameters;
 import com.aoapps.servlet.http.HttpServletUtil;
 import java.io.IOException;
@@ -46,6 +47,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class LinkedClassNameTag extends TagSupport {
 
   private static final long serialVersionUID = 1L;
+
+  private static final String TOKENS = "()[]<>&,";
+  private static final String EXTENDS = " extends ";
+  private static final String SUPER = " super ";
 
   private boolean requireLinks;
   private Map<String, String> apiLinks;
@@ -107,7 +112,6 @@ public class LinkedClassNameTag extends TagSupport {
   ) throws IOException, JspTagException {
     if (className != null) {
       className = className.trim();
-      final String TOKENS = "()[]<>&,";
       StringTokenizer tokenizer = new StringTokenizer(className, TOKENS, true);
       while (tokenizer.hasMoreTokens()) {
         String token = tokenizer.nextToken();
@@ -138,14 +142,12 @@ public class LinkedClassNameTag extends TagSupport {
           ) {
             encodeTextInXhtml(token, out);
           } else {
-            final String EXTENDS = " extends ";
             int pos = token.indexOf(EXTENDS);
             if (pos != -1) {
               encodeTextInXhtml(token.substring(0, pos).trim(), out);
               out.append(EXTENDS);
               token = token.substring(pos + EXTENDS.length());
             } else {
-              final String SUPER = " super ";
               pos = token.indexOf(SUPER);
               if (pos != -1) {
                 encodeTextInXhtml(token.substring(0, pos).trim(), out);
@@ -156,16 +158,16 @@ public class LinkedClassNameTag extends TagSupport {
             if (!token.isEmpty()) {
               String packageName;
               String nameOnly;
-              {
-                int lastDot = token.lastIndexOf('.');
-                if (lastDot == -1) {
-                  packageName = "";
-                  nameOnly = token;
-                } else {
-                  packageName = token.substring(0, lastDot);
-                  nameOnly = token.substring(lastDot + 1);
+                {
+                  int lastDot = token.lastIndexOf('.');
+                  if (lastDot == -1) {
+                    packageName = "";
+                    nameOnly = token;
+                  } else {
+                    packageName = token.substring(0, lastDot);
+                    nameOnly = token.substring(lastDot + 1);
+                  }
                 }
-              }
               String javadocLink = apiLinks.get(packageName);
               if (javadocLink != null) {
                 // Link to javadocs

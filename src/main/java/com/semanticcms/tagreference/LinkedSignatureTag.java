@@ -24,6 +24,7 @@
 package com.semanticcms.tagreference;
 
 import static com.aoapps.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
+
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.jsp.JspException;
