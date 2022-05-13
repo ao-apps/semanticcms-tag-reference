@@ -43,4 +43,4 @@ module com.semanticcms.tagreference {
   requires taglibs.standard.spec; // <groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-spec</artifactId>
   // Java SE
   requires java.xml;
-} // TODO: Avoiding rewrite-maven-plugin-4.22.2 truncation
+}
