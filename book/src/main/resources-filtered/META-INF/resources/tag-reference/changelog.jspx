@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-11-06T10:35:35-06:00"
-    dateModified="2022-05-14T02:18:15-05:00"
+    dateModified="2022-05-18T03:00:19-05:00"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -49,6 +49,12 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         scmUrl="@{project.scm.url}"
       >
         <!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
+        <ul>
+          <li>
+            <code>javax.activation:activation</code> apidocs now link to
+            <ao:a href="https://jakarta.ee/specifications/activation/1.2/apidocs/" />.
+          </li>
+        </ul>
       </changelog:release>
     </c:if>
 

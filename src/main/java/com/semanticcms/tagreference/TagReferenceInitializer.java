@@ -74,6 +74,11 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
   public static final String NOFOLLOW_PREFIX = "nofollow:";
 
   /**
+   * The property name used for Activation API.
+   */
+  private static final String ACTIVATION_PROPERTY = "javadoc.link.activation";
+
+  /**
    * The property name used for JavaMail API.
    */
   private static final String JAVAMAIL_PROPERTY = "javadoc.link.javamail";
@@ -138,6 +143,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       addPackageMap("javadoc.link.javase.19", "com/aoapps/javadoc/offline/javase/19/element-list");
 
       // Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
+      addPackageMap(ACTIVATION_PROPERTY,     "com/aoapps/javadoc/offline/javax.activation/activation/element-list");
       addPackageMap(JAVAMAIL_PROPERTY,       "com/aoapps/javadoc/offline/com.sun.mail/javax.mail/package-list");
       addPackageMap("javadoc.link.javaee.5", "com/aoapps/javadoc/offline/javaee/5/package-list");
       addPackageMap("javadoc.link.javaee.6", "com/aoapps/javadoc/offline/javaee/6/package-list");
