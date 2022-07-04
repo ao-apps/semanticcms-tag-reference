@@ -9,19 +9,25 @@
 # $ git config blame.ignoreRevsFile .git-blame-ignore-revs
 
 # Significant manual code formatting clean-up…
+595a032bac52fb350bb4180a33b93b5c1aa3bb9a
 88f576476d1685971b683d26737cf5a63bf06f0e
 
 # Added missing spaces after comma
+1dc8214dbbc43d4a66d2444aa207914d2591c23b
 c05f37699708bdaec6dd86e625628e968065e8fe
 
 # Created AnyContent interface and AnyDocument base implementation
+87246d4b040c4caccd82c949361a60bdbb08b6c7
 8bb301577cc91d38c14070b22679c94661dd00c5
 
 # Performed automatic source code clean-up with rewrite-maven-plugin
+54a817ab615d12c976a0bf516d53eb4486dba621
 fcee00440a3ee3f5ae2eb978b46a7bf0ff726b99
 
 # Performed automatic clean-up with org.openrewrite.java.cleanup.Cleanup
+daafb7ea59bfe3a1d70aac9ccac13821c8db029b
 2beda113a13b03e64986243d23cb13e10704c6a8
 
 # Performed manual checkstyle clean-up
+1ff71fbab1e103cc5aeb147a9d1530466fb4bd76
 526fab258265e068a2fed964f5d8b3c1900e3949
