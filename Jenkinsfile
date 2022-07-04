@@ -36,8 +36,8 @@ def upstreamProjects = [
   '../oss/style', // <groupId>com.aoapps</groupId><artifactId>ao-style</artifactId>
   '../oss/taglib', // <groupId>com.aoapps</groupId><artifactId>ao-taglib</artifactId>
   '../oss/tld-parser', // <groupId>com.aoapps</groupId><artifactId>ao-tld-parser</artifactId>
-  '../oss/web-resources/registry', // <groupId>com.aoapps</groupId><artifactId>web-resources-registry</artifactId>
-  '../oss/web-resources/servlet', // <groupId>com.aoapps</groupId><artifactId>web-resources-servlet</artifactId>
+  '../oss/web-resources/registry', // <groupId>com.aoapps</groupId><artifactId>ao-web-resources-registry</artifactId>
+  '../oss/web-resources/servlet', // <groupId>com.aoapps</groupId><artifactId>ao-web-resources-servlet</artifactId>
   // No Jenkins: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
   // No Jenkins: <groupId>javax.servlet.jsp</groupId><artifactId>javax.servlet.jsp-api</artifactId>
   // No Jenkins: <groupId>joda-time</groupId><artifactId>joda-time</artifactId>
