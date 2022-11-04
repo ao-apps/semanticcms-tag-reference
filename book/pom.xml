@@ -29,7 +29,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference-book</artifactId><version>1.9.1-SNAPSHOT</version>
+  <groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference-book</artifactId><version>1.9.1</version>
   <packaging>bundle</packaging>
 
   <properties>
@@ -76,7 +76,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     <connection>scm:git:git://github.com/ao-apps/semanticcms-tag-reference.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/semanticcms-tag-reference.git</developerConnection>
     <url>https://github.com/ao-apps/semanticcms-tag-reference</url>
-    <tag>HEAD</tag>
+    <tag>semanticcms-tag-reference-book-1.9.1</tag>
   </scm>
 
   <issueManagement>
