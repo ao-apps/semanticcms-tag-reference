@@ -152,7 +152,10 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       addPackageMap("javadoc.link.javaee.5", "com/aoapps/javadoc/offline/javaee/5/package-list");
       addPackageMap("javadoc.link.javaee.6", "com/aoapps/javadoc/offline/javaee/6/package-list");
       addPackageMap("javadoc.link.javaee.7", "com/aoapps/javadoc/offline/javaee/7/package-list");
-      addPackageMap("javadoc.link.javaee.8", "com/aoapps/javadoc/offline/javaee/8/package-list");
+      addPackageMap("javadoc.link.jakartaee.8",   "com/aoapps/javadoc/offline/jakartaee/8/package-list");
+      addPackageMap("javadoc.link.jakartaee.9",   "com/aoapps/javadoc/offline/jakartaee/9/package-list");
+      addPackageMap("javadoc.link.jakartaee.9.1", "com/aoapps/javadoc/offline/jakartaee/9.1/package-list");
+      addPackageMap("javadoc.link.jakartaee.10",  "com/aoapps/javadoc/offline/jakartaee/10/element-list");
     } catch (IOException e) {
       throw new ExceptionInInitializerError(e);
     }
