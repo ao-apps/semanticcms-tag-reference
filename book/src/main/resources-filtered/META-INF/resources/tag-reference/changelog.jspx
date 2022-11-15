@@ -52,9 +52,9 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         <ul>
           <li>Jakarta EE updates:
             <ol>
-              <li>Added <ao:a href="https://jakarta.ee/specifications/platform/9/apidocs/">Jakarta EE 9</ao:a></li>
-              <li>Added <ao:a href="https://jakarta.ee/specifications/platform/9.1/apidocs/">Jakarta EE 9.1</ao:a></li>
-              <li>Added <ao:a href="https://jakarta.ee/specifications/platform/10/apidocs/">Jakarta EE 10</ao:a></li>
+              <li>Added <ao:a href="https://jakarta.ee/specifications/platform/9/">Jakarta EE 9</ao:a></li>
+              <li>Added <ao:a href="https://jakarta.ee/specifications/platform/9.1/">Jakarta EE 9.1</ao:a></li>
+              <li>Added <ao:a href="https://jakarta.ee/specifications/platform/10/">Jakarta EE 10</ao:a></li>
             </ol>
           </li>
         </ul>
