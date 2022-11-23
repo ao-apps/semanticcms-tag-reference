@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-11-06T10:35:35-06:00"
-    dateModified="2022-11-15T11:18:43-06:00"
+    dateModified="2022-11-22T22:51:38-06:00"
   >
     <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
       <changelog:release
@@ -49,17 +49,27 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         scmUrl="@{project.scm.url}"
       >
         <!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
-        <ul>
-          <li>Jakarta EE updates:
-            <ol>
-              <li>Added <ao:a href="https://jakarta.ee/release/9/">Jakarta EE 9</ao:a></li>
-              <li>Added <ao:a href="https://jakarta.ee/release/9.1/">Jakarta EE 9.1</ao:a></li>
-              <li>Added <ao:a href="https://jakarta.ee/release/10/">Jakarta EE 10</ao:a></li>
-            </ol>
-          </li>
-        </ul>
       </changelog:release>
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.10.0"
+      datePublished="2022-11-22T22:51:38-06:00"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Jakarta EE updates:
+          <ol>
+            <li>Added <ao:a href="https://jakarta.ee/release/9/">Jakarta EE 9</ao:a></li>
+            <li>Added <ao:a href="https://jakarta.ee/release/9.1/">Jakarta EE 9.1</ao:a></li>
+            <li>Added <ao:a href="https://jakarta.ee/release/10/">Jakarta EE 10</ao:a></li>
+          </ol>
+        </li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
