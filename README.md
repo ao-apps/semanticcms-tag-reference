@@ -24,7 +24,7 @@ Generates tag library descriptor documentation for .tld files.
 * [Changelog](https://semanticcms.com/tag-reference/changelog)
 * [Taglib Reference](https://semanticcms.com/tag-reference/tag-reference.tld/)
 * [API Docs](https://semanticcms.com/tag-reference/apidocs/)
-* [Maven Central Repository](https://central.sonatype.com/search?namespace=com.semanticcms&q=a%3Asemanticcms-tag-reference)
+* [Maven Central Repository](https://central.sonatype.com/artifact/com.semanticcms/semanticcms-tag-reference)
 * [GitHub](https://github.com/ao-apps/semanticcms-tag-reference)
 
 ## Related Projects
