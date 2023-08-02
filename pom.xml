@@ -29,11 +29,11 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.10.1-SNAPSHOT</version>
+  <groupId>com.semanticcms</groupId><artifactId>semanticcms-tag-reference</artifactId><version>1.10.1</version>
   <packaging>bundle</packaging>
 
   <properties>
-    <project.build.outputTimestamp>2023-02-08T21:06:04Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-08-02T18:27:04Z</project.build.outputTimestamp>
     <module.name>com.semanticcms.tagreference</module.name>
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
 / <a target="${javadoc.target}" href="${project.url}">Tag Reference</a>]]></javadoc.breadcrumbs>
@@ -74,7 +74,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     <connection>scm:git:git://github.com/ao-apps/semanticcms-tag-reference.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/semanticcms-tag-reference.git</developerConnection>
     <url>https://github.com/ao-apps/semanticcms-tag-reference</url>
-    <tag>HEAD</tag>
+    <tag>semanticcms-tag-reference-1.10.1</tag>
   </scm>
 
   <issueManagement>
