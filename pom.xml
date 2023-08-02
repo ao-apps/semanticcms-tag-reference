@@ -470,7 +470,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
       </dependency>
       <!-- Runtime Direct -->
       <dependency>
-        <groupId>com.aoapps</groupId><artifactId>ao-javadoc-offline</artifactId><version>3.4.0${POST-SNAPSHOT}</version>
+        <groupId>com.aoapps</groupId><artifactId>ao-javadoc-offline</artifactId><version>3.4.1${POST-SNAPSHOT}</version>
       </dependency>
       <!-- javaee-web-api-bom: <groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-impl</artifactId> -->
       <!-- BOM -->
