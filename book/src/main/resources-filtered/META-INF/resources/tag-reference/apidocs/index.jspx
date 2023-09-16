@@ -39,5 +39,6 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="API Docs"
     datePublished="2016-11-06T10:24:23-06:00"
     dateModified="${ao:getLastModified('index.html')}"
+    allowRobots="false"
   />
 </jsp:root>
