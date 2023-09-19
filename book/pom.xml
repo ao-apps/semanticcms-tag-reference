@@ -41,6 +41,9 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     <documented.artifactId>semanticcms-tag-reference</documented.artifactId>
     <documented.name>SemanticCMS Tag Reference</documented.name>
     <documented.description>Generates tag library descriptor documentation for .tld files.</documented.description>
+    <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
+/ <a target="${javadoc.target}" href="${project.url}">Tag Reference</a>]]></javadoc.breadcrumbs>
+    <javadoc.taglibReference><![CDATA[<li><a target="${javadoc.target}" href="${project.url}tag-reference.tld/">Taglib Reference</a></li>]]></javadoc.taglibReference>
 
     <description.html><![CDATA[Documentation for <a target="${javadoc.target}" href="${project.url}">${documented.name}</a> in <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
     <!-- SonarQube -->
