@@ -39,6 +39,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a>
 / <a target="${javadoc.target}" href="${project.url}">Tag Reference</a>]]></javadoc.breadcrumbs>
     <javadoc.taglibReference><![CDATA[<li><a target="${javadoc.target}" href="${project.url}tag-reference.tld/">Taglib Reference</a></li>]]></javadoc.taglibReference>
+
     <!-- TODO: Implement tests -->
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
   </properties>
