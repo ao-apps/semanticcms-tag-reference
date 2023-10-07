@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,6 +26,7 @@ package com.semanticcms.tagreference;
 import static com.aoapps.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -44,12 +45,17 @@ public class LinkedSignatureTag extends TagSupport {
 
   private static final long serialVersionUID = 1L;
 
-  private boolean requireLinks;
-  private Map<String, String> apiLinks;
-  private String signature;
-  private boolean shortName;
+  private transient boolean requireLinks;
+  private transient Map<String, String> apiLinks;
+  private transient String signature;
+  private transient boolean shortName;
 
   public LinkedSignatureTag() {
+    init();
+  }
+
+  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    in.defaultReadObject();
     init();
   }
 

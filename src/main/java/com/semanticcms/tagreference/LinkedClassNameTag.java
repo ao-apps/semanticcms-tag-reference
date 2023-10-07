@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,6 +29,7 @@ import static com.aoapps.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 import com.aoapps.net.EmptyURIParameters;
 import com.aoapps.servlet.http.HttpServletUtil;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Map;
 import java.util.StringTokenizer;
 import javax.servlet.jsp.JspException;
@@ -52,12 +53,17 @@ public class LinkedClassNameTag extends TagSupport {
   private static final String EXTENDS = " extends ";
   private static final String SUPER = " super ";
 
-  private boolean requireLinks;
-  private Map<String, String> apiLinks;
-  private String className;
-  private boolean shortName;
+  private transient boolean requireLinks;
+  private transient Map<String, String> apiLinks;
+  private transient String className;
+  private transient boolean shortName;
 
   public LinkedClassNameTag() {
+    init();
+  }
+
+  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    in.defaultReadObject();
     init();
   }
 
