@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-11-06T10:35:35-06:00"
-    dateModified="2023-08-02T18:28:45Z"
+    dateModified="2023-10-07T03:54:47Z"
   >
     <c:set var="latestRelease" value="1.10.1" />
     <c:if test="${
@@ -54,6 +54,12 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         scmUrl="@{project.scm.url}"
       >
         <!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
+        <ul>
+          <li>
+            Improved support for taglib serialization: marked attribute fields <code>transient</code> and calling
+            <code>init()</code> from <code>readObject(…)</code>.
+          </li>
+        </ul>
       </changelog:release>
     </c:if>
 
