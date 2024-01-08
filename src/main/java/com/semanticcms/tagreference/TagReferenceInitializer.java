@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -143,6 +143,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       addPackageMap("javadoc.link.javase.19", "com/aoapps/javadoc/offline/javase/19/element-list");
       addPackageMap("javadoc.link.javase.20", "com/aoapps/javadoc/offline/javase/20/element-list");
       addPackageMap("javadoc.link.javase.21", "com/aoapps/javadoc/offline/javase/21/element-list");
+      addPackageMap("javadoc.link.javase.22", "com/aoapps/javadoc/offline/javase/22/element-list");
 
       // Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
       addPackageMap(ACTIVATION_PROPERTY,     "com/aoapps/javadoc/offline/javax.activation/activation/element-list");
