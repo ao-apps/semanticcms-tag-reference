@@ -37,9 +37,9 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-11-06T10:35:35-06:00"
-    dateModified="2024-01-08T00:08:41Z"
+    dateModified="2024-05-10T18:32:27Z"
   >
-    <c:set var="latestRelease" value="1.10.1" />
+    <c:set var="latestRelease" value="1.10.2" />
     <c:if test="${
       fn:endsWith('@{project.version}', '-SNAPSHOT')
       and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
@@ -54,21 +54,31 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         scmUrl="@{project.scm.url}"
       >
         <!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
-        <ul>
-          <li>
-            Improved support for taglib serialization: marked attribute fields <code>transient</code> and calling
-            <code>init()</code> from <code>readObject(…)</code>.
-          </li>
-          <li>Java updates:
-            <ol>
-              <li>Java 20 is now end-of-life</li>
-              <li>Java 21 is now current stable</li>
-              <li>Java 22 is new beta</li>
-            </ol>
-          </li>
-        </ul>
       </changelog:release>
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.10.2"
+      datePublished="2024-05-10T18:32:27Z"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>
+          Improved support for taglib serialization: marked attribute fields <code>transient</code> and calling
+          <code>init()</code> from <code>readObject(…)</code>.
+        </li>
+        <li>Java updates:
+          <ol>
+            <li>Java 20 is now end-of-life</li>
+            <li>Java 21 is now current stable</li>
+            <li>Java 22 is new beta</li>
+          </ol>
+        </li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
