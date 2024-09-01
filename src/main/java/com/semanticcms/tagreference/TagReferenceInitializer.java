@@ -242,24 +242,6 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
     apiLinks = Collections.unmodifiableMap(combinedApiLinks);
   }
 
-  private static Map<String, String> convertToMap(String ... additionalApiLinks) {
-    if (additionalApiLinks == null) {
-      return null;
-    }
-    int len = additionalApiLinks.length;
-    if ((len & 1) != 0) {
-      throw new IllegalArgumentException("Uneven number of elements in additionalApiLinks, must be in even pairs (package, apiLinks), ...");
-    }
-    Map<String, String> map = AoCollections.newLinkedHashMap(len >> 1);
-    for (int i = 0; i < len; i += 2) {
-      String p = additionalApiLinks[i];
-      if (!map.containsKey(p)) {
-        map.put(p, additionalApiLinks[i + 1]);
-      }
-    }
-    return map;
-  }
-
   /**
    * Parses the TLD file.
    *
@@ -290,6 +272,24 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
         javadocLinkJavaEE,
         convertToMap(additionalApiLinks)
     );
+  }
+
+  private static Map<String, String> convertToMap(String ... additionalApiLinks) {
+    if (additionalApiLinks == null) {
+      return null;
+    }
+    int len = additionalApiLinks.length;
+    if ((len & 1) != 0) {
+      throw new IllegalArgumentException("Uneven number of elements in additionalApiLinks, must be in even pairs (package, apiLinks), ...");
+    }
+    Map<String, String> map = AoCollections.newLinkedHashMap(len >> 1);
+    for (int i = 0; i < len; i += 2) {
+      String p = additionalApiLinks[i];
+      if (!map.containsKey(p)) {
+        map.put(p, additionalApiLinks[i + 1]);
+      }
+    }
+    return map;
   }
 
   /**

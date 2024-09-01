@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-11-06T10:35:35-06:00"
-    dateModified="2024-05-10T18:32:27Z"
+    dateModified="2024-08-31T19:37:53Z"
   >
     <c:set var="latestRelease" value="1.10.2" />
     <c:if test="${
@@ -53,6 +53,9 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
       >
+        <ul>
+          <li>Updated to <ao:a href="https://checkstyle.org/releasenotes.html#Release_10.18.1">Checkstyle 10.18.1</ao:a>.</li>
+        </ul>
         <!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
       </changelog:release>
     </c:if>
