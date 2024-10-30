@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,12 +32,9 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * <p>
  * Displays a function or method signature return type, possibly linked to javadocs apis.
- * </p>
- * <p>
- * Supports arrays {@code …[]} and generics {@code <…[, …]>}, possibly nested.
- * </p>
+ *
+ * <p>Supports arrays {@code …[]} and generics {@code <…[, …]>}, possibly nested.</p>
  */
 public class LinkedSignatureReturnTag extends TagSupport {
 

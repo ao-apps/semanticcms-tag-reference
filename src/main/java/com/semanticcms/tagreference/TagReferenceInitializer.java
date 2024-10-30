@@ -278,10 +278,9 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
 
   /**
    * Parses the TLD file.
-   * <p>
-   * Calls {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)},
-   * with {@code requireLinks = false} for backward compatibility.
-   * </p>
+   *
+   * <p>Calls {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)},
+   * with {@code requireLinks = false} for backward compatibility.</p>
    *
    * @deprecated  Please provide {@code requireLinks} to either
    *              {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
