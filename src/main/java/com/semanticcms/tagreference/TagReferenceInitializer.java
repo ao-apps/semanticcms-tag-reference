@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -337,45 +337,45 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       String tldServletPath = tldRef.getServletPath();
       // Parse TLD
       Taglib taglib;
-        {
-          try (InputStream tldIn = servletContext.getResourceAsStream(tldServletPath)) {
-            if (tldIn == null) {
-              throw new IOException("TLD not found: " + tldServletPath);
-            }
-            long tldLastModified = ServletContextCache.getLastModified(servletContext, tldServletPath);
-            taglib = new Taglib(
-                SUMMARY_CLASS,
-                tldRef.toString(),
-                Dates.valueOf(
-                    null,
-                    null,
-                    tldLastModified == 0 ? null : new DateTime(tldLastModified),
-                    null
-                ),
-                XmlUtils.parseXml(tldIn)
-            );
+      {
+        try (InputStream tldIn = servletContext.getResourceAsStream(tldServletPath)) {
+          if (tldIn == null) {
+            throw new IOException("TLD not found: " + tldServletPath);
           }
-        }
-        // Dynamically add servlets
-        {
-          // /path/taglib.tld/
-          String taglibServletUrlPattern = tldServletPath + "/";
-          ServletRegistration.Dynamic registration = servletContext.addServlet(
-              taglibServletUrlPattern,
-              new TaglibServlet(title, shortTitle, tldRef, taglib, requireLinks, apiLinks)
+          long tldLastModified = ServletContextCache.getLastModified(servletContext, tldServletPath);
+          taglib = new Taglib(
+              SUMMARY_CLASS,
+              tldRef.toString(),
+              Dates.valueOf(
+                  null,
+                  null,
+                  tldLastModified == 0 ? null : new DateTime(tldLastModified),
+                  null
+              ),
+              XmlUtils.parseXml(tldIn)
           );
-          registration.addMapping(taglibServletUrlPattern);
         }
+      }
+      // Dynamically add servlets
+      {
+        // /path/taglib.tld/
+        String taglibServletUrlPattern = tldServletPath + "/";
+        ServletRegistration.Dynamic registration = servletContext.addServlet(
+            taglibServletUrlPattern,
+            new TaglibServlet(title, shortTitle, tldRef, taglib, requireLinks, apiLinks)
+        );
+        registration.addMapping(taglibServletUrlPattern);
+      }
       if (!taglib.getTags().isEmpty()) {
-          {
-            // /path/taglib.tld/tags
-            String tagsServletUrlPattern = tldServletPath + "/tags";
-            ServletRegistration.Dynamic registration = servletContext.addServlet(
-                tagsServletUrlPattern,
-                new TagsServlet(tldRef, taglib)
-            );
-            registration.addMapping(tagsServletUrlPattern);
-          }
+        {
+          // /path/taglib.tld/tags
+          String tagsServletUrlPattern = tldServletPath + "/tags";
+          ServletRegistration.Dynamic registration = servletContext.addServlet(
+              tagsServletUrlPattern,
+              new TagsServlet(tldRef, taglib)
+          );
+          registration.addMapping(tagsServletUrlPattern);
+        }
         for (Tag tag : taglib.getTags()) {
           // /path/taglib.tld/tag-tagName
           String tagServletUrlPattern = tldServletPath + "/tag-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(tag.getName()));
@@ -387,15 +387,15 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
         }
       }
       if (!taglib.getFunctions().isEmpty()) {
-          {
-            // /path/taglib.tld/functions
-            String functionsServletUrlPattern = tldServletPath + "/functions";
-            ServletRegistration.Dynamic registration = servletContext.addServlet(
-                functionsServletUrlPattern,
-                new FunctionsServlet(tldRef, taglib, requireLinks, apiLinks)
-            );
-            registration.addMapping(functionsServletUrlPattern);
-          }
+        {
+          // /path/taglib.tld/functions
+          String functionsServletUrlPattern = tldServletPath + "/functions";
+          ServletRegistration.Dynamic registration = servletContext.addServlet(
+              functionsServletUrlPattern,
+              new FunctionsServlet(tldRef, taglib, requireLinks, apiLinks)
+          );
+          registration.addMapping(functionsServletUrlPattern);
+        }
         for (Function function : taglib.getFunctions()) {
           // /path/taglib.tld/function-functionName
           String functionServletUrlPattern = tldServletPath + "/function-" + URIDecoder.decodeURI(URIEncoder.encodeURIComponent(function.getName()));
