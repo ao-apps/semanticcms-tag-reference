@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -161,16 +161,16 @@ public class LinkedClassNameTag extends TagSupport {
             if (!token.isEmpty()) {
               String packageName;
               String nameOnly;
-                {
-                  int lastDot = token.lastIndexOf('.');
-                  if (lastDot == -1) {
-                    packageName = "";
-                    nameOnly = token;
-                  } else {
-                    packageName = token.substring(0, lastDot);
-                    nameOnly = token.substring(lastDot + 1);
-                  }
+              {
+                int lastDot = token.lastIndexOf('.');
+                if (lastDot == -1) {
+                  packageName = "";
+                  nameOnly = token;
+                } else {
+                  packageName = token.substring(0, lastDot);
+                  nameOnly = token.substring(lastDot + 1);
                 }
+              }
               String javadocLink = apiLinks.get(packageName);
               if (javadocLink != null) {
                 // Link to javadocs
