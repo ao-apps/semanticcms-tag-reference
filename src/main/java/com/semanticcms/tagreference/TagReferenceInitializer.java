@@ -261,7 +261,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       boolean requireLinks,
       String javadocLinkJavaSE,
       String javadocLinkJavaEE,
-      String ... additionalApiLinks
+      String... additionalApiLinks
   ) {
     this(
         title,
@@ -274,7 +274,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
     );
   }
 
-  private static Map<String, String> convertToMap(String ... additionalApiLinks) {
+  private static Map<String, String> convertToMap(String... additionalApiLinks) {
     if (additionalApiLinks == null) {
       return null;
     }
