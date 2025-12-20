@@ -32,12 +32,12 @@ def upstreamProjects = [
   '../oss/encoding', // <groupId>com.aoapps</groupId><artifactId>ao-encoding</artifactId>
   '../oss/lang', // <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
   '../oss/net-types', // <groupId>com.aoapps</groupId><artifactId>ao-net-types</artifactId>
-  '../oss/servlet-util-javaee', // <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId>
-  '../oss/style-javaee', // <groupId>com.aoapps</groupId><artifactId>ao-style</artifactId>
-  '../oss/taglib-javaee', // <groupId>com.aoapps</groupId><artifactId>ao-taglib</artifactId>
+  '../oss/servlet-util', // <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId>
+  '../oss/style', // <groupId>com.aoapps</groupId><artifactId>ao-style</artifactId>
+  '../oss/taglib', // <groupId>com.aoapps</groupId><artifactId>ao-taglib</artifactId>
   '../oss/tld-parser', // <groupId>com.aoapps</groupId><artifactId>ao-tld-parser</artifactId>
   '../oss/web-resources/registry', // <groupId>com.aoapps</groupId><artifactId>ao-web-resources-registry</artifactId>
-  '../oss/web-resources/servlet-javaee', // <groupId>com.aoapps</groupId><artifactId>ao-web-resources-servlet</artifactId>
+  '../oss/web-resources/servlet', // <groupId>com.aoapps</groupId><artifactId>ao-web-resources-servlet</artifactId>
   // No Jenkins: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
   // No Jenkins: <groupId>javax.servlet.jsp</groupId><artifactId>javax.servlet.jsp-api</artifactId>
   // No Jenkins: <groupId>joda-time</groupId><artifactId>joda-time</artifactId>
