@@ -40,7 +40,6 @@ def upstreamProjects = [
   '../oss/web-resources/servlet', // <groupId>com.aoapps</groupId><artifactId>ao-web-resources-servlet</artifactId>
   // No Jenkins: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
   // No Jenkins: <groupId>javax.servlet.jsp</groupId><artifactId>javax.servlet.jsp-api</artifactId>
-  // No Jenkins: <groupId>joda-time</groupId><artifactId>joda-time</artifactId>
   'core/controller', // <groupId>com.semanticcms</groupId><artifactId>semanticcms-core-controller</artifactId>
   'core/model', // <groupId>com.semanticcms</groupId><artifactId>semanticcms-core-model</artifactId>
   'core/pages-local', // <groupId>com.semanticcms</groupId><artifactId>semanticcms-core-pages-local</artifactId>

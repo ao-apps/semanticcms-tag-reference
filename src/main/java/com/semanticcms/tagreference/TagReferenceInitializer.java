@@ -41,6 +41,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -52,7 +55,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
-import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
 /**
@@ -314,7 +316,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
                 Dates.valueOf(
                     null,
                     null,
-                    tldLastModified == 0 ? null : new DateTime(tldLastModified),
+                    tldLastModified == 0 ? null : ZonedDateTime.ofInstant(Instant.ofEpochMilli(tldLastModified), ZoneId.systemDefault()),
                     null
                 ),
                 XmlUtils.parseXml(tldIn)
