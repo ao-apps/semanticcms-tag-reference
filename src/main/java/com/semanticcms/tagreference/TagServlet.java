@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -30,14 +30,14 @@ import com.aoapps.web.resources.servlet.PageServlet;
 import com.aoapps.web.resources.servlet.RegistryEE;
 import com.semanticcms.core.model.PageRef;
 import com.semanticcms.core.servlet.CapturePage;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.jsp.SkipPageException;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.SkipPageException;
 
 public class TagServlet extends PageServlet {
 

@@ -1,6 +1,6 @@
 /*
  * semanticcms-tag-reference - Generates tag library descriptor documentation for .tld files.
- * Copyright (C) 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
+ * Copyright (C) 2020, 2021, 2022, 2023, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,14 +28,14 @@ import static com.aoapps.encoding.TextInXhtmlEncoder.encodeTextInXhtml;
 
 import com.aoapps.net.EmptyURIParameters;
 import com.aoapps.servlet.http.HttpServletUtil;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.JspTagException;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Map;
 import java.util.StringTokenizer;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * Displays a class name, possibly linked to javadocs apis.
