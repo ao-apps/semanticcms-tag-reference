@@ -73,7 +73,7 @@ public class LinkedClassNameTag extends TagSupport {
 
   /**
    * @param requireLinks  When {@code true}, will fail when a class does not map to a
-   *                      package in {@linkplain #setApiLinks(java.util.Map) apiLinks}.
+   *                      package in {@linkplain LinkedClassNameTag#setApiLinks(java.util.Map) apiLinks}.
    *                      Defaults to {@code false}.
    */
   public void setRequireLinks(boolean requireLinks) {
