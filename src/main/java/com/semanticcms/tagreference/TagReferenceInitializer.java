@@ -196,7 +196,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
    *
    * @param additionalApiLinks  Additional API links.
    *                            When there are duplicate packages, the first match wins.
-   *                            The API links may be prefixed with {@link #NOFOLLOW_PREFIX} to have <code>rel="nofollow"</code> in the generated links.
+   *                            The API links may be prefixed with {@link TagReferenceInitializer#NOFOLLOW_PREFIX} to have <code>rel="nofollow"</code> in the generated links.
    */
   protected TagReferenceInitializer(
       String title,
@@ -279,12 +279,12 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
   /**
    * Parses the TLD file.
    *
-   * <p>Calls {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)},
+   * <p>Calls {@link TagReferenceInitializer#TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)},
    * with {@code requireLinks = false} for backward compatibility.</p>
    *
    * @deprecated  Please provide {@code requireLinks} to either
-   *              {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
-   *              or {@link #TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String...)}
+   *              {@link TagReferenceInitializer#TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.util.Map)}
+   *              or {@link TagReferenceInitializer#TagReferenceInitializer(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String...)}
    */
   @Deprecated(forRemoval = true)
   protected TagReferenceInitializer(
