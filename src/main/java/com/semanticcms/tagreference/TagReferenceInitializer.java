@@ -200,7 +200,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
    *
    * @param additionalApiLinks  Additional API links.
    *                            When there are duplicate packages, the first match wins.
-   *                            The API links may be prefixed with {@link #NOFOLLOW_PREFIX} to have <code>rel="nofollow"</code> in the generated links.
+   *                            The API links may be prefixed with {@link TagReferenceInitializer#NOFOLLOW_PREFIX} to have <code>rel="nofollow"</code> in the generated links.
    */
   protected TagReferenceInitializer(
       String title,
