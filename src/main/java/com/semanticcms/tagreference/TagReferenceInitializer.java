@@ -128,11 +128,11 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
   static {
     try {
       // Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-      addPackageMap("javadoc.link.javase.5",  "com/aoapps/javadoc/offline/javase/5/package-list");
-      addPackageMap("javadoc.link.javase.6",  "com/aoapps/javadoc/offline/javase/6/package-list");
-      addPackageMap("javadoc.link.javase.7",  "com/aoapps/javadoc/offline/javase/7/package-list");
-      addPackageMap("javadoc.link.javase.8",  "com/aoapps/javadoc/offline/javase/8/package-list");
-      addPackageMap("javadoc.link.javase.9",  "com/aoapps/javadoc/offline/javase/9/package-list");
+      addPackageMap("javadoc.link.javase.5", "com/aoapps/javadoc/offline/javase/5/package-list");
+      addPackageMap("javadoc.link.javase.6", "com/aoapps/javadoc/offline/javase/6/package-list");
+      addPackageMap("javadoc.link.javase.7", "com/aoapps/javadoc/offline/javase/7/package-list");
+      addPackageMap("javadoc.link.javase.8", "com/aoapps/javadoc/offline/javase/8/package-list");
+      addPackageMap("javadoc.link.javase.9", "com/aoapps/javadoc/offline/javase/9/package-list");
       addPackageMap("javadoc.link.javase.10", "com/aoapps/javadoc/offline/javase/10/element-list");
       addPackageMap("javadoc.link.javase.11", "com/aoapps/javadoc/offline/javase/11/element-list");
       addPackageMap("javadoc.link.javase.12", "com/aoapps/javadoc/offline/javase/12/element-list");
@@ -153,15 +153,15 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       addPackageMap("javadoc.link.javase.27", "com/aoapps/javadoc/offline/javase/27/element-list");
 
       // Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
-      addPackageMap(ACTIVATION_PROPERTY,     "com/aoapps/javadoc/offline/javax.activation/activation/element-list");
-      addPackageMap(JAVAMAIL_PROPERTY,       "com/aoapps/javadoc/offline/com.sun.mail/javax.mail/package-list");
+      addPackageMap(ACTIVATION_PROPERTY, "com/aoapps/javadoc/offline/javax.activation/activation/element-list");
+      addPackageMap(JAVAMAIL_PROPERTY, "com/aoapps/javadoc/offline/com.sun.mail/javax.mail/package-list");
       addPackageMap("javadoc.link.javaee.5", "com/aoapps/javadoc/offline/javaee/5/package-list");
       addPackageMap("javadoc.link.javaee.6", "com/aoapps/javadoc/offline/javaee/6/package-list");
       addPackageMap("javadoc.link.javaee.7", "com/aoapps/javadoc/offline/javaee/7/package-list");
-      addPackageMap("javadoc.link.jakartaee.8",   "com/aoapps/javadoc/offline/jakartaee/8/package-list");
-      addPackageMap("javadoc.link.jakartaee.9",   "com/aoapps/javadoc/offline/jakartaee/9/package-list");
+      addPackageMap("javadoc.link.jakartaee.8", "com/aoapps/javadoc/offline/jakartaee/8/package-list");
+      addPackageMap("javadoc.link.jakartaee.9", "com/aoapps/javadoc/offline/jakartaee/9/package-list");
       addPackageMap("javadoc.link.jakartaee.9.1", "com/aoapps/javadoc/offline/jakartaee/9.1/package-list");
-      addPackageMap("javadoc.link.jakartaee.10",  "com/aoapps/javadoc/offline/jakartaee/10/element-list");
+      addPackageMap("javadoc.link.jakartaee.10", "com/aoapps/javadoc/offline/jakartaee/10/element-list");
     } catch (IOException e) {
       throw new ExceptionInInitializerError(e);
     }
