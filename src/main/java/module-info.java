@@ -21,7 +21,6 @@
  * along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.semanticcms.tagreference {
-  exports com.semanticcms.tagreference;
   // Direct
   requires com.aoapps.collections; // <groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
   requires com.aoapps.encoding; // <groupId>com.aoapps</groupId><artifactId>ao-encoding</artifactId>
@@ -42,4 +41,6 @@ module com.semanticcms.tagreference {
   requires jakarta.servlet.jsp.jstl; // <groupId>jakarta.servlet.jsp.jstl</groupId><artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
   // Java SE
   requires java.xml;
+
+  exports com.semanticcms.tagreference;
 }
