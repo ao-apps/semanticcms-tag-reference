@@ -151,6 +151,7 @@ public abstract class TagReferenceInitializer implements ServletContainerInitial
       addPackageMap("javadoc.link.javase.25", "com/aoapps/javadoc/offline/javase/25/element-list");
       addPackageMap("javadoc.link.javase.26", "com/aoapps/javadoc/offline/javase/26/element-list");
       addPackageMap("javadoc.link.javase.27", "com/aoapps/javadoc/offline/javase/27/element-list");
+      addPackageMap("javadoc.link.javase.28", "com/aoapps/javadoc/offline/javase/28/element-list");
 
       // Note: This list matches ao-oss-parent/pom.xml and ao-javadoc-offline
       addPackageMap(ACTIVATION_PROPERTY, "com/aoapps/javadoc/offline/javax.activation/activation/element-list");

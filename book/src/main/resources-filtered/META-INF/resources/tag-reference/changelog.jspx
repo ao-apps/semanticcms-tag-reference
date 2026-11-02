@@ -37,7 +37,7 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-11-06T10:35:35-06:00"
-    dateModified="2026-05-26T22:09:53Z"
+    dateModified="2026-11-02T03:06:59Z"
   >
     <c:set var="latestRelease" value="2.0.0" />
     <c:if test="${
@@ -53,6 +53,15 @@ along with semanticcms-tag-reference.  If not, see <https://www.gnu.org/licenses
         scmUrl="@{project.scm.url}"
       >
         <!-- TODO: Selective use of non-breaking space to allow for graceful word wrapping. -->
+        <ul>
+          <li>Java updates:
+            <ol>
+              <li>Java 26 is now end-of-life</li>
+              <li>Java 27 is now current stable</li>
+              <li>Java 28 is new beta</li>
+            </ol>
+          </li>
+        </ul>
       </changelog:release>
     </c:if>
 
